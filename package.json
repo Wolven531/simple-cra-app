@@ -22,7 +22,7 @@
     "prebuild": "npm test",
     "start": "react-scripts start",
     "start:heroku": "react-scripts start",
-    "test": "react-scripts test --all --ci --coverage --watchAll=false"
+    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/App.tsx"
   },
   "eslintConfig": {
     "extends": [
