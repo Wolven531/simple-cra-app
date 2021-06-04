@@ -1,7 +1,7 @@
 import React from 'react'
 import './App.css'
 
-const ENV_API_URL = process.env.API_URL || 'localhost:3000'
+const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
 
 function App() {
 	return (
