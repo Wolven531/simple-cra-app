@@ -16,4 +16,4 @@ Runs tests and outputs code coverage
 
 Locally, the app runs on port 4000 (as specified in the `.env` file)
 
-By default, the app looks to `localhost:3000` for a running API; to override this URL, set `API_URL` in your environment variables (or update the value in the `.env` file)
+By default, the app looks to `localhost:3000` for a running API; to override this URL, set `API_URL` in your environment variables or update `ENV_API_URL` in `App.tsx`
