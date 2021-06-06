@@ -24,7 +24,7 @@ const useStyles = makeStyles((theme: Theme) =>
 	}),
 )
 
-export default function SvgMaterialIcons() {
+function IconDemo() {
 	const classes = useStyles()
 
 	return (
@@ -75,3 +75,5 @@ export default function SvgMaterialIcons() {
 		</Grid>
 	)
 }
+
+export { IconDemo }
