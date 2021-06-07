@@ -15,7 +15,14 @@ function App() {
 				<p>Welcome to Anthony and Vinny's Simple CRA App®!</p>
 			</Grid>
 			<Grid item xs={12}>
-				API - <input disabled readOnly value={ENV_API_URL}  />
+				<Grid container style={{ marginBottom: '1rem' }}>
+					<Grid item xs={2}>
+						API
+					</Grid>
+					<Grid item xs={10}>
+						<input disabled readOnly value={ENV_API_URL} style={{ width: '100%' }} />
+					</Grid>
+				</Grid>
 			</Grid>
 			<Grid item xs={12}>
 				<IconDemo/>
