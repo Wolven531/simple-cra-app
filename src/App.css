@@ -1,0 +1,15 @@
+.app {
+	padding: 1rem;
+}
+
+.app h2 {
+	margin-block-end: 0;
+	margin-block-start: 0;
+	margin-inline-end: 0;
+	margin-inline-start: 0;
+	text-align: center;
+}
+
+.app p {
+	text-align: center;
+}
