@@ -1,5 +1,5 @@
 import React from 'react'
-import Grid from '@material-ui/core/Grid'
+import { Button, Grid } from '@material-ui/core'
 import { IconDemo } from './IconDemo'
 import './App.css'
 
@@ -16,11 +16,14 @@ function App() {
 			</Grid>
 			<Grid item xs={12}>
 				<Grid container style={{ marginBottom: '1rem' }}>
-					<Grid item xs={2}>
+					<Grid item>
 						API
 					</Grid>
-					<Grid item xs={10}>
-						<input disabled readOnly value={ENV_API_URL} style={{ width: '100%' }} />
+					<Grid item>
+						<input disabled readOnly value={ENV_API_URL} style={{ margin: '0 0 0 0' }} />
+					</Grid>
+					<Grid item>
+						<Button color="primary" variant="outlined" style={{ margin: '' }}>Test</Button>
 					</Grid>
 				</Grid>
 			</Grid>
