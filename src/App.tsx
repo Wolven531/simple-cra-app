@@ -15,11 +15,11 @@ function App() {
 				<p>Welcome to Anthony and Vinny's Simple CRA App®!</p>
 			</Grid>
 			<Grid item xs={12}>
-				<Grid container style={{ marginBottom: '1rem' }}>
+				<Grid container>
 					<Grid item>
 						API
 					</Grid>
-					<Grid item>
+					<Grid item style={{ margin: '0 1rem 0 1rem' }}>
 						<input disabled readOnly value={ENV_API_URL} style={{ margin: '0 0 0 0' }} />
 					</Grid>
 					<Grid item>
