@@ -20,15 +20,23 @@
 
 .app > .footer {
 	background-color: bisque;
-	bottom: 0;
+	border-radius: 1rem;
+	/* bottom: 0; */
 	font-size: .75rem;
-	margin: 0;
+	/* margin: 0; */
+	margin-top: var(--app-padding);
 	padding: calc(var(--app-padding) / 2) 0;
-	position: absolute;
+	/* padding: var(--app-padding); */
+	/* position: absolute; */
 	text-align: center;
-	width: calc(100% - 2 * var(--app-padding));
+	/* width: calc(100% - 2 * var(--app-padding)); */
 }
 
 .app > .header {
+	background-color: cadetblue;
+	border-radius: 1rem;
+	color: gold;
 	font-size: 1.3rem;
+	margin-bottom: var(--app-padding);
+	padding: calc(var(--app-padding) / 2) 0;
 }
