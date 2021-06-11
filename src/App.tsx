@@ -6,6 +6,18 @@ import './App.css'
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
 
 function App() {
+	const pingApiHealthEndpoint = () => {
+		fetch(
+			`${ENV_API_URL}/health`,
+			{
+				cache: 'no-cache',
+				method: 'get',
+			})
+			.then(resp => resp.text())
+			.then(text => { alert(text) })
+			.catch(console.error)
+	}
+
 	return (
 		<Container maxWidth="sm" className="app">
 			<Container className="header">
@@ -18,10 +30,10 @@ function App() {
 						API
 					</Grid>
 					<Grid item style={{ margin: '0 1rem 0 1rem' }}>
-						<input disabled readOnly value={ENV_API_URL} style={{ }} />
+						<input disabled readOnly value={ENV_API_URL} />
 					</Grid>
 					<Grid item>
-						<Button color="primary" variant="contained" style={{ }}>Test</Button>
+						<Button color="primary" variant="contained" onClick={pingApiHealthEndpoint}>Test</Button>
 					</Grid>
 				</Grid>
 				<IconDemo/>
