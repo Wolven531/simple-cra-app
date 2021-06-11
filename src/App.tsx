@@ -21,7 +21,7 @@ function App() {
 						<input disabled readOnly value={ENV_API_URL} style={{ }} />
 					</Grid>
 					<Grid item>
-						<Button color="primary" variant="outlined" style={{ }}>Test</Button>
+						<Button color="primary" variant="contained" style={{ }}>Test</Button>
 					</Grid>
 				</Grid>
 				<IconDemo/>
