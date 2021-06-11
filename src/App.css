@@ -1,5 +1,9 @@
+:root {
+	--app-padding: 1rem;
+}
+
 .app {
-	padding: 1rem;
+	padding: var(--app-padding);
 }
 
 .app h2 {
@@ -12,4 +16,19 @@
 
 .app p {
 	text-align: center;
+}
+
+.app > .footer {
+	background-color: bisque;
+	bottom: 0;
+	font-size: .75rem;
+	margin: 0;
+	padding: calc(var(--app-padding) / 2) 0;
+	position: absolute;
+	text-align: center;
+	width: calc(100% - 2 * var(--app-padding));
+}
+
+.app > .header {
+	font-size: 1.3rem;
 }
