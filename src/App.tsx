@@ -8,7 +8,7 @@ const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!
 function App() {
 	return (
 		<Grid container className="app">
-			<Grid item xs={12}>
+			<Grid item xs={12} className="header">
 				<h2>Simple CRA App</h2>
 			</Grid>
 			<Grid item xs={12}>
@@ -29,6 +29,11 @@ function App() {
 			</Grid>
 			<Grid item xs={12}>
 				<IconDemo/>
+			</Grid>
+			<Grid item xs={12} className="footer">
+				Anthony Williams, Vincent Leighton
+				<br/>
+				© 2021, Most rights reserved but available upon request
 			</Grid>
 		</Grid>
 	)
