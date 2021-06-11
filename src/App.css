@@ -1,8 +1,12 @@
 :root {
 	--app-padding: 1rem;
+	--app-half-padding: calc(var(--app-padding) / 2);
+
+	background-color: lightcyan;
 }
 
 .app {
+	background-color: lightskyblue;
 	padding: var(--app-padding);
 }
 
@@ -20,12 +24,12 @@
 
 .app > .footer {
 	background-color: bisque;
-	border-radius: 1rem;
+	border-radius: var(--app-padding);
 	/* bottom: 0; */
 	font-size: .75rem;
 	/* margin: 0; */
 	margin-top: var(--app-padding);
-	padding: calc(var(--app-padding) / 2) 0;
+	padding: var(--app-half-padding) 0;
 	/* padding: var(--app-padding); */
 	/* position: absolute; */
 	text-align: center;
@@ -34,9 +38,9 @@
 
 .app > .header {
 	background-color: cadetblue;
-	border-radius: 1rem;
+	border-radius: var(--app-padding);
 	color: gold;
 	font-size: 1.3rem;
 	margin-bottom: var(--app-padding);
-	padding: calc(var(--app-padding) / 2) 0;
+	padding: var(--app-half-padding) 0;
 }
