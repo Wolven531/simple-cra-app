@@ -7,6 +7,7 @@
 
 .app {
 	background-color: lightskyblue;
+	/* min-height: 600px; */
 	padding: var(--app-padding);
 }
 
@@ -21,6 +22,16 @@
 .app p {
 	text-align: center;
 }
+
+.app .btn-health {
+	margin-right: var(--app-padding);
+}
+
+/*
+.app .btn-token {
+
+}
+*/
 
 .app > .footer {
 	background-color: bisque;
