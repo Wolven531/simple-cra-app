@@ -6,6 +6,10 @@ import './App.css'
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
 
 function App() {
+	const handleError = (err: Error) => {
+		console.error(err)
+		alert(`There was a problem -\n\n${err.message}`)
+	}
 	const pingApiHealthEndpoint = () => {
 		fetch(
 			`${ENV_API_URL}/health`,
@@ -15,7 +19,7 @@ function App() {
 			})
 			.then(resp => resp.text())
 			.then(text => { alert(text) })
-			.catch(console.error)
+			.catch(handleError)
 	}
 	const pingTokenCheckEndpoint = () => {
 		fetch(
@@ -26,7 +30,7 @@ function App() {
 			})
 			.then(resp => resp.text())
 			.then(text => { alert(!!text ? 'Valid' : 'NOT VALID') })
-			.catch(console.error)
+			.catch(handleError)
 	}
 
 	return (
