@@ -45,8 +45,8 @@ function App() {
 					</Grid>
 				</Grid>
 				<Container style={{ display: 'flex', justifyContent: 'center', }}>
-					<Button className="btn-health" color="primary" variant="contained" onClick={pingApiHealthEndpoint}>Test - Server Up?</Button>
-					<Button className="btn-token" color="secondary" variant="contained" onClick={pingTokenCheckEndpoint}>Test - Token valid?</Button>
+					<Button className="btn-health" color="primary" variant="contained" onClick={pingApiHealthEndpoint}>Server Up?</Button>
+					<Button className="btn-token" color="secondary" variant="contained" onClick={pingTokenCheckEndpoint}>Token valid?</Button>
 				</Container>
 				{/* <IconDemo/> */}
 			</Container>
