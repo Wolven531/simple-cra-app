@@ -1,6 +1,6 @@
 import React from 'react'
 import { Button, Container, Grid } from '@material-ui/core'
-import { IconDemo } from './IconDemo'
+// import { IconDemo } from './IconDemo'
 import './App.css'
 
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
@@ -48,7 +48,7 @@ function App() {
 					<Button className="btn-health" color="primary" variant="contained" onClick={pingApiHealthEndpoint}>Test - Server Up?</Button>
 					<Button className="btn-token" color="secondary" variant="contained" onClick={pingTokenCheckEndpoint}>Test - Token valid?</Button>
 				</Container>
-				<IconDemo/>
+				{/* <IconDemo/> */}
 			</Container>
 			<Container className="footer">
 				Anthony Williams, Vincent Leighton
