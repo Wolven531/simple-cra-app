@@ -57,6 +57,15 @@ function App() {
 								{/* <IconDemo/> */}
 							</Container>
 						</Route>
+						<Route path="/">
+							<Container>
+								<Grid container alignItems="center" justify="center">
+									<Grid item>
+										<h3>Page not found</h3>
+									</Grid>
+								</Grid>
+							</Container>
+						</Route>
 					</Switch>
 				</BrowserRouter>
 				<Container className="footer">
