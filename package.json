@@ -30,7 +30,7 @@
     "prebuild": "npm test",
     "start": "react-scripts start",
     "start:heroku": "serve -s build",
-    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/App.tsx"
+    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom={src/{App,Nav}/**.{ts,tsx},src/ApiService.ts}"
   },
   "eslintConfig": {
     "extends": [
