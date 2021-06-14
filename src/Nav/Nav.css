@@ -1,0 +1,15 @@
+nav {
+	margin: 1rem 0;
+}
+
+nav a {
+	border: 1px dashed silver;
+	color: blue;
+	padding: .25rem .5rem;
+	text-decoration: none;
+	text-transform: lowercase;
+}
+
+nav a:hover {
+	border: 1px solid black;
+}
