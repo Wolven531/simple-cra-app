@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { Button, Container, Grid } from '@material-ui/core'
 import { ApiService } from './ApiService'
-// import { IconDemo } from './IconDemo'
+import { IconDemo } from './IconDemo'
 import './App.css'
 
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
@@ -54,7 +54,15 @@ function App() {
 										Token valid?
 									</Button>
 								</Container>
-								{/* <IconDemo/> */}
+							</Container>
+						</Route>
+						<Route path="/icons">
+							<Container>
+								<Grid container alignItems="center" justify="center">
+									<Grid item>
+										<IconDemo/>
+									</Grid>
+								</Grid>
 							</Container>
 						</Route>
 						<Route path="/">
