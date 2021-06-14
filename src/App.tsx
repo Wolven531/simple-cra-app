@@ -1,8 +1,9 @@
+import { Button, Container, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { Button, Container, Grid } from '@material-ui/core'
 import { ApiService } from './ApiService'
 import { IconDemo } from './IconDemo'
+import { Nav } from './Nav/Nav'
 import './App.css'
 
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
@@ -20,6 +21,7 @@ function App() {
 			<Container maxWidth="sm" className="app">
 				<Container className="header">
 					<h2>Simple CRA App</h2>
+					<Nav />
 				</Container>
 				{/* Content outside of <BrowserRouter> renders on every page */}
 				<BrowserRouter>
