@@ -4,14 +4,14 @@ import { render, RenderResult } from '@testing-library/react'
 import App from './App'
 
 describe('App component', () => {
-	let app: RenderResult
+	let comp: RenderResult
 
 	beforeEach(() => {
-		app = render(<App />)
+		comp = render(<App />)
 	})
 
-	it('renders app', () => {
-		expect(app).toBeDefined()
+	it('renders App', () => {
+		expect(comp).toBeDefined()
 
 		// const linkElement = screen.getByText(/learn react/i)
 		// expect(linkElement).toBeInTheDocument()
