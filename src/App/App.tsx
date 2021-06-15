@@ -7,9 +7,9 @@ import { Nav } from '../Nav/Nav'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
-const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
-
 function App() {
+	const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
+
 	const [api, setApi] = useState(new ApiService(ENV_API_URL))
 	const ApiContext = React.createContext(api)
 	
