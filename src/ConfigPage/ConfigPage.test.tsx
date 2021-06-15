@@ -39,4 +39,21 @@ describe('ConfigPage component', () => {
 			expect(mockApiService.pingApiHealthEndpoint).toHaveBeenLastCalledWith()
 		})
 	})
+
+	describe('click check token button', () => {
+		let buttonCheckToken: ShallowWrapper
+
+		beforeEach(() => {
+			buttonCheckToken = comp.find('.btn-token')
+
+			buttonCheckToken.simulate('click')
+		})
+
+		it('renders button properly, invokes pingTokenCheckEndpoint() on API w/ no params', () => {
+			expect(buttonCheckToken.text()).toEqual('Token valid?')
+
+			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenLastCalledWith()
+		})
+	})
 })
