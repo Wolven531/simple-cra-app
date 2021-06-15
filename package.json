@@ -22,7 +22,10 @@
   "devDependencies": {
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
-    "@testing-library/user-event": "^13.1.9"
+    "@testing-library/user-event": "^13.1.9",
+    "@types/enzyme": "^3.10.8",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-17-updated": "^1.0.2"
   },
   "scripts": {
     "build": "react-scripts build",
