@@ -20,12 +20,12 @@ function App() {
 	return (
 		<ApiContext.Provider value={api}>
 			<Container maxWidth="sm" className="app">
-				<Container className="header">
-					<h2>Simple CRA App</h2>
-					<Nav />
-				</Container>
-				{/* Content outside of <BrowserRouter> renders on every page */}
 				<BrowserRouter>
+					<Container className="header">
+						<h2>Simple CRA App</h2>
+						<Nav />
+					</Container>
+					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>{/* Home page */}
 							<Container>
