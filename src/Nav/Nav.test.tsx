@@ -1,13 +1,17 @@
-import React from 'react'
-// import { render, screen } from '@testing-library/react'
 import { render, RenderResult } from '@testing-library/react'
+import React from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import { Nav } from './Nav'
 
 describe('Nav component', () => {
 	let comp: RenderResult
 
 	beforeEach(() => {
-		comp = render(<Nav />)
+		comp = render(
+			<BrowserRouter>
+				<Nav />
+			</BrowserRouter>
+		)
 	})
 
 	it('renders Nav', () => {
