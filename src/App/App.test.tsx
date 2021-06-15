@@ -1,10 +1,11 @@
+import { shallow, ShallowWrapper } from 'enzyme'
 import React from 'react'
-import { render, RenderResult } from '@testing-library/react'
+import { ConfigPage } from '../ConfigPage/ConfigPage'
 import App from './App'
 
 describe('App component when process.env.REACT_APP_API_URL has value', () => {
 	const fakeApiUrl = 'http://fake-api.co'
-	let comp: RenderResult
+	let wrapper: ShallowWrapper
 	let origEnv: NodeJS.ProcessEnv
 
 	beforeEach(() => {
@@ -16,7 +17,7 @@ describe('App component when process.env.REACT_APP_API_URL has value', () => {
 			REACT_APP_API_URL: fakeApiUrl,
 		}
 
-		comp = render(<App />)
+		wrapper = shallow(<App />)
 	})
 
 	afterEach(() => {
@@ -24,9 +25,9 @@ describe('App component when process.env.REACT_APP_API_URL has value', () => {
 	})
 
 	it('renders App, uses values from environment', () => {
-		expect(comp).toBeDefined()
-		// TODO - 
-		// comp.asFragment().querySelector('<ApiContext.Provider>')?.getAttribute('value')
+		expect(wrapper).toBeDefined()
+
+		expect(wrapper.find(ConfigPage).props().api.apiUrl).toEqual(fakeApiUrl)
 		// const linkElement = screen.getByText(/learn react/i)
 		// expect(linkElement).toBeInTheDocument()
 	})
@@ -34,7 +35,7 @@ describe('App component when process.env.REACT_APP_API_URL has value', () => {
 })
 
 describe('App component when process.env.REACT_APP_API_URL is not set', () => {
-	let comp: RenderResult
+	let wrapper: ShallowWrapper
 	let origEnv: NodeJS.ProcessEnv
 
 	beforeEach(() => {
@@ -46,7 +47,8 @@ describe('App component when process.env.REACT_APP_API_URL is not set', () => {
 			REACT_APP_API_URL: undefined,
 		}
 
-		comp = render(<App />)
+		wrapper = shallow(<App />)
+
 	})
 
 	afterEach(() => {
@@ -54,6 +56,8 @@ describe('App component when process.env.REACT_APP_API_URL is not set', () => {
 	})
 
 	it('renders App, uses default value from App comp', () => {
-		expect(comp).toBeDefined()
+		expect(wrapper).toBeDefined()
+
+		expect(wrapper.find(ConfigPage).props().api.apiUrl).toEqual('!!! ENV WAS MISSING URL !!!')
 	})
 })
