@@ -1,3 +1,4 @@
+import { render, RenderResult } from '@testing-library/react'
 import { shallow, ShallowWrapper } from 'enzyme'
 import React from 'react'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
@@ -32,6 +33,17 @@ describe('App component when process.env.REACT_APP_API_URL has value', () => {
 		// expect(linkElement).toBeInTheDocument()
 	})
 
+	describe('mount component', () => {
+		let comp: RenderResult
+
+		beforeEach(() => {
+			comp = render(<App />)
+		})
+
+		it('renders App', () => {
+			expect(comp).toBeDefined()
+		})
+	})
 })
 
 describe('App component when process.env.REACT_APP_API_URL is not set', () => {
