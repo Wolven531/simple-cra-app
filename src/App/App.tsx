@@ -1,9 +1,10 @@
-import { Button, Container, Grid } from '@material-ui/core'
+import { Container, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { ApiService } from '../services/ApiService'
+import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
+import { ApiService } from '../services/ApiService'
 import './App.css'
 
 const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
@@ -26,39 +27,15 @@ function App() {
 				{/* Content outside of <BrowserRouter> renders on every page */}
 				<BrowserRouter>
 					<Switch>
-						{/* Home page */}
-						<Route path="/" exact>
+						<Route path="/" exact>{/* Home page */}
 							<Container>
 								<p>Welcome to Anthony and Vinny's Simple CRA App®!</p>
-								<Grid container alignItems="center" justify="center" style={{ margin: '0 0 1rem 0' }}>
-									<Grid item>
-										API
-									</Grid>
-									<Grid item style={{ margin: '0 1rem 0 1rem' }}>
-										<input disabled readOnly value={ENV_API_URL} />
-									</Grid>
-								</Grid>
-								<Container style={{ display: 'flex', justifyContent: 'center', }}>
-									<Button
-										className="btn-health"
-										color="primary"
-										variant="contained"
-										onClick={() => { api.pingApiHealthEndpoint() }}
-									>
-										Server Up?
-									</Button>
-									<Button
-										className="btn-token"
-										color="secondary"
-										variant="contained"
-										onClick={() => { api.pingTokenCheckEndpoint() }}
-									>
-										Token valid?
-									</Button>
-								</Container>
 							</Container>
 						</Route>
-						<Route path="/icons">
+						<Route path="/config">{/* Config page */}
+							<ConfigPage api={api}></ConfigPage>
+						</Route>
+						<Route path="/icons">{/* Icon demo page */}
 							<Container>
 								<Grid container alignItems="center" justify="center">
 									<Grid item>
@@ -67,7 +44,7 @@ function App() {
 								</Grid>
 							</Container>
 						</Route>
-						<Route path="/">
+						<Route path="/">{/* Not Found page */}
 							<Container>
 								<Grid container alignItems="center" justify="center">
 									<Grid item>
