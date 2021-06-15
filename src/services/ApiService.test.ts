@@ -8,8 +8,9 @@ describe('ApiService service', () => {
 			service = new ApiService()
 		})
 
-		it('creates ApiService', () => {
+		it('creates ApiService w/o API URL', () => {
 			expect(service).toBeDefined()
+			expect(service.apiUrl).toEqual('')
 		})
 	})
 
@@ -20,8 +21,9 @@ describe('ApiService service', () => {
 			service = new ApiService(fakeUrl)
 		})
 
-		it('creates ApiService', () => {
+		it('creates ApiService w/ proper API URL', () => {
 			expect(service).toBeDefined()
+			expect(service.apiUrl).toEqual(fakeUrl)
 		})
 	})
 })
