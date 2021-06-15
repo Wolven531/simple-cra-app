@@ -1,41 +1,68 @@
+/**
+ * This service encapsulates API communication in a centralized location
+ */
 class ApiService {
-	private apiUrl: string
+	private _apiUrl: string
 
 	/**
-	 * This service enables communication w/ the API in a centralized location
+	 * The base URL of the API that this service uses when it makes HTTP requests
+	 */
+	get apiUrl(): string {
+		return this._apiUrl
+	}
+	set apiUrl(newUrl: string) {
+		this._apiUrl = newUrl
+	}
+
+	/**
+	 * Create a new instance of the ApiService w/ optional API URL
 	 *
 	 * @param apiUrl Base URL of the API for this service to use
 	 */
 	constructor(apiUrl: string | undefined = '') {
-		this.apiUrl = apiUrl
+		this._apiUrl = apiUrl
 	}
 
-	pingApiHealthEndpoint() {
-		fetch(
-			`${this.apiUrl}/health`,
+	/**
+	 * Use the fetch API over HTTP to hit the API health endpoint on the server
+	 *
+	 * @returns Promise that resolves to server message if successful; otherwise, Promise that resolves to empty string
+	 */
+	pingApiHealthEndpoint(): Promise<string> {
+		return fetch(
+			`${this._apiUrl}/health`,
 			{
 				cache: 'no-cache',
 				method: 'get',
 			})
 			.then(resp => resp.text())
-			.then(text => { alert(text) })
-			.catch(this.handleError)
+			.then(text => text)
+			.catch(err => {
+				this.handleError(err)
+
+				return Promise.resolve('')
+			})
 	}
 
-	pingTokenCheckEndpoint() {
-		fetch(
-			`${this.apiUrl}/config/check-token`,
+	/**
+	 * Use the fetch API over HTTP to hit the check token endpoint on the server
+	 *
+	 * @returns Promise that resolves to true if token was valid; otherwise, Promise that resolves to false
+	 */
+	pingTokenCheckEndpoint(): Promise<boolean> {
+		return fetch(
+			`${this._apiUrl}/config/check-token`,
 			{
 				cache: 'no-cache',
 				method: 'get',
 			})
 			.then(resp => resp.text())
-			.then(text => { alert(!!text ? 'Valid' : 'NOT VALID') })
-			.catch(this.handleError)
-	}
+			.then(text => !!text)
+			.catch(err => {
+				this.handleError(err)
 
-	setApiUrl(newApiUrl: string) {
-		this.apiUrl = newApiUrl
+				return Promise.resolve(false)
+			})
 	}
 
 	private handleError(err: Error) {
