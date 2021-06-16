@@ -25,5 +25,22 @@ describe('ApiService service', () => {
 			expect(service).toBeDefined()
 			expect(service.apiUrl).toEqual(fakeUrl)
 		})
+
+		describe('pingApiHealthEndpoint()', () => {
+			const fakeResponseText = 'fake-response-text'
+			let resp: string
+
+			beforeEach(async () => {
+				jest.spyOn(window, 'fetch').mockResolvedValueOnce({
+					text: jest.fn().mockResolvedValue(fakeResponseText),
+				} as unknown as Response)
+
+				resp = await service.pingApiHealthEndpoint()
+			})
+
+			it('uses fetch() properly and returns processed value', () => {
+				expect(resp).toEqual(fakeResponseText)
+			})
+		})
 	})
 })
