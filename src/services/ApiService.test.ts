@@ -28,10 +28,11 @@ describe('ApiService service', () => {
 
 		describe('pingApiHealthEndpoint()', () => {
 			const fakeResponseText = 'fake-response-text'
+			let mockFetch: jest.SpyInstance
 			let resp: string
 
 			beforeEach(async () => {
-				jest.spyOn(window, 'fetch').mockResolvedValueOnce({
+				mockFetch = jest.spyOn(window, 'fetch').mockResolvedValueOnce({
 					text: jest.fn().mockResolvedValue(fakeResponseText),
 				} as unknown as Response)
 
@@ -40,6 +41,14 @@ describe('ApiService service', () => {
 
 			it('uses fetch() properly and returns processed value', () => {
 				expect(resp).toEqual(fakeResponseText)
+				expect(mockFetch).toHaveBeenCalledTimes(1)
+				expect(mockFetch).toHaveBeenLastCalledWith(
+					`${fakeUrl}/health`,
+					{
+						cache: 'no-cache',
+						method: 'get',
+					},
+				)
 			})
 		})
 	})
