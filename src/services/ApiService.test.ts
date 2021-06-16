@@ -26,7 +26,7 @@ describe('ApiService service', () => {
 			expect(service.apiUrl).toEqual(fakeUrl)
 		})
 
-		describe('pingApiHealthEndpoint()', () => {
+		describe('pingApiHealthEndpoint() w/ mocked non-error response', () => {
 			const fakeResponseText = 'fake-response-text'
 			let mockFetch: jest.SpyInstance
 			let resp: string
@@ -49,6 +49,28 @@ describe('ApiService service', () => {
 						method: 'get',
 					},
 				)
+			})
+		})
+
+		describe('pingApiHealthEndpoint() w/ mocked error response', () => {
+			const fakeError = 'fake-error'
+			let mockFetch: jest.SpyInstance
+			let resp: string
+			let spyHandleError: jest.SpyInstance
+
+			beforeEach(async () => {
+				mockFetch = jest.spyOn(window, 'fetch').mockRejectedValueOnce(fakeError)
+				spyHandleError = jest.spyOn<any, 'handleError'>(service, 'handleError')
+					.mockImplementationOnce(jest.fn())
+
+				resp = await service.pingApiHealthEndpoint()
+			})
+
+			it('invokes handleError() properly and returns safe value', () => {
+				expect(resp).toEqual('')
+				expect(mockFetch).toHaveBeenCalledTimes(1)
+				expect(spyHandleError).toHaveBeenCalledTimes(1)
+				expect(spyHandleError).toHaveBeenLastCalledWith(fakeError)
 			})
 		})
 	})
