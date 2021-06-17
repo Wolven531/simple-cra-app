@@ -12,6 +12,31 @@ describe('ApiService service', () => {
 			expect(service).toBeDefined()
 			expect(service.apiUrl).toEqual('')
 		})
+
+		describe('set apiUrl w/ property setter and invoke method', () => {
+			const fakeUpdatedUrl = 'http://updated-fake-url.co'
+			let mockFetch: jest.SpyInstance
+
+			beforeEach(async () => {
+				mockFetch = jest.spyOn(window, 'fetch').mockResolvedValueOnce({
+					text: jest.fn().mockResolvedValue(''),
+				} as unknown as Response)
+
+				service.apiUrl = fakeUpdatedUrl
+
+				await service.pingApiHealthEndpoint()
+			})
+
+			it('uses updated apiUrl during method execution', () => {
+				expect(mockFetch).toHaveBeenLastCalledWith(
+					`${fakeUpdatedUrl}/health`,
+					{
+						cache: 'no-cache',
+						method: 'get',
+					},
+				)
+			})
+		})
 	})
 
 	describe('create new instance providing URL', () => {
