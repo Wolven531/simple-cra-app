@@ -8,6 +8,17 @@ export interface ConfigPageProps {
 }
 
 const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
+	const fireHealthCheck = async () => {
+		const msg = await api.pingApiHealthEndpoint()
+
+		alert(msg)
+	}
+	const fireTokenCheck = async () => {
+		const isValid = await api.pingTokenCheckEndpoint()
+
+		alert(isValid ? 'Token is valid' : 'Token is borked 🤷‍♂️')
+	}
+
 	return (
 		<Container>
 			<Grid container alignItems="center" justify="center" style={{ margin: '0 0 1rem 0' }}>
@@ -23,7 +34,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					className="btn-health"
 					color="primary"
 					variant="contained"
-					onClick={() => { api.pingApiHealthEndpoint() }}
+					onClick={fireHealthCheck}
 				>
 					Server Up?
 				</Button>
@@ -31,7 +42,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					className="btn-token"
 					color="secondary"
 					variant="contained"
-					onClick={() => { api.pingTokenCheckEndpoint() }}
+					onClick={fireTokenCheck}
 				>
 					Token valid?
 				</Button>
