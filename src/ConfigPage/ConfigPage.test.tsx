@@ -5,9 +5,12 @@ import { ConfigPage, ConfigPageProps } from './ConfigPage'
 
 describe('ConfigPage component', () => {
 	let comp: ShallowWrapper<ConfigPageProps>
+	let mockAlert: jest.SpyInstance
 	let mockApiService: ApiService
 
 	beforeEach(() => {
+		mockAlert = jest.spyOn(window, 'alert').mockImplementationOnce(jest.fn())
+
 		mockApiService = {
 			_apiUrl: 'fake-url',
 			apiUrl: 'fake-url',
@@ -37,6 +40,8 @@ describe('ConfigPage component', () => {
 
 			expect(mockApiService.pingApiHealthEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockApiService.pingApiHealthEndpoint).toHaveBeenLastCalledWith()
+
+			expect(mockAlert).toHaveBeenCalledTimes(1)
 		})
 	})
 
@@ -54,6 +59,8 @@ describe('ConfigPage component', () => {
 
 			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenLastCalledWith()
+
+			expect(mockAlert).toHaveBeenCalledTimes(1)
 		})
 	})
 })
