@@ -15,7 +15,7 @@ function App() {
 	
 	useEffect(() => {
 		setApi(new ApiService(ENV_API_URL))
-	}, [])
+	}, [ENV_API_URL])
 
 	return (
 		<ApiContext.Provider value={api}>
