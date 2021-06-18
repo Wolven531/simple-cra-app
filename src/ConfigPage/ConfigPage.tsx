@@ -50,24 +50,32 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					Token valid?
 				</Button>
 			</Container>
-			<Grid container alignItems="center" justify="center" style={{ margin: '1rem 0' }}>
-				<Grid item>
-					<input value={newToken} onChange={e => { setNewToken(e.target.value) }} placeholder="New token" />
-				</Grid>
-				<Grid item style={{ margin: '0 1rem 0 1rem' }}>
-					<input value={secret} onChange={e => { setSecret(e.target.value) }} placeholder="Secret" />
-				</Grid>
-				<Grid item style={{ margin: '0 1rem 0 1rem' }}>
-					<Button
-						className="btn-update-token"
-						color="primary"
-						variant="contained"
-						onClick={() => {}}
-					>
-						Update Token
-					</Button>
-				</Grid>
-			</Grid>
+			<Container style={{ display: 'flex', justifyContent: 'center', }}>
+				<ol>
+					<li>
+						Go to Riot site, login, generate token
+					</li>
+					<li>
+					<a href="https://developer.riotgames.com" target="_blank" rel="noopener noreferrer">Riot Developer Site</a>
+					</li>
+					<li>
+						<input value={newToken} onChange={e => { setNewToken(e.target.value) }} placeholder="New token" />
+					</li>
+					<li>
+						<input value={secret} onChange={e => { setSecret(e.target.value) }} placeholder="Secret" />
+					</li>
+					<li>
+						<Button
+							className="btn-update-token"
+							color="primary"
+							variant="contained"
+							onClick={() => {}}
+						>
+							Update Token
+						</Button>
+					</li>
+				</ol>
+			</Container>
 		</Container>
 	)
 }
