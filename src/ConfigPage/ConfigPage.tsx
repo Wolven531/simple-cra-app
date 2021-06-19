@@ -5,11 +5,13 @@ import './ConfigPage.css'
 
 export interface ConfigPageProps {
 	api: ApiService
+	defaultSecret?: string
+	defaultToken?: string
 }
 
-const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
-	const [newToken, setNewToken] = useState('')
-	const [secret, setSecret] = useState('')
+const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken = '' }) => {
+	const [newToken, setNewToken] = useState(defaultToken)
+	const [secret, setSecret] = useState(defaultSecret)
 
 	const fireHealthCheck = async () => {
 		const msg = await api.pingApiHealthEndpoint()
@@ -77,6 +79,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					</li>
 					<li>
 						<input
+							className="input-new-token"
 							value={newToken}
 							onChange={(e) => {
 								setNewToken(e.target.value)
@@ -86,6 +89,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					</li>
 					<li>
 						<input
+							className="input-secret"
 							value={secret}
 							onChange={(e) => {
 								setSecret(e.target.value)
