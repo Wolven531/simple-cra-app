@@ -29,15 +29,13 @@ class ApiService {
 	 * @returns Promise that resolves to server message if successful; otherwise, Promise that resolves to empty string
 	 */
 	pingApiHealthEndpoint(): Promise<string> {
-		return fetch(
-			`${this._apiUrl}/health`,
-			{
-				cache: 'no-cache',
-				method: 'get',
-			})
-			.then(resp => resp.text())
-			.then(text => text)
-			.catch(err => {
+		return fetch(`${this._apiUrl}/health`, {
+			cache: 'no-cache',
+			method: 'get',
+		})
+			.then((resp) => resp.text())
+			.then((text) => text)
+			.catch((err) => {
 				this.handleError(err)
 
 				return Promise.resolve('')
@@ -50,15 +48,40 @@ class ApiService {
 	 * @returns Promise that resolves to true if token was valid; otherwise, Promise that resolves to false
 	 */
 	pingTokenCheckEndpoint(): Promise<boolean> {
-		return fetch(
-			`${this._apiUrl}/config/check-token`,
-			{
-				cache: 'no-cache',
-				method: 'get',
+		return fetch(`${this._apiUrl}/config/check-token`, {
+			cache: 'no-cache',
+			method: 'get',
+		})
+			.then((resp) => resp.text())
+			.then((text) => text === 'true')
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve(false)
 			})
-			.then(resp => resp.text())
-			.then(text => !!text)
-			.catch(err => {
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the update token endpoint
+	 *
+	 * @returns Promise that resolves to true if token was upated; otherwise, Promise that resolves to false
+	 */
+	pingTokenUpdateEndpoint(secret: string, token: string): Promise<boolean> {
+		const body = JSON.stringify({
+			secret,
+			token,
+		})
+		return fetch(`${this._apiUrl}/config/set-token`, {
+			cache: 'no-cache',
+			method: 'POST',
+			body,
+			headers: {
+				'Content-Type': 'application/json',
+			},
+		})
+			.then((resp) => resp.text())
+			.then((text) => text === 'true')
+			.catch((err) => {
 				this.handleError(err)
 
 				return Promise.resolve(false)
