@@ -2,6 +2,15 @@
  * This service encapsulates API communication in a centralized location
  */
 class ApiService {
+	private static readonly HEADER_CONTENT_TYPE = 'Content-Type'
+	private static readonly HEADER_CONTENT_TYPE_JSON = 'application/json'
+	private static readonly HEADERS_JSON_CONTENT = {
+		[ApiService.HEADER_CONTENT_TYPE]: ApiService.HEADER_CONTENT_TYPE_JSON,
+	}
+	private static readonly HTTP_GET = 'get'
+	private static readonly HTTP_POST = 'post'
+	private static readonly NO_CACHE = 'no-cache'
+
 	private _apiUrl: string
 
 	/**
@@ -30,8 +39,8 @@ class ApiService {
 	 */
 	pingApiHealthEndpoint(): Promise<string> {
 		return fetch(`${this._apiUrl}/health`, {
-			cache: 'no-cache',
-			method: 'get',
+			cache: ApiService.NO_CACHE,
+			method: ApiService.HTTP_GET,
 		})
 			.then((resp) => resp.text())
 			.then((text) => text)
@@ -49,8 +58,8 @@ class ApiService {
 	 */
 	pingTokenCheckEndpoint(): Promise<boolean> {
 		return fetch(`${this._apiUrl}/config/check-token`, {
-			cache: 'no-cache',
-			method: 'get',
+			cache: ApiService.NO_CACHE,
+			method: ApiService.HTTP_GET,
 		})
 			.then((resp) => resp.text())
 			.then((text) => text === 'true')
@@ -67,17 +76,14 @@ class ApiService {
 	 * @returns Promise that resolves to true if token was upated; otherwise, Promise that resolves to false
 	 */
 	pingTokenUpdateEndpoint(secret: string, token: string): Promise<boolean> {
-		const body = JSON.stringify({
-			secret,
-			token,
-		})
 		return fetch(`${this._apiUrl}/config/set-token`, {
-			cache: 'no-cache',
-			method: 'POST',
-			body,
-			headers: {
-				'Content-Type': 'application/json',
-			},
+			cache: ApiService.NO_CACHE,
+			method: ApiService.HTTP_POST,
+			body: JSON.stringify({
+				secret,
+				token,
+			}),
+			headers: ApiService.HEADERS_JSON_CONTENT,
 		})
 			.then((resp) => resp.text())
 			.then((text) => text === 'true')
