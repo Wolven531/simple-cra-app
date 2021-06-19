@@ -21,18 +21,26 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 
 		alert(isValid ? 'Token is valid' : 'Token is borked 🤷‍♂️')
 	}
+	const fireTokenUpdate = async () => {
+		const wasSuccessful = await api.pingTokenUpdateEndpoint(secret, newToken)
+
+		alert(wasSuccessful ? 'Token updated' : 'Token update failed')
+	}
 
 	return (
 		<Container className="config-page">
-			<Grid container alignItems="center" justify="center" style={{ margin: '0 0 1rem 0' }}>
-				<Grid item>
-					API
-				</Grid>
+			<Grid
+				container
+				alignItems="center"
+				justify="center"
+				style={{ margin: '0 0 1rem 0' }}
+			>
+				<Grid item>API</Grid>
 				<Grid item style={{ margin: '0 1rem 0 1rem' }}>
 					<input disabled readOnly value={api.apiUrl} />
 				</Grid>
 			</Grid>
-			<Container style={{ display: 'flex', justifyContent: 'center', }}>
+			<Container style={{ display: 'flex', justifyContent: 'center' }}>
 				<Button
 					className="btn-health"
 					color="primary"
@@ -50,26 +58,42 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 					Token valid?
 				</Button>
 			</Container>
-			<Container style={{ display: 'flex', justifyContent: 'center', }}>
+			<Container style={{ display: 'flex', justifyContent: 'center' }}>
 				<ol>
+					<li>Go to Riot site, login, generate token</li>
 					<li>
-						Go to Riot site, login, generate token
+						<a
+							href="https://developer.riotgames.com"
+							target="_blank"
+							rel="noopener noreferrer"
+						>
+							Riot Developer Site
+						</a>
 					</li>
 					<li>
-					<a href="https://developer.riotgames.com" target="_blank" rel="noopener noreferrer">Riot Developer Site</a>
+						<input
+							value={newToken}
+							onChange={(e) => {
+								setNewToken(e.target.value)
+							}}
+							placeholder="New token"
+						/>
 					</li>
 					<li>
-						<input value={newToken} onChange={e => { setNewToken(e.target.value) }} placeholder="New token" />
-					</li>
-					<li>
-						<input value={secret} onChange={e => { setSecret(e.target.value) }} placeholder="Secret" />
+						<input
+							value={secret}
+							onChange={(e) => {
+								setSecret(e.target.value)
+							}}
+							placeholder="Secret"
+						/>
 					</li>
 					<li>
 						<Button
 							className="btn-update-token"
 							color="primary"
 							variant="contained"
-							onClick={() => {}}
+							onClick={fireTokenUpdate}
 						>
 							Update Token
 						</Button>
