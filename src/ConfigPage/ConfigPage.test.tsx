@@ -17,6 +17,7 @@ describe('ConfigPage component', () => {
 			handleError: jest.fn(),
 			pingApiHealthEndpoint: jest.fn().mockResolvedValue('healthy'),
 			pingTokenCheckEndpoint: jest.fn().mockResolvedValue(true),
+			pingTokenUpdateEndpoint: jest.fn().mockResolvedValue(true),
 		} as unknown as ApiService
 
 		comp = shallow(<ConfigPage api={mockApiService} />)
@@ -59,6 +60,24 @@ describe('ConfigPage component', () => {
 
 			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenLastCalledWith()
+
+			expect(mockAlert).toHaveBeenCalledTimes(1)
+		})
+	})
+
+	describe('click update token button w/o setting secret or token inputs', () => {
+		let buttonUpdateToken: ShallowWrapper
+
+		beforeEach(() => {
+			buttonUpdateToken = comp.find('.btn-update-token')
+
+			buttonUpdateToken.simulate('click')
+		})
+
+		it('shows alert and does NOT invoke API', () => {
+			expect(buttonUpdateToken.text()).toEqual('Update Token')
+
+			expect(mockApiService.pingTokenUpdateEndpoint).not.toHaveBeenCalled()
 
 			expect(mockAlert).toHaveBeenCalledTimes(1)
 		})
