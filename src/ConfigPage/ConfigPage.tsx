@@ -22,6 +22,11 @@ const ConfigPage: FC<ConfigPageProps> = ({ api }) => {
 		alert(isValid ? 'Token is valid' : 'Token is borked 🤷‍♂️')
 	}
 	const fireTokenUpdate = async () => {
+		if (newToken.length < 1 || secret.length < 1) {
+			alert('Secret and Token are required to update token')
+
+			return
+		}
 		const wasSuccessful = await api.pingTokenUpdateEndpoint(secret, newToken)
 
 		alert(wasSuccessful ? 'Token updated' : 'Token update failed')
