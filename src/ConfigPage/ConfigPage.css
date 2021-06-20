@@ -1,3 +1,22 @@
 .config-page .btn-update-token {
 	margin-top: 1rem;
 }
+
+.config-page {
+	align-items: center;
+	align-content: center;
+	margin: 0 0 1rem 0;
+}
+
+.config-page .api-container {
+	margin: 0 0 1rem 0;
+}
+
+.config-page .MuiGrid-item{
+	margin: 0 1rem 0 1rem;
+}
+
+.config-page .center-flex{
+	display: flex; 
+	justify-content: center;
+}
