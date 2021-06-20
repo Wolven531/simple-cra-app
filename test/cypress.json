@@ -5,5 +5,7 @@
 	"retries": {
 		"runMode": 2,
 		"openMode": 0
-	}
+	},
+	"integrationFolder": "cypress/integration",
+	"testFiles": "**/simplePage.spec.{js,ts}"
 }
