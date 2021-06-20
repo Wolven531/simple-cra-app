@@ -1,0 +1,9 @@
+{
+	"baseUrl": "http://localhost:4000/",
+	"video": false,
+	"chromeWebSecurity": false,
+	"retries": {
+		"runMode": 2,
+		"openMode": 0
+	}
+}
