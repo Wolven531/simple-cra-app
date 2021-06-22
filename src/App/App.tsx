@@ -4,15 +4,17 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
+import PageNotfound from '../PageNotFound/PageNotfound'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
 function App() {
-	const ENV_API_URL = process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
+	const ENV_API_URL =
+		process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
 
 	const [api, setApi] = useState(new ApiService(ENV_API_URL))
 	const ApiContext = React.createContext(api)
-	
+
 	useEffect(() => {
 		setApi(new ApiService(ENV_API_URL))
 	}, [ENV_API_URL])
@@ -27,29 +29,33 @@ function App() {
 					</Container>
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
-						<Route path="/" exact>{/* Home page */}
+						<Route path="/" exact>
+							{/* Home page */}
 							<Container>
 								<p>Welcome to Anthony and Vinny's Simple CRA App®!</p>
 							</Container>
 						</Route>
-						<Route path="/config">{/* Config page */}
+						<Route path="/config">
+							{/* Config page */}
 							<ConfigPage api={api}></ConfigPage>
 						</Route>
-						<Route path="/icons">{/* Icon demo page */}
+						<Route path="/icons">
+							{/* Icon demo page */}
 							<Container>
 								<Grid container alignItems="center" justify="center">
 									<Grid item>
-										<IconDemo/>
+										<IconDemo />
 									</Grid>
 								</Grid>
 							</Container>
 						</Route>
-						<Route path="/">{/* Not Found page */}
+						<Route path="/">
+							{/* Not Found page */}
 							<Container>
-								<Grid container alignItems="center" justify="center">
-									<Grid item>
-										<h3>Page not found</h3>
-									</Grid>
+								<Grid>
+									{
+										<PageNotfound />
+									}
 								</Grid>
 							</Container>
 						</Route>
@@ -57,8 +63,7 @@ function App() {
 				</BrowserRouter>
 				<Container className="footer">
 					Anthony Williams, Vincent Leighton
-					<br/>
-					© 2021, Most rights reserved
+					<br />© 2021, Most rights reserved
 				</Container>
 			</Container>
 		</ApiContext.Provider>
