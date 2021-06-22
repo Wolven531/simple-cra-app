@@ -23,7 +23,7 @@ function App() {
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
 					<Container className="header">
-						<Typography variant="h2" gutterBottom>
+						<Typography variant="h2" align="center" gutterBottom>
 							Simple CRA App
 						</Typography>
 						<Nav />
@@ -32,7 +32,7 @@ function App() {
 					<Switch>
 						<Route path="/" exact>{/* Home page */}
 							<Container>
-								<Typography variant="body1" gutterBottom>
+								<Typography variant="body1" align="center" gutterBottom>
 									Welcome to Anthony and Vinny's Simple CRA App®!
 								</Typography>
 							</Container>
