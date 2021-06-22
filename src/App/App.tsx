@@ -53,7 +53,7 @@ function App() {
 							<Container>
 								<Grid container alignItems="center" justify="center">
 									<Grid item>
-										<Typography variant="h3" gutterBottom>
+										<Typography variant="h3" align="center" gutterBottom>
 											Page not found
 										</Typography>
 									</Grid>
@@ -63,7 +63,7 @@ function App() {
 					</Switch>
 				</BrowserRouter>
 				<Container className="footer">
-					<Typography variant="caption" display="block" gutterBottom>
+					<Typography variant="body2" align="center" gutterBottom>
 						Anthony Williams, Vincent Leighton
 						<br/>
 						© 2021, Most rights reserved
