@@ -1,4 +1,4 @@
-import { Container, Grid } from '@material-ui/core'
+import { Container, CssBaseline, Grid, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
@@ -19,17 +19,22 @@ function App() {
 
 	return (
 		<ApiContext.Provider value={api}>
+			<CssBaseline />
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
 					<Container className="header">
-						<h2>Simple CRA App</h2>
+						<Typography variant="h2" align="center" gutterBottom>
+							Simple CRA App
+						</Typography>
 						<Nav />
 					</Container>
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>{/* Home page */}
 							<Container>
-								<p>Welcome to Anthony and Vinny's Simple CRA App®!</p>
+								<Typography variant="body1" align="center" gutterBottom>
+									Welcome to Anthony and Vinny's Simple CRA App®!
+								</Typography>
 							</Container>
 						</Route>
 						<Route path="/config">{/* Config page */}
@@ -48,7 +53,9 @@ function App() {
 							<Container>
 								<Grid container alignItems="center" justify="center">
 									<Grid item>
-										<h3>Page not found</h3>
+										<Typography variant="h3" align="center" gutterBottom>
+											Page not found
+										</Typography>
 									</Grid>
 								</Grid>
 							</Container>
@@ -56,9 +63,11 @@ function App() {
 					</Switch>
 				</BrowserRouter>
 				<Container className="footer">
-					Anthony Williams, Vincent Leighton
-					<br/>
-					© 2021, Most rights reserved
+					<Typography variant="body2" align="center" gutterBottom>
+						Anthony Williams, Vincent Leighton
+						<br/>
+						© 2021, Most rights reserved
+					</Typography>
 				</Container>
 			</Container>
 		</ApiContext.Provider>
