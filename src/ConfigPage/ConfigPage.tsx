@@ -40,14 +40,14 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 				container
 				alignItems="center"
 				justify="center"
-				style={{ margin: '0 0 1rem 0' }}
+				className="api-container"
 			>
 				<Grid item>API</Grid>
-				<Grid item style={{ margin: '0 1rem 0 1rem' }}>
+				<Grid item>
 					<input disabled readOnly value={api.apiUrl} />
 				</Grid>
 			</Grid>
-			<Container style={{ display: 'flex', justifyContent: 'center' }}>
+			<Container className="center-flex">
 				<Button
 					className="btn-health"
 					color="primary"
@@ -65,7 +65,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 					Token valid?
 				</Button>
 			</Container>
-			<Container style={{ display: 'flex', justifyContent: 'center' }}>
+			<Container className="center-flex">
 				<ol>
 					<li>Go to Riot site, login, generate token</li>
 					<li>
