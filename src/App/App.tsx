@@ -1,4 +1,4 @@
-import { Container, Grid } from '@material-ui/core'
+import { Container, CssBaseline, Grid } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
@@ -19,6 +19,7 @@ function App() {
 
 	return (
 		<ApiContext.Provider value={api}>
+			<CssBaseline />
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
 					<Container className="header">
