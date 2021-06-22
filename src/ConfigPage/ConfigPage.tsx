@@ -43,7 +43,7 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 				className="api-container"
 			>
 				<Grid item>API</Grid>
-				<Grid item >
+				<Grid item>
 					<input disabled readOnly value={api.apiUrl} />
 				</Grid>
 			</Grid>
