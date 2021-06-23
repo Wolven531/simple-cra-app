@@ -10,7 +10,7 @@ function PageNotfound() {
 			<Grid item>
 				<h3>Page not found. How did you even get here?</h3>
 			</Grid>
-            <img src={PNFImage} width='300' height='400'/>
+			<img src={PNFImage} width="300" height="400" />
 		</Grid>
 	)
 }
