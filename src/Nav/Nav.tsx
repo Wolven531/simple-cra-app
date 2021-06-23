@@ -12,6 +12,9 @@ const Nav: FC = () => {
 						<Link to="/">Home</Link>
 					</Grid>
 					<Grid item>
+						<Link to="/SearchUsers">Search Users</Link>
+					</Grid>
+					<Grid item>
 						<Link to="/config">Config</Link>
 					</Grid>
 					<Grid item>

@@ -5,6 +5,7 @@ import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
 import PageNotfound from '../PageNotFound/PageNotfound'
+import { SearchUsers } from '../SearchUsers/SearchUsers'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
@@ -39,6 +40,10 @@ function App() {
 									Welcome to Anthony and Vinny's Simple CRA App®!
 								</Typography>
 							</Container>
+						</Route>
+						<Route path="/searchUsers" exact>
+							{/* Search Users page */}
+								<SearchUsers api={api}></SearchUsers>
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
