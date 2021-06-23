@@ -1,37 +1,16 @@
 :root {
 	--app-padding: 1rem;
 	--app-half-padding: calc(var(--app-padding) / 2);
-
-	background-color: lightcyan;
 }
 
 .app {
-	background-color: lightskyblue;
 	/* min-height: 600px; */
 	padding: var(--app-padding);
-}
-
-.app h2 {
-	margin-block-end: 0;
-	margin-block-start: 0;
-	margin-inline-end: 0;
-	margin-inline-start: 0;
-	text-align: center;
-}
-
-.app p {
-	text-align: center;
 }
 
 .app .btn-health {
 	margin-right: var(--app-padding);
 }
-
-/*
-.app .btn-token {
-
-}
-*/
 
 .app > .footer {
 	background-color: bisque;
@@ -43,7 +22,6 @@
 	padding: var(--app-half-padding) 0;
 	/* padding: var(--app-padding); */
 	/* position: absolute; */
-	text-align: center;
 	/* width: calc(100% - 2 * var(--app-padding)); */
 }
 

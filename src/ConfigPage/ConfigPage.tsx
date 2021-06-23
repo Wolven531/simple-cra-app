@@ -1,4 +1,4 @@
-import { Button, Container, Grid } from '@material-ui/core'
+import { Button, Container, Grid, Typography } from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
@@ -42,7 +42,11 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 				justify="center"
 				className="api-container"
 			>
-				<Grid item>API</Grid>
+				<Grid item>
+					<Typography variant="body1" gutterBottom>
+						API
+					</Typography>
+				</Grid>
 				<Grid item>
 					<input disabled readOnly value={api.apiUrl} />
 				</Grid>
@@ -67,7 +71,11 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 			</Container>
 			<Container className="center-flex">
 				<ol>
-					<li>Go to Riot site, login, generate token</li>
+					<li>
+						<Typography variant="body1" gutterBottom>
+							Go to Riot site, login, generate token
+						</Typography>
+					</li>
 					<li>
 						<a
 							href="https://developer.riotgames.com"
