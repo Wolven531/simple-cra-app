@@ -1,4 +1,4 @@
-import { Button, Container, Grid, Typography } from '@material-ui/core'
+import { Button, Container, Grid, Typography, Link } from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
@@ -9,7 +9,11 @@ export interface ConfigPageProps {
 	defaultToken?: string
 }
 
-const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken = '' }) => {
+const ConfigPage: FC<ConfigPageProps> = ({
+	api,
+	defaultSecret = '',
+	defaultToken = '',
+}) => {
 	const [newToken, setNewToken] = useState(defaultToken)
 	const [secret, setSecret] = useState(defaultSecret)
 
@@ -77,13 +81,13 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 						</Typography>
 					</li>
 					<li>
-						<a
+						<Link
 							href="https://developer.riotgames.com"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Riot Developer Site
-						</a>
+						</Link>
 					</li>
 					<li>
 						<input
