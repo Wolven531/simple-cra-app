@@ -1,0 +1,16 @@
+{
+  "name": "simplecraapp.e2etests",
+  "version": "1.0.0",
+  "description": "",
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "test": "npm run cy:run"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@testing-library/cypress": "^7.0.6",
+    "cypress": "^7.5.0"
+  }
+}
