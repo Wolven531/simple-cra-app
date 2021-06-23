@@ -4,7 +4,7 @@ import  PNFImage from '../Media/PageNotFoundImage.jpg'
 
 interface Props {}
 
-function PageNotfound() {
+function PageNotFound() {
 	return (
 		<Grid container alignItems="center" justify="center">
 			<Grid item>
