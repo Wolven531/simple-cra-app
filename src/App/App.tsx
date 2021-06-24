@@ -24,8 +24,8 @@ function App() {
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
 					<Container className="header">
-						<Typography variant="h2" align="center" gutterBottom>
-							Simple CRA App
+						<Typography variant="h4" align="center" color="primary" gutterBottom>
+							NextGen League Compare
 						</Typography>
 						<Nav />
 					</Container>
@@ -35,7 +35,7 @@ function App() {
 							{/* Home page */}
 							<Container>
 								<Typography variant="body1" align="center" gutterBottom>
-									Welcome to Anthony and Vinny's Simple CRA App®!
+									Welcome to our next generation League compare app!
 								</Typography>
 							</Container>
 						</Route>
@@ -55,7 +55,7 @@ function App() {
 				</BrowserRouter>
 				<Container className="footer">
 					<Typography variant="body2" align="center" gutterBottom>
-						Anthony Williams, Vincent Leighton
+						Anthony Williams, Vincent Leighton, Jonathan Stutson
 						<br />© 2021, Most rights reserved
 					</Typography>
 				</Container>
