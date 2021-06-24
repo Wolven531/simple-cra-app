@@ -24,19 +24,29 @@ function App() {
 		<ApiContext.Provider value={api}>
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
+					<Nav />
 					<Container className="header">
-						<Typography variant="h4" align="center" color="primary" gutterBottom>
+						<Typography
+							variant="h4"
+							align="center"
+							color="primary"
+							gutterBottom
+						>
 							NextGen League Compare
 						</Typography>
-						<Nav />
 					</Container>
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>
 							{/* Home page */}
 							<Container>
-								<Typography variant="body1" align="center" gutterBottom>
-									Welcome to our next generation League compare app!
+								<Typography
+									variant="body1"
+									align="center"
+									gutterBottom
+								>
+									Welcome to our next generation League
+									compare app!
 								</Typography>
 							</Container>
 						</Route>
