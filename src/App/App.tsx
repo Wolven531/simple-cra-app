@@ -1,10 +1,10 @@
-import { Container, CssBaseline, Grid, Typography } from '@material-ui/core'
+import { Container, CssBaseline, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
-import PageNotfound from '../PageNotFound/PageNotfound'
+import { PageNotFoundPage } from '../PageNotFound/PageNotFoundPage'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
@@ -42,35 +42,22 @@ function App() {
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
-							<ConfigPage api={api}></ConfigPage>
+							<ConfigPage api={api} />
 						</Route>
 						<Route path="/icons">
 							{/* Icon demo page */}
-							<Container>
-								<Grid container alignItems="center" justify="center">
-									<Grid item>
-										<IconDemo />
-									</Grid>
-								</Grid>
-							</Container>
+							<IconDemo />
 						</Route>
 						<Route path="/">
 							{/* Not Found page */}
-							<Container>
-								<Grid>
-									{
-										<PageNotfound />
-									}
-								</Grid>
-							</Container>
+							<PageNotFoundPage />
 						</Route>
 					</Switch>
 				</BrowserRouter>
 				<Container className="footer">
 					<Typography variant="body2" align="center" gutterBottom>
 						Anthony Williams, Vincent Leighton
-						<br/>
-						© 2021, Most rights reserved
+						<br />© 2021, Most rights reserved
 					</Typography>
 				</Container>
 			</Container>
