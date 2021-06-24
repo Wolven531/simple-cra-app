@@ -4,7 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
-import { PageNotFoundPage } from '../PageNotFound/PageNotFoundPage'
+import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
