@@ -1,4 +1,4 @@
-import { Container } from '@material-ui/core'
+import { Container, Grid } from '@material-ui/core'
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles'
 import Typography from '@material-ui/core/Typography'
 import DeleteIcon from '@material-ui/icons/Delete'
@@ -29,36 +29,40 @@ function IconDemo() {
 
 	return (
 		<Container className={classes.root} style={{
-			alignItems: 'center',
-			display: 'flex',
-			flexDirection: 'column',
-			justifyContent: 'center',
+			// alignItems: 'center',
+			// display: 'flex',
+			// flexDirection: 'column',
+			// justifyContent: 'center',
 			// justifyItems: 'center',
 		}}>
-			<Typography >Filled</Typography>
-			<DeleteIcon />
-			<DeleteForeverIcon />
-			<br/>
-			<Typography>Outlined</Typography>
-			<DeleteOutlinedIcon />
-			<DeleteForeverOutlinedIcon />
-			<br/>
-			<Typography>Rounded</Typography>
-			<DeleteRoundedIcon />
-			<DeleteForeverRoundedIcon />
-			<br/>
-			<Typography>Two Tone</Typography>
-			<DeleteTwoToneIcon />
-			<DeleteForeverTwoToneIcon />
-			<br/>
-			<Typography>Sharp</Typography>
-			<DeleteSharpIcon />
-			<DeleteForeverSharpIcon />
-			<br/>
-			<Typography>Edge-cases</Typography>
-			<ThreeDRotationIcon />
-			<FourKIcon />
-			<ThreeSixtyIcon />
+			<Grid container alignItems="center" justify="center">
+				<Grid item>
+					<Typography >Filled</Typography>
+					<DeleteIcon />
+					<DeleteForeverIcon />
+					<br/>
+					<Typography>Outlined</Typography>
+					<DeleteOutlinedIcon />
+					<DeleteForeverOutlinedIcon />
+					<br/>
+					<Typography>Rounded</Typography>
+					<DeleteRoundedIcon />
+					<DeleteForeverRoundedIcon />
+					<br/>
+					<Typography>Two Tone</Typography>
+					<DeleteTwoToneIcon />
+					<DeleteForeverTwoToneIcon />
+					<br/>
+					<Typography>Sharp</Typography>
+					<DeleteSharpIcon />
+					<DeleteForeverSharpIcon />
+					<br/>
+					<Typography>Edge-cases</Typography>
+					<ThreeDRotationIcon />
+					<FourKIcon />
+					<ThreeSixtyIcon />
+				</Grid>
+			</Grid>
 		</Container>
 	)
 }
