@@ -2,8 +2,8 @@ import { Container, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
+import Header from '../Header/Header'
 import { IconDemo } from '../IconDemo'
-import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { ApiService } from '../services/ApiService'
 import './App.css'
@@ -23,12 +23,7 @@ function App() {
 		<ApiContext.Provider value={api}>
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
-					<Container className="header">
-						<Typography variant="h4" align="center" color="primary" gutterBottom>
-							NextGen League Compare
-						</Typography>
-						<Nav />
-					</Container>
+					<Header/>
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>

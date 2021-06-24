@@ -1,0 +1,4 @@
+.app > .header {
+	border-radius: var(--app-padding);
+	padding: var(--app-half-padding) 0;
+}

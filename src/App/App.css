@@ -24,7 +24,3 @@
 	/* width: calc(100% - 2 * var(--app-padding)); */
 }
 
-.app > .header {
-	border-radius: var(--app-padding);
-	padding: var(--app-half-padding) 0;
-}
