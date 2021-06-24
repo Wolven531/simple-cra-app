@@ -1,4 +1,12 @@
-import { Button, Container, Grid, Typography, Link } from '@material-ui/core'
+import {
+	Button,
+	Container,
+	Grid,
+	Typography,
+	Link,
+	List,
+	ListItem,
+} from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
@@ -74,13 +82,13 @@ const ConfigPage: FC<ConfigPageProps> = ({
 				</Button>
 			</Container>
 			<Container className="center-flex">
-				<ol>
-					<li>
+				<List component="ol">
+					<ListItem>
 						<Typography variant="body1" gutterBottom>
 							Go to Riot site, login, generate token
 						</Typography>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<Link
 							href="https://developer.riotgames.com"
 							target="_blank"
@@ -88,8 +96,8 @@ const ConfigPage: FC<ConfigPageProps> = ({
 						>
 							Riot Developer Site
 						</Link>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<input
 							className="input-new-token"
 							value={newToken}
@@ -98,8 +106,8 @@ const ConfigPage: FC<ConfigPageProps> = ({
 							}}
 							placeholder="New token"
 						/>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<input
 							className="input-secret"
 							value={secret}
@@ -108,8 +116,8 @@ const ConfigPage: FC<ConfigPageProps> = ({
 							}}
 							placeholder="Secret"
 						/>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<Button
 							className="btn-update-token"
 							color="primary"
@@ -118,8 +126,8 @@ const ConfigPage: FC<ConfigPageProps> = ({
 						>
 							Update Token
 						</Button>
-					</li>
-				</ol>
+					</ListItem>
+				</List>
 			</Container>
 		</Container>
 	)
