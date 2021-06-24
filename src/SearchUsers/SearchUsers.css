@@ -1,0 +1,19 @@
+.note{
+    text-align: center;
+}
+
+.displayData{
+    margin: 0 1rem 0 1rem;
+    /* Not sure why align and boreders don't work here, come back to it
+    align-items: center;
+    align-self: center; */
+}
+
+.userDataContainer{
+    color: black;
+    /* Not sure why align and boreders don't work here, come back to it
+    align-items: center;
+    align-self: center;
+    align-content: center; */
+
+}

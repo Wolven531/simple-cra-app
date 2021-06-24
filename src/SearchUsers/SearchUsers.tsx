@@ -1,8 +1,16 @@
-import { Button, Container, Grid, TextareaAutosize } from '@material-ui/core'
+import {
+	Box,
+	Button,
+	Container,
+	Grid,
+	TextareaAutosize,
+	TextField,
+} from '@material-ui/core'
 import axios from 'axios'
 import React, { FC, useState } from 'react'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { ApiService } from '../services/ApiService'
+import './SearchUsers.css'
 
 interface SearchUsersProps {
 	api: ApiService
@@ -16,15 +24,20 @@ const SearchUsers: FC<SearchUsersProps> = ({
 	const [newSearchValue, setNewSearchValue] = useState(defaultSearchValue)
 	const [searchUserName, setSearchUserNameValue] = useState('')
 	const [searchUserLevel, setSearchUserLevelValue] = useState('')
+	const [searchUserIcon, setSearchUserIconValue] = useState('')
 
 	const fireUserSearch = async () => {
 		const response = await api.pingUserSearchEndpoint(newSearchValue)
 		setSearchUserNameValue(response.name)
 		setSearchUserLevelValue(response.summonerLevel)
+		setSearchUserIconValue(response.profileIconId)
 	}
 
 	return (
 		<Container className="config-page">
+			<h2 className="note">
+				Note, search function is limited to single exact name result for now.
+			</h2>
 			<Grid
 				container
 				alignItems="center"
@@ -51,7 +64,18 @@ const SearchUsers: FC<SearchUsersProps> = ({
 					</Button>
 				</Grid>
 			</Grid>
-			<TextareaAutosize rowsMin={2} placeholder={`Username:${searchUserName}\nPlayer Level:${searchUserLevel}`}/>
+			{/* Display searched user data. Icon(ID will change to image whe API updated)/Name/Level */}
+			<Container id='userDataContainer'>
+				<Box className="displayData" component="div" display="inline" border={1}>
+					{searchUserIcon}
+				</Box>
+				<Box className="displayData" component="div" display="inline" border={1}>
+					{searchUserName}
+				</Box>
+				<Box className="displayData" component="div" display="inline" border={1}>
+					{searchUserLevel}
+				</Box>
+			</Container>
 		</Container>
 	)
 }
