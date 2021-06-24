@@ -1,6 +1,5 @@
-import { Container, Grid } from '@material-ui/core'
+import { Container, Grid, Link } from '@material-ui/core'
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
 import './Nav.css'
 
 const Nav: FC = () => {
@@ -9,13 +8,13 @@ const Nav: FC = () => {
 			<Container>
 				<Grid container alignItems="center" justify="space-around">
 					<Grid item>
-						<Link to="/">Home</Link>
+						<Link href="/">Home</Link>
 					</Grid>
 					<Grid item>
-						<Link to="/config">Config</Link>
+						<Link href="/config">Config</Link>
 					</Grid>
 					<Grid item>
-						<Link to="/icons">Icon Demo</Link>
+						<Link href="/icons">Icon Demo</Link>
 					</Grid>
 				</Grid>
 			</Container>
