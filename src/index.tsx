@@ -1,16 +1,20 @@
-import { CssBaseline } from '@material-ui/core'
+import { CssBaseline, ThemeProvider } from '@material-ui/core'
 import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './App/App'
 import reportWebVitals from './reportWebVitals'
+import { theme } from './theme'
 
 import '@fontsource/roboto'
 import './index.css'
 
 ReactDOM.render(
 	<React.StrictMode>
-		<CssBaseline />
-		<App />
+		<ThemeProvider theme={theme}>
+			{/* CssBaseline provides consistent baseline to build upon */}
+			<CssBaseline />
+			<App />
+		</ThemeProvider>
 	</React.StrictMode>,
 	document.getElementById('root'),
 )
