@@ -2,6 +2,7 @@ import { Container, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
+import Home from '../Home/Home'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
@@ -33,11 +34,7 @@ function App() {
 					<Switch>
 						<Route path="/" exact>
 							{/* Home page */}
-							<Container>
-								<Typography variant="body1" align="center" gutterBottom>
-									Welcome to our next generation League compare app!
-								</Typography>
-							</Container>
+							<Home/>
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
