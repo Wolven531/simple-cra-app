@@ -16,7 +16,6 @@
 	background-color: bisque;
 	border-radius: var(--app-padding);
 	/* bottom: 0; */
-	font-size: .75rem;
 	/* margin: 0; */
 	margin-top: var(--app-padding);
 	padding: var(--app-half-padding) 0;
@@ -26,10 +25,6 @@
 }
 
 .app > .header {
-	background-color: cadetblue;
 	border-radius: var(--app-padding);
-	color: gold;
-	font-size: 1.3rem;
-	margin-bottom: var(--app-padding);
 	padding: var(--app-half-padding) 0;
 }

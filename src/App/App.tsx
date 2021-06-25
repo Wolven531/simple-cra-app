@@ -1,10 +1,10 @@
-import { Container, CssBaseline, Grid, Typography } from '@material-ui/core'
+import { Container, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
-import PageNotfound from '../PageNotFound/PageNotfound'
+import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsers } from '../SearchUsers/SearchUsers'
 import { ApiService } from '../services/ApiService'
 import './App.css'
@@ -22,12 +22,11 @@ function App() {
 
 	return (
 		<ApiContext.Provider value={api}>
-			<CssBaseline />
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
 					<Container className="header">
-						<Typography variant="h2" align="center" gutterBottom>
-							Simple CRA App
+						<Typography variant="h4" align="center" color="primary" gutterBottom>
+							NextGen League Compare
 						</Typography>
 						<Nav />
 					</Container>
@@ -37,7 +36,7 @@ function App() {
 							{/* Home page */}
 							<Container>
 								<Typography variant="body1" align="center" gutterBottom>
-									Welcome to Anthony and Vinny's Simple CRA App®!
+									Welcome to our next generation League compare app!
 								</Typography>
 							</Container>
 						</Route>
@@ -47,35 +46,22 @@ function App() {
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
-							<ConfigPage api={api}></ConfigPage>
+							<ConfigPage api={api} />
 						</Route>
 						<Route path="/icons">
 							{/* Icon demo page */}
-							<Container>
-								<Grid container alignItems="center" justify="center">
-									<Grid item>
-										<IconDemo />
-									</Grid>
-								</Grid>
-							</Container>
+							<IconDemo />
 						</Route>
 						<Route path="/">
 							{/* Not Found page */}
-							<Container>
-								<Grid>
-									{
-										<PageNotfound />
-									}
-								</Grid>
-							</Container>
+							<PageNotFoundPage />
 						</Route>
 					</Switch>
 				</BrowserRouter>
 				<Container className="footer">
 					<Typography variant="body2" align="center" gutterBottom>
-						Anthony Williams, Vincent Leighton
-						<br/>
-						© 2021, Most rights reserved
+						Anthony Williams, Vincent Leighton, Jonathan Stutson
+						<br />© 2021, Most rights reserved
 					</Typography>
 				</Container>
 			</Container>

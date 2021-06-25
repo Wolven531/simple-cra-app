@@ -1,4 +1,12 @@
-import { Button, Container, Grid, Typography } from '@material-ui/core'
+import {
+	Button,
+	Container,
+	Grid,
+	Typography,
+	Link,
+	List,
+	ListItem,
+} from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
@@ -9,7 +17,11 @@ export interface ConfigPageProps {
 	defaultToken?: string
 }
 
-const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken = '' }) => {
+const ConfigPage: FC<ConfigPageProps> = ({
+	api,
+	defaultSecret = '',
+	defaultToken = '',
+}) => {
 	const [newToken, setNewToken] = useState(defaultToken)
 	const [secret, setSecret] = useState(defaultSecret)
 
@@ -70,22 +82,22 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 				</Button>
 			</Container>
 			<Container className="center-flex">
-				<ol>
-					<li>
+				<List component="ol">
+					<ListItem>
 						<Typography variant="body1" gutterBottom>
 							Go to Riot site, login, generate token
 						</Typography>
-					</li>
-					<li>
-						<a
+					</ListItem>
+					<ListItem>
+						<Link
 							href="https://developer.riotgames.com"
 							target="_blank"
 							rel="noopener noreferrer"
 						>
 							Riot Developer Site
-						</a>
-					</li>
-					<li>
+						</Link>
+					</ListItem>
+					<ListItem>
 						<input
 							className="input-new-token"
 							value={newToken}
@@ -94,8 +106,8 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 							}}
 							placeholder="New token"
 						/>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<input
 							className="input-secret"
 							value={secret}
@@ -104,8 +116,8 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 							}}
 							placeholder="Secret"
 						/>
-					</li>
-					<li>
+					</ListItem>
+					<ListItem>
 						<Button
 							className="btn-update-token"
 							color="primary"
@@ -114,8 +126,8 @@ const ConfigPage: FC<ConfigPageProps> = ({ api, defaultSecret = '', defaultToken
 						>
 							Update Token
 						</Button>
-					</li>
-				</ol>
+					</ListItem>
+				</List>
 			</Container>
 		</Container>
 	)
