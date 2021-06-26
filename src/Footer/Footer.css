@@ -1,7 +1,4 @@
 .app > .footer {
 	background-color: bisque;
 	border-radius: 5;
-	/* padding: var(--app-padding); */
-	/* position: absolute; */
-	/* width: calc(100% - 2 * var(--app-padding)); */
 }
