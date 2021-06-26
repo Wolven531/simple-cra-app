@@ -22,9 +22,9 @@ function App() {
 
 	return (
 		<ApiContext.Provider value={api}>
+			<Nav />
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
-					<Nav />
 					<Container className="header">
 						<Typography
 							variant="h4"

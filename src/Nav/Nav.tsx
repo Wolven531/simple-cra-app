@@ -1,42 +1,93 @@
-//import { Container, Grid } from '@material-ui/core'
-//import { Link } from 'react-router-dom'
-import {} from '@material/top-app-bar'
-import React, { FC } from 'react'
-import './Nav.css'
+import React from 'react'
+import {
+	makeStyles,
+	AppBar,
+	Toolbar,
+	Typography,
+	IconButton,
+	MenuItem,
+	Menu,
+} from '@material-ui/core'
+import MenuIcon from '@material-ui/icons/Menu'
+import AccountCircle from '@material-ui/icons/AccountCircle'
 
-const Nav: FC = () => {
+const useStyles = makeStyles((theme) => ({
+	root: {
+		flexGrow: 1,
+	},
+	menuButton: {
+		marginRight: theme.spacing(2),
+	},
+	title: {
+		flexGrow: 1,
+	},
+}))
+
+function Nav() {
+	const classes = useStyles()
+	const [anchorEl, setAnchorEl] = React.useState(null)
+	const open = Boolean(anchorEl)
+
+	const handleMenu = (event: any) => {
+		setAnchorEl(event.currentTarget)
+	}
+
+	const handleClose = () => {
+		setAnchorEl(null)
+	}
 	return (
-		<nav>
-			<header className="mdc-top-app-bar">
-				<div className="mdc-top-app-bar__row">
-					<section className="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
-						<button
-							className="material-icons mdc-top-app-bar__navigation-icon mdc-icon-button"
-							aria-label="Open navigation menu"
-						>
-							menu
-						</button>
-						<span className="mdc-top-app-bar__title">
-							Page title
-						</span>
-					</section>
-				</div>
-			</header>
-
-			{/* <Container>
-				<Grid container alignItems="center" justify="space-around">
-					<Grid item>
-						<Link href="/">Home</Link>
-					</Grid>
-					<Grid item>
-						<Link href="/config">Config</Link>
-					</Grid>
-					<Grid item>
-						<Link href="/icons">Icon Demo</Link>
-					</Grid>
-				</Grid>
-			</Container> */}
-		</nav>
+		<div className={classes.root}>
+			<AppBar position="static">
+				<Toolbar>
+					<IconButton
+						edge="start"
+						className={classes.menuButton}
+						color="inherit"
+						aria-label="menu"
+					>
+						<MenuIcon />
+					</IconButton>
+					<Typography variant="h6" className={classes.title}>
+						Photos
+					</Typography>
+					{
+						<div>
+							<IconButton
+								aria-label="account of current user"
+								aria-controls="menu-appbar"
+								aria-haspopup="true"
+								onClick={handleMenu}
+								color="inherit"
+							>
+								<AccountCircle />
+							</IconButton>
+							<Menu
+								id="menu-appbar"
+								anchorEl={anchorEl}
+								anchorOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								keepMounted
+								transformOrigin={{
+									vertical: 'top',
+									horizontal: 'right',
+								}}
+								open={open}
+								onClose={handleClose}
+							>
+								<MenuItem onClick={handleClose}>
+									Profile
+								</MenuItem>
+								<MenuItem onClick={handleClose}>
+									My account
+								</MenuItem>
+							</Menu>
+						</div>
+					}
+				</Toolbar>
+			</AppBar>
+		</div>
 	)
 }
 
