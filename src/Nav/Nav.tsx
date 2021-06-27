@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react'
+import React from 'react'
 import {
 	makeStyles,
 	AppBar,
@@ -11,7 +11,6 @@ import {
 import MenuIcon from '@material-ui/icons/Menu'
 import { Link } from '@material-ui/core'
 import { AppTitleContext } from '../AppTitleContext'
-import { useEffect } from 'react'
 
 const useStyles = makeStyles((theme) => ({
 	root: {

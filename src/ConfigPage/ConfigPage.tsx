@@ -10,7 +10,6 @@ import {
 import React, { FC, useState, useEffect, useContext } from 'react'
 import { ApiContext } from '../ApiContext'
 import { AppTitleContext } from '../AppTitleContext'
-import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
 
 export interface ConfigPageProps {

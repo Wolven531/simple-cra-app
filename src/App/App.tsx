@@ -49,45 +49,6 @@ function App() {
 								<PageNotFoundPage />
 							</Route>
 						</Switch>
-						<Container className="footer">
-							<Typography
-								variant="body2"
-								align="center"
-								gutterBottom
-							>
-								Anthony Williams, Vincent Leighton, Jonathan
-								Stutson
-								<br />© 2021, Most rights reserved
-							</Typography>
-						</Container>
-						{/* Content outside of <Switch> renders on every page */}
-						<Switch>
-							<Route path="/" exact>
-								{/* Home page */}
-								<Container>
-									<Typography
-										variant="body1"
-										align="center"
-										gutterBottom
-									>
-										Welcome to our next generation League
-										compare app!
-									</Typography>
-								</Container>
-							</Route>
-							<Route path="/config">
-								{/* Config page */}
-								<ConfigPage />
-							</Route>
-							<Route path="/icons">
-								{/* Icon demo page */}
-								<IconDemo />
-							</Route>
-							<Route path="/">
-								{/* Not Found page */}
-								<PageNotFoundPage />
-							</Route>
-						</Switch>
 					</BrowserRouter>
 					<Footer />
 				</Container>
