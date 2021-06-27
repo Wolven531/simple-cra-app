@@ -7,23 +7,26 @@ import {
 	List,
 	ListItem,
 } from '@material-ui/core'
-import React, { FC, useState } from 'react'
+import React, { FC, useState, useEffect, useContext } from 'react'
+import { ApiContext } from '../ApiContext'
+import { AppTitleContext } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
 
 export interface ConfigPageProps {
-	api: ApiService
 	defaultSecret?: string
 	defaultToken?: string
 }
 
 const ConfigPage: FC<ConfigPageProps> = ({
-	api,
 	defaultSecret = '',
 	defaultToken = '',
 }) => {
 	const [newToken, setNewToken] = useState(defaultToken)
 	const [secret, setSecret] = useState(defaultSecret)
+	const apiCtx = useContext(ApiContext)
+	const [api] = useState(apiCtx)
+	const { title, setTitle } = useContext(AppTitleContext)
 
 	const fireHealthCheck = async () => {
 		const msg = await api.pingApiHealthEndpoint()
@@ -41,10 +44,20 @@ const ConfigPage: FC<ConfigPageProps> = ({
 
 			return
 		}
-		const wasSuccessful = await api.pingTokenUpdateEndpoint(secret, newToken)
+		const wasSuccessful = await api.pingTokenUpdateEndpoint(
+			secret,
+			newToken
+		)
 
 		alert(wasSuccessful ? 'Token updated' : 'Token update failed')
 	}
+
+	useEffect(() => {
+		console.log(title)
+		setTitle('Config')
+
+		console.log(title)
+	})
 
 	return (
 		<Container className="config-page">

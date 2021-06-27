@@ -1,71 +1,97 @@
 import { Container, Typography } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { ApiContext } from '../ApiContext'
+import { AppTitleContext } from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
-import { ApiService } from '../services/ApiService'
 import './App.css'
 
 function App() {
-	const ENV_API_URL =
-		process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
-
-	const [api, setApi] = useState(new ApiService(ENV_API_URL))
-	const ApiContext = React.createContext(api)
-
-	useEffect(() => {
-		setApi(new ApiService(ENV_API_URL))
-	}, [ENV_API_URL])
+	const { title, setTitle } = useContext(AppTitleContext)
+	const apiCtx = useContext(ApiContext)
+	const [api] = useState(apiCtx)
 
 	return (
 		<ApiContext.Provider value={api}>
-			<Nav />
-			<Container maxWidth="sm" className="app">
-				<BrowserRouter>
-					<Container className="header">
-						<Typography
-							variant="h4"
-							align="center"
-							color="primary"
-							gutterBottom
-						>
-							NextGen League Compare
-						</Typography>
-					</Container>
-					{/* Content outside of <Switch> renders on every page */}
-					<Switch>
-						<Route path="/" exact>
-							{/* Home page */}
-							<Container>
-								<Typography
-									variant="body1"
-									align="center"
-									gutterBottom
-								>
-									Welcome to our next generation League
-									compare app!
-								</Typography>
-							</Container>
-						</Route>
-						<Route path="/config">
-							{/* Config page */}
-							<ConfigPage api={api} />
-						</Route>
-						<Route path="/icons">
-							{/* Icon demo page */}
-							<IconDemo />
-						</Route>
-						<Route path="/">
-							{/* Not Found page */}
-							<PageNotFoundPage />
-						</Route>
-					</Switch>
-				</BrowserRouter>
-				<Footer/>
-			</Container>
+			<AppTitleContext.Provider value={{ title, setTitle }}>
+				<Nav />
+				<Container maxWidth="sm" className="app">
+					<BrowserRouter>
+						{/* Content outside of <Switch> renders on every page */}
+						<Switch>
+							<Route path="/" exact>
+								{/* Home page */}
+								<Container>
+									<Typography
+										variant="body1"
+										align="center"
+										gutterBottom
+									>
+										Welcome to our next generation League
+										compare app!
+									</Typography>
+								</Container>
+							</Route>
+							<Route path="/config">
+								{/* Config page */}
+								<ConfigPage />
+							</Route>
+							<Route path="/icons">
+								{/* Icon demo page */}
+								<IconDemo />
+							</Route>
+							<Route path="/">
+								{/* Not Found page */}
+								<PageNotFoundPage />
+							</Route>
+						</Switch>
+						<Container className="footer">
+							<Typography
+								variant="body2"
+								align="center"
+								gutterBottom
+							>
+								Anthony Williams, Vincent Leighton, Jonathan
+								Stutson
+								<br />© 2021, Most rights reserved
+							</Typography>
+						</Container>
+						{/* Content outside of <Switch> renders on every page */}
+						<Switch>
+							<Route path="/" exact>
+								{/* Home page */}
+								<Container>
+									<Typography
+										variant="body1"
+										align="center"
+										gutterBottom
+									>
+										Welcome to our next generation League
+										compare app!
+									</Typography>
+								</Container>
+							</Route>
+							<Route path="/config">
+								{/* Config page */}
+								<ConfigPage />
+							</Route>
+							<Route path="/icons">
+								{/* Icon demo page */}
+								<IconDemo />
+							</Route>
+							<Route path="/">
+								{/* Not Found page */}
+								<PageNotFoundPage />
+							</Route>
+						</Switch>
+					</BrowserRouter>
+					<Footer />
+				</Container>
+			</AppTitleContext.Provider>
 		</ApiContext.Provider>
 	)
 }

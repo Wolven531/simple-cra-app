@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useContext, useState } from 'react'
 import {
 	makeStyles,
 	AppBar,
@@ -9,7 +9,9 @@ import {
 	Menu,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import AccountCircle from '@material-ui/icons/AccountCircle'
+import { Link } from '@material-ui/core'
+import { AppTitleContext } from '../AppTitleContext'
+import { useEffect } from 'react'
 
 const useStyles = makeStyles((theme) => ({
 	root: {
@@ -44,47 +46,51 @@ function Nav() {
 						className={classes.menuButton}
 						color="inherit"
 						aria-label="menu"
+						aria-controls="menu-appbar"
+						aria-haspopup="true"
+						onClick={handleMenu}
 					>
 						<MenuIcon />
 					</IconButton>
+					<Menu
+						id="menu-appbar"
+						anchorEl={anchorEl}
+						anchorOrigin={{
+							vertical: 'top',
+							horizontal: 'right',
+						}}
+						keepMounted
+						transformOrigin={{
+							vertical: 'top',
+							horizontal: 'right',
+						}}
+						open={open}
+						onClose={handleClose}
+					>
+						<MenuItem onClick={handleClose}>
+							<Link href="/" rel="noopener noreferrer">
+								Home
+							</Link>
+						</MenuItem>
+						<MenuItem onClick={handleClose}>
+							<Link href="/config" rel="noopener noreferrer">
+								Config
+							</Link>
+						</MenuItem>
+						<MenuItem onClick={handleClose}>
+							<Link href="/icons" rel="noopener noreferrer">
+								Icon Demo
+							</Link>
+						</MenuItem>
+					</Menu>
 					<Typography variant="h6" className={classes.title}>
-						Photos
+						<AppTitleContext.Consumer>
+							{/* This is not updating when config should be setting the title */}
+							{({ title }) => {
+								return title
+							}}
+						</AppTitleContext.Consumer>
 					</Typography>
-					{
-						<div>
-							<IconButton
-								aria-label="account of current user"
-								aria-controls="menu-appbar"
-								aria-haspopup="true"
-								onClick={handleMenu}
-								color="inherit"
-							>
-								<AccountCircle />
-							</IconButton>
-							<Menu
-								id="menu-appbar"
-								anchorEl={anchorEl}
-								anchorOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								keepMounted
-								transformOrigin={{
-									vertical: 'top',
-									horizontal: 'right',
-								}}
-								open={open}
-								onClose={handleClose}
-							>
-								<MenuItem onClick={handleClose}>
-									Profile
-								</MenuItem>
-								<MenuItem onClick={handleClose}>
-									My account
-								</MenuItem>
-							</Menu>
-						</div>
-					}
 				</Toolbar>
 			</AppBar>
 		</div>

@@ -7,11 +7,7 @@ describe('Nav component', () => {
 	let comp: RenderResult
 
 	beforeEach(() => {
-		comp = render(
-			<BrowserRouter>
-				<Nav />
-			</BrowserRouter>
-		)
+		comp = render(<Nav />)
 	})
 
 	it('renders Nav', () => {
