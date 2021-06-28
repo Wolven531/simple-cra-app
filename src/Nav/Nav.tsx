@@ -30,6 +30,7 @@ const Nav: FC = () => {
 	const [menuIsOpen, setMenuIsOpen] = useState(false)
 
 	const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
+		setMenuIsOpen(true)
 		setAnchorElem(event.currentTarget)
 	}
 
