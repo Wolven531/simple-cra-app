@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core'
 import {
 	Box,
 	Button,
@@ -22,9 +23,9 @@ const SearchUsers: FC<SearchUsersProps> = ({
 	defaultSearchValue = '',
 }) => {
 	const [newSearchValue, setNewSearchValue] = useState(defaultSearchValue)
-	const [searchUserName, setSearchUserNameValue] = useState('')
-	const [searchUserLevel, setSearchUserLevelValue] = useState('')
-	const [searchUserIcon, setSearchUserIconValue] = useState('')
+	const [resultName, setSearchUserNameValue] = useState('')
+	const [resultLevel, setSearchUserLevelValue] = useState('')
+	const [resultIcon, setSearchUserIconValue] = useState('')
 
 	const fireUserSearch = async () => {
 		const response = await api.pingUserSearchEndpoint(newSearchValue)
@@ -35,9 +36,9 @@ const SearchUsers: FC<SearchUsersProps> = ({
 
 	return (
 		<Container className="config-page">
-			<h2 className="note">
+			<Typography variant='h2' align='center'>
 				Note, search function is limited to single exact name result for now.
-			</h2>
+			</Typography>
 			<Grid
 				container
 				alignItems="center"
@@ -66,14 +67,14 @@ const SearchUsers: FC<SearchUsersProps> = ({
 			</Grid>
 			{/* Display searched user data. Icon(ID will change to image whe API updated)/Name/Level */}
 			<Container id='userDataContainer'>
-				<Box className="displayData" component="div" display="inline" border={1}>
-					{searchUserIcon}
+				<Box className="display-data" display="inline" border={1}>
+					{resultIcon}
 				</Box>
-				<Box className="displayData" component="div" display="inline" border={1}>
-					{searchUserName}
+				<Box className="display-data" display="inline" border={1}>
+					{resultName}
 				</Box>
-				<Box className="displayData" component="div" display="inline" border={1}>
-					{searchUserLevel}
+				<Box className="display-data" display="inline" border={1}>
+					{resultLevel}
 				</Box>
 			</Container>
 		</Container>
