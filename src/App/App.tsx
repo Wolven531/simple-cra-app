@@ -1,7 +1,7 @@
 import { Container, Typography } from '@material-ui/core'
 import React, { useContext, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { ApiContext } from '../ApiContext'
+import { ApiContextProvider } from '../ApiContext'
 import {
 	AppTitleContextConsumer,
 	AppTitleContextProvider,
@@ -14,11 +14,8 @@ import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import './App.css'
 
 function App() {
-	const apiCtx = useContext(ApiContext)
-	const [api] = useState(apiCtx)
-
 	return (
-		<ApiContext.Provider value={api}>
+		<ApiContextProvider>
 			<AppTitleContextProvider>
 				<Nav />
 				<Container maxWidth="sm" className="app">
@@ -62,7 +59,7 @@ function App() {
 					<Footer />
 				</Container>
 			</AppTitleContextProvider>
-		</ApiContext.Provider>
+		</ApiContextProvider>
 	)
 }
 
