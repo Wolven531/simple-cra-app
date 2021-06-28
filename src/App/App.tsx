@@ -1,8 +1,11 @@
 import { Container, Typography } from '@material-ui/core'
-import React, { useState, useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ApiContext } from '../ApiContext'
-import { AppTitleContext } from '../AppTitleContext'
+import {
+	AppTitleContextConsumer,
+	AppTitleContextProvider,
+} from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
 import { IconDemo } from '../IconDemo'
@@ -11,13 +14,12 @@ import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import './App.css'
 
 function App() {
-	const { title, setTitle } = useContext(AppTitleContext)
 	const apiCtx = useContext(ApiContext)
 	const [api] = useState(apiCtx)
 
 	return (
 		<ApiContext.Provider value={api}>
-			<AppTitleContext.Provider value={{ title, setTitle }}>
+			<AppTitleContextProvider>
 				<Nav />
 				<Container maxWidth="sm" className="app">
 					<BrowserRouter>
@@ -25,19 +27,27 @@ function App() {
 						<Switch>
 							<Route path="/" exact>
 								{/* Home page */}
-								<Container>
-									<Typography
-										variant="body1"
-										align="center"
-										gutterBottom
-									>
-										Welcome to our next generation League
-										compare app!
-									</Typography>
-								</Container>
+								<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Home')
+
+										return (
+											<Container>
+												<Typography
+													variant="body1"
+													align="center"
+													gutterBottom
+												>
+													Welcome to our next
+													generation League compare
+													app!
+												</Typography>
+											</Container>
+										)
+									}}
+								</AppTitleContextConsumer>
 							</Route>
 							<Route path="/config">
-								{/* Config page */}
 								<ConfigPage />
 							</Route>
 							<Route path="/icons">
@@ -45,14 +55,13 @@ function App() {
 								<IconDemo />
 							</Route>
 							<Route path="/">
-								{/* Not Found page */}
 								<PageNotFoundPage />
 							</Route>
 						</Switch>
 					</BrowserRouter>
 					<Footer />
 				</Container>
-			</AppTitleContext.Provider>
+			</AppTitleContextProvider>
 		</ApiContext.Provider>
 	)
 }
