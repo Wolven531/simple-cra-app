@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import React, { FC, MouseEvent, useState } from 'react'
-import { AppTitleContext } from '../AppTitleContext'
+import { AppTitleContextConsumer } from '../AppTitleContext'
 
 const useStyles = makeStyles((theme) => ({
 	menuButton: {
@@ -102,12 +102,9 @@ const Nav: FC = () => {
 						</MenuItem>
 					</Menu>
 					<Typography variant="h6" className={classes.title}>
-						<AppTitleContext.Consumer>
-							{/* This is not updating when config should be setting the title */}
-							{({ title }) => {
-								return title
-							}}
-						</AppTitleContext.Consumer>
+						<AppTitleContextConsumer>
+							{(context) => context.title}
+						</AppTitleContextConsumer>
 					</Typography>
 				</Toolbar>
 			</AppBar>
