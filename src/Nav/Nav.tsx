@@ -69,8 +69,8 @@ const Nav: FC = () => {
 						}}
 						open={menuIsOpen}
 						transformOrigin={{
-							vertical: 'top',
 							horizontal: 'right',
+							vertical: 'top',
 						}}
 					>
 						<MenuItem
