@@ -1,82 +1,100 @@
-import React from 'react'
 import {
-	makeStyles,
 	AppBar,
+	IconButton,
+	Link,
+	makeStyles,
+	Menu,
+	MenuItem,
 	Toolbar,
 	Typography,
-	IconButton,
-	MenuItem,
-	Menu,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import { Link } from '@material-ui/core'
+import React, { FC, MouseEvent, useState } from 'react'
 import { AppTitleContext } from '../AppTitleContext'
 
 const useStyles = makeStyles((theme) => ({
-	root: {
-		flexGrow: 1,
-	},
 	menuButton: {
 		marginRight: theme.spacing(2),
+	},
+	root: {
+		flexGrow: 1,
 	},
 	title: {
 		flexGrow: 1,
 	},
 }))
 
-function Nav() {
+const Nav: FC = () => {
 	const classes = useStyles()
-	const [anchorEl, setAnchorEl] = React.useState(null)
-	const open = Boolean(anchorEl)
+	const [anchorElem, setAnchorElem] = useState<HTMLElement | null>(null)
+	const [menuIsOpen, setMenuIsOpen] = useState(false)
 
-	const handleMenu = (event: any) => {
-		setAnchorEl(event.currentTarget)
+	const handleMenuOpen = (event: MouseEvent<HTMLButtonElement>) => {
+		setAnchorElem(event.currentTarget)
 	}
 
 	const handleClose = () => {
-		setAnchorEl(null)
+		setMenuIsOpen(false)
+		setAnchorElem(null)
 	}
+
 	return (
 		<div className={classes.root}>
 			<AppBar position="static">
 				<Toolbar>
 					<IconButton
-						edge="start"
-						className={classes.menuButton}
-						color="inherit"
-						aria-label="menu"
 						aria-controls="menu-appbar"
 						aria-haspopup="true"
-						onClick={handleMenu}
+						aria-label="menu"
+						className={classes.menuButton}
+						color="inherit"
+						edge="start"
+						onClick={(evt: any) => {
+							handleMenuOpen(evt)
+						}}
 					>
 						<MenuIcon />
 					</IconButton>
 					<Menu
-						id="menu-appbar"
-						anchorEl={anchorEl}
+						anchorEl={anchorElem}
 						anchorOrigin={{
-							vertical: 'top',
 							horizontal: 'right',
+							vertical: 'top',
 						}}
+						id="menu-appbar"
 						keepMounted
+						onClose={() => {
+							handleClose()
+						}}
+						open={menuIsOpen}
 						transformOrigin={{
 							vertical: 'top',
 							horizontal: 'right',
 						}}
-						open={open}
-						onClose={handleClose}
 					>
-						<MenuItem onClick={handleClose}>
+						<MenuItem
+							onClick={() => {
+								handleClose()
+							}}
+						>
 							<Link href="/" rel="noopener noreferrer">
 								Home
 							</Link>
 						</MenuItem>
-						<MenuItem onClick={handleClose}>
+						<MenuItem
+							onClick={() => {
+								handleClose()
+							}}
+						>
 							<Link href="/config" rel="noopener noreferrer">
 								Config
 							</Link>
 						</MenuItem>
-						<MenuItem onClick={handleClose}>
+						<MenuItem
+							onClick={() => {
+								handleClose()
+							}}
+						>
 							<Link href="/icons" rel="noopener noreferrer">
 								Icon Demo
 							</Link>
