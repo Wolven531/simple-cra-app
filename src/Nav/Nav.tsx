@@ -101,7 +101,7 @@ const Nav: FC = () => {
 							</Link>
 						</MenuItem>
 					</Menu>
-					<Typography variant="h6" className={classes.title}>
+					<Typography variant="h4" component="h1" className={classes.title}>
 						<AppTitleContextConsumer>
 							{(context) => context.title}
 						</AppTitleContextConsumer>
