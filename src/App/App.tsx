@@ -2,7 +2,8 @@ import { Container, Typography } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
-import Home from '../Home/Home'
+import { Home } from '../Home/Home'
+import { Footer } from '../Footer/Footer'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
@@ -50,12 +51,7 @@ function App() {
 						</Route>
 					</Switch>
 				</BrowserRouter>
-				<Container className="footer">
-					<Typography variant="body2" align="center" gutterBottom>
-						Anthony Williams, Vincent Leighton, Jonathan Stutson
-						<br />© 2021, Most rights reserved
-					</Typography>
-				</Container>
+				<Footer/>
 			</Container>
 		</ApiContext.Provider>
 	)
