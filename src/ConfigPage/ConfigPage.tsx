@@ -7,9 +7,10 @@ import {
 	ListItem,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useContext, useState } from 'react'
+import React, { FC, useState } from 'react'
 import { ApiContextConsumer } from '../ApiContext'
 import { AppTitleContextConsumer } from '../AppTitleContext'
+import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
 
 export interface ConfigPageProps {
@@ -24,24 +25,24 @@ const ConfigPage: FC<ConfigPageProps> = ({
 	const [newToken, setNewToken] = useState(defaultToken)
 	const [secret, setSecret] = useState(defaultSecret)
 
-	const fireHealthCheck = async (apiContext: any) => {
+	const fireHealthCheck = async (api: ApiService) => {
 		//Ping is returning back a undefined. Also how does apiContext get passed???
-		const msg = await apiContext.api.pingApiHealthEndpoint()
+		const msg = await api.pingApiHealthEndpoint()
 
 		alert(msg)
 	}
-	const fireTokenCheck = async (apiContext: any) => {
-		const isValid = await apiContext.api.pingTokenCheckEndpoint()
+	const fireTokenCheck = async (api: ApiService) => {
+		const isValid = await api.pingTokenCheckEndpoint()
 
 		alert(isValid ? 'Token is valid' : 'Token is borked 🤷‍♂️')
 	}
-	const fireTokenUpdate = async (apiContext: any) => {
+	const fireTokenUpdate = async (api: ApiService) => {
 		if (newToken.length < 1 || secret.length < 1) {
 			alert('Secret and Token are required to update token')
 
 			return
 		}
-		const wasSuccessful = await apiContext.api.pingTokenUpdateEndpoint(
+		const wasSuccessful = await api.pingTokenUpdateEndpoint(
 			secret,
 			newToken
 		)
@@ -51,7 +52,7 @@ const ConfigPage: FC<ConfigPageProps> = ({
 
 	return (
 		<ApiContextConsumer>
-			{(apiContext) => {
+			{({ api }) => {
 				return (
 					<AppTitleContextConsumer>
 						{(titleContext) => {
@@ -77,7 +78,7 @@ const ConfigPage: FC<ConfigPageProps> = ({
 											<input
 												disabled
 												readOnly
-												value={apiContext.api.apiUrl}
+												value={api.apiUrl}
 											/>
 										</Grid>
 									</Grid>
@@ -86,7 +87,9 @@ const ConfigPage: FC<ConfigPageProps> = ({
 											className="btn-health"
 											color="primary"
 											variant="contained"
-											onClick={fireHealthCheck}
+											onClick={() => {
+												fireHealthCheck(api)
+											}}
 										>
 											Server Up?
 										</Button>
@@ -94,7 +97,9 @@ const ConfigPage: FC<ConfigPageProps> = ({
 											className="btn-token"
 											color="secondary"
 											variant="contained"
-											onClick={fireTokenCheck}
+											onClick={() => {
+												fireTokenCheck(api)
+											}}
 										>
 											Token valid?
 										</Button>
@@ -148,7 +153,9 @@ const ConfigPage: FC<ConfigPageProps> = ({
 													className="btn-update-token"
 													color="primary"
 													variant="contained"
-													onClick={fireTokenUpdate}
+													onClick={() => {
+														fireTokenUpdate(api)
+													}}
 												>
 													Update Token
 												</Button>
