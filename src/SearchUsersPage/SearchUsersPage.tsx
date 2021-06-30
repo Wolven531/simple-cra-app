@@ -5,23 +5,29 @@ import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
 	api: ApiService
-	defaultSearchValue?: string
+	initialSearchValue?: string
 }
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	api,
-	defaultSearchValue = '',
+	initialSearchValue = '',
 }) => {
-	const [searchValue, setSearchValue] = useState(defaultSearchValue)
-	const [resultName, setResultName] = useState('')
-	const [resultLevel, setResultLevel] = useState('')
-	const [resultIcon, setResultIcon] = useState('')
+	const [result, setResult] = useState({
+		icon: '',
+		level: '',
+		name: '',
+	})
+	const [searchValue, setSearchValue] = useState(initialSearchValue)
 
 	const fireUserSearch = async () => {
 		const response = await api.pingUserSearchEndpoint(searchValue)
-		setResultName(response.name)
-		setResultLevel(response.summonerLevel)
-		setResultIcon(response.profileIconId)
+		const { icon, level, name } = response
+
+		setResult({
+			icon,
+			level,
+			name,
+		})
 	}
 
 	return (
@@ -63,13 +69,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 			{/* Display searched user data. Icon(ID will change to image whe API updated)/Name/Level */}
 			<Container className="user-data-container">
 				<Box className="display-data" display="inline" border={1}>
-					{resultIcon}
+					{result.icon}
 				</Box>
 				<Box className="display-data" display="inline" border={1}>
-					{resultName}
+					{result.name}
 				</Box>
 				<Box className="display-data" display="inline" border={1}>
-					{resultLevel}
+					{result.level}
 				</Box>
 			</Container>
 		</Container>
@@ -77,4 +83,3 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 }
 
 export { SearchUsersPage }
-
