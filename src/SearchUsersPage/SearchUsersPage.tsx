@@ -1,6 +1,14 @@
-import { Box, Button, Container, Grid, Typography } from '@material-ui/core'
+import {
+	Button,
+	Container,
+	Grid,
+	makeStyles,
+	Theme,
+	Typography,
+} from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiService } from '../services/ApiService'
+import { theme } from '../theme'
 import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
@@ -11,6 +19,18 @@ interface SearchUsersPageProps {
 		updateFunc: (updatedResult: any) => void
 	) => Promise<void>
 }
+
+const useStyles = makeStyles({
+	resultRow: (theme: Theme) => ({
+		alignSelf: 'stretch',
+		border: '1px solid',
+		borderCollapse: 'collapse',
+		borderColor: theme.palette.primary.main,
+		display: 'flex',
+		justifyContent: 'space-between',
+		marginBottom: theme.spacing(3),
+	}),
+})
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	api,
@@ -31,18 +51,26 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		})
 	},
 }) => {
-	const [result, setResult] = useState({
+	const DEFAULT_RESPONSE = {
 		icon: '',
 		level: '',
 		name: '',
-	})
+	}
+	const [result, setResult] = useState(DEFAULT_RESPONSE)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
+	const [hasSearched, setHasSearched] = useState(false)
+
+	const classes = useStyles(theme)
 
 	return (
 		<Container className="config-page">
-			<Typography variant="h2" align="center" color="secondary">
-				Note, search function is limited to single exact name result for
-				now.
+			<Typography
+				align="center"
+				color="secondary"
+				gutterBottom
+				variant="h4"
+			>
+				Note - search function limited to exact name result
 			</Typography>
 			<Grid
 				alignItems="center"
@@ -56,9 +84,12 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							setSearchValue(e.target.value)
 						}}
 						onKeyPress={(e) => {
-							if (e.key === 'Enter') {
-								userSearchFunc(searchValue, setResult)
+							if (e.key !== 'Enter') {
+								return
 							}
+							userSearchFunc(searchValue, setResult).then(() => {
+								setHasSearched(true)
+							})
 						}}
 						placeholder="Username"
 						value={searchValue}
@@ -68,7 +99,9 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
-							userSearchFunc(searchValue, setResult)
+							userSearchFunc(searchValue, setResult).then(() => {
+								setHasSearched(true)
+							})
 						}}
 						variant="contained"
 					>
@@ -76,18 +109,55 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Button>
 				</Grid>
 			</Grid>
-			{/* display result of search; note the ID of icon will change to image when API updates */}
-			<Container className="user-data-container">
-					<Typography variant="h6" align="center" color="primary" gutterBottom>
-						Icon: {result.icon}
+			{/* display result if search has been made ; note the ID of icon will change to image when API updates */}
+			{hasSearched && (
+				<Container className="user-data-container">
+					<Typography
+						align="center"
+						color="primary"
+						gutterBottom
+						variant="h5"
+					>
+						Results
 					</Typography>
-					<Typography variant="h6" align="center" color="primary" gutterBottom>
-						Name: {result.name}
-					</Typography>
-					<Typography variant="h6" align="center" color="primary" gutterBottom>
-						Level: {result.level}
-					</Typography>
-			</Container>
+					<Container className={classes.resultRow}>
+						<Typography align="left" color="primary" variant="h6">
+							Icon:
+						</Typography>
+						<Typography
+							align="right"
+							color="secondary"
+							variant="h6"
+						>
+							{result.icon}
+						</Typography>
+					</Container>
+					<Container className={classes.resultRow}>
+						<Typography align="left" color="primary" variant="h6">
+							Name:
+						</Typography>
+						<Typography
+							align="right"
+							color="secondary"
+							variant="h6"
+						>
+							{result.name}
+						</Typography>
+					</Container>
+					<Container className={classes.resultRow}>
+						<Typography align="left" color="primary" variant="h6">
+							Level:
+						</Typography>
+						<Typography
+							align="right"
+							color="secondary"
+							variant="h6"
+						>
+							{result.level}
+						</Typography>
+					</Container>
+				</Container>
+			)}
 		</Container>
 	)
 }
