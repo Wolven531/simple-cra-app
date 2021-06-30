@@ -6,11 +6,28 @@ import './SearchUsersPage.css'
 interface SearchUsersPageProps {
 	api: ApiService
 	initialSearchValue?: string
+	userSearchFunc?: (
+		searchKey: string,
+		updateFunc: (updatedResult: any) => void
+	) => Promise<void>
 }
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	api,
 	initialSearchValue = '',
+	userSearchFunc = async (
+		searchKey: string,
+		updateFunc: (updatedResult: any) => void
+	) => {
+		const response = await api.pingUserSearchEndpoint(searchKey)
+		const { icon, level, name } = response
+
+		updateFunc({
+			icon,
+			level,
+			name,
+		})
+	},
 }) => {
 	const [result, setResult] = useState({
 		icon: '',
@@ -18,17 +35,6 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		name: '',
 	})
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
-
-	const fireUserSearch = async () => {
-		const response = await api.pingUserSearchEndpoint(searchValue)
-		const { icon, level, name } = response
-
-		setResult({
-			icon,
-			level,
-			name,
-		})
-	}
 
 	return (
 		<Container className="config-page">
@@ -49,7 +55,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						}}
 						onKeyPress={(e) => {
 							if (e.key === 'Enter') {
-								fireUserSearch()
+								userSearchFunc(searchValue, setResult)
 							}
 						}}
 						placeholder="Username"
@@ -59,7 +65,9 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 				<Grid item>
 					<Button
 						color="primary"
-						onClick={fireUserSearch}
+						onClick={() => {
+							userSearchFunc(searchValue, setResult)
+						}}
 						variant="contained"
 					>
 						Search
