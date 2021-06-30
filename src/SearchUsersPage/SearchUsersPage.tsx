@@ -40,7 +40,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 
 	return (
 		<Container className="config-page">
-			<Typography variant="h2" align="center">
+			<Typography variant="h2" align="center" color="secondary">
 				Note, search function is limited to single exact name result for
 				now.
 			</Typography>
@@ -76,17 +76,17 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Button>
 				</Grid>
 			</Grid>
-			{/* Display searched user data. Icon(ID will change to image whe API updated)/Name/Level */}
+			{/* display result of search; note the ID of icon will change to image when API updates */}
 			<Container className="user-data-container">
-				<Box className="display-data" display="inline" border={1}>
-					{result.icon}
-				</Box>
-				<Box className="display-data" display="inline" border={1}>
-					{result.name}
-				</Box>
-				<Box className="display-data" display="inline" border={1}>
-					{result.level}
-				</Box>
+					<Typography variant="h6" align="center" color="primary" gutterBottom>
+						Icon: {result.icon}
+					</Typography>
+					<Typography variant="h6" align="center" color="primary" gutterBottom>
+						Name: {result.name}
+					</Typography>
+					<Typography variant="h6" align="center" color="primary" gutterBottom>
+						Level: {result.level}
+					</Typography>
 			</Container>
 		</Container>
 	)
