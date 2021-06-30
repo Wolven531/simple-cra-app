@@ -7,6 +7,7 @@ import { Header } from '../Header/Header'
 import { Home } from '../Home/Home'
 import { IconDemo } from '../IconDemo'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
+import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
@@ -39,6 +40,10 @@ function App() {
 						<Route path="/icons">
 							{/* Icon demo page */}
 							<IconDemo />
+						</Route>
+						<Route path="/search-users" exact>
+							{/* Search Users page */}
+							<SearchUsersPage api={api} />
 						</Route>
 						<Route path="/">
 							{/* Not Found page */}
