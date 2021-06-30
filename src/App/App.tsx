@@ -33,10 +33,6 @@ function App() {
 							{/* Home page */}
 							<Home />
 						</Route>
-						<Route path="/searchUsers" exact>
-							{/* Search Users page */}
-							<SearchUsersPage api={api} />
-						</Route>
 						<Route path="/config">
 							{/* Config page */}
 							<ConfigPage api={api} />
@@ -44,6 +40,10 @@ function App() {
 						<Route path="/icons">
 							{/* Icon demo page */}
 							<IconDemo />
+						</Route>
+						<Route path="/search-users" exact>
+							{/* Search Users page */}
+							<SearchUsersPage api={api} />
 						</Route>
 						<Route path="/">
 							{/* Not Found page */}
