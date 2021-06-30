@@ -20,11 +20,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		updateFunc: (updatedResult: any) => void
 	) => {
 		const response = await api.pingUserSearchEndpoint(searchKey)
-		const { icon, level, name } = response
+
+		// !! must use keys as returned by server here, but can alias them as seen below
+		const { name, profileIconId, summonerLevel } = response
 
 		updateFunc({
-			icon,
-			level,
+			icon: profileIconId,
+			level: summonerLevel,
 			name,
 		})
 	},
