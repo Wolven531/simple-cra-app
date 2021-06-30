@@ -1,9 +1,10 @@
-import { Container, Typography } from '@material-ui/core'
+import { Container } from '@material-ui/core'
 import React, { useEffect, useState } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
-import { Header } from '../Header/Header'
 import { Footer } from '../Footer/Footer'
+import { Header } from '../Header/Header'
+import { Home } from '../Home/Home'
 import { IconDemo } from '../IconDemo'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { ApiService } from '../services/ApiService'
@@ -24,16 +25,12 @@ function App() {
 		<ApiContext.Provider value={api}>
 			<Container maxWidth="sm" className="app">
 				<BrowserRouter>
-					<Header/>
+					<Header />
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>
 							{/* Home page */}
-							<Container>
-								<Typography variant="body1" align="center" gutterBottom>
-									Welcome to our next generation League compare app!
-								</Typography>
-							</Container>
+							<Home />
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
@@ -49,7 +46,7 @@ function App() {
 						</Route>
 					</Switch>
 				</BrowserRouter>
-				<Footer/>
+				<Footer />
 			</Container>
 		</ApiContext.Provider>
 	)
