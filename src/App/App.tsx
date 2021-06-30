@@ -7,7 +7,7 @@ import { Header } from '../Header/Header'
 import { Home } from '../Home/Home'
 import { IconDemo } from '../IconDemo'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
-import { SearchUsers } from '../SearchUsers/SearchUsers'
+import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import { ApiService } from '../services/ApiService'
 import './App.css'
 
@@ -35,7 +35,7 @@ function App() {
 						</Route>
 						<Route path="/searchUsers" exact>
 							{/* Search Users page */}
-								<SearchUsers api={api}></SearchUsers>
+							<SearchUsersPage api={api} />
 						</Route>
 						<Route path="/config">
 							{/* Config page */}
