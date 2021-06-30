@@ -8,7 +8,6 @@ import {
 } from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
-import { Header } from '../Header/Header'
 import { Home } from '../Home/Home'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
@@ -23,7 +22,6 @@ function App() {
 				<Nav />
 				<Container maxWidth="sm" className="app">
 					<BrowserRouter>
-						<Header />
 						{/* Content outside of <Switch> renders on every page */}
 						<Switch>
 							<Route path="/" exact>
@@ -37,15 +35,38 @@ function App() {
 								</AppTitleContextConsumer>
 							</Route>
 							<Route path="/config">
-								<ConfigPage />
+							<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Config Page')
+
+										return <ConfigPage />
+									}}
+								</AppTitleContextConsumer>
 							</Route>
 							<Route path="/icons">
-								{/* Icon demo page */}
-								<IconDemo />
+								<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Icon Demo')
+
+										return <IconDemo />
+									}}
+								</AppTitleContextConsumer>
 							</Route>
 							<Route path="/search-users" exact>
 								<ApiContextConsumer>
-									{({ api }) => <SearchUsersPage api={api} />}
+									{({ api }) => (
+										<AppTitleContextConsumer>
+											{(context) => {
+												context.setTitle('Search Users')
+
+												return (
+													<SearchUsersPage
+														api={api}
+													/>
+												)
+											}}
+										</AppTitleContextConsumer>
+									)}
 								</ApiContextConsumer>
 							</Route>
 							<Route path="/">

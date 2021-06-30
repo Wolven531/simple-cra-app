@@ -9,7 +9,6 @@ import {
 } from '@material-ui/core'
 import React, { FC, useState } from 'react'
 import { ApiContextConsumer } from '../ApiContext'
-import { AppTitleContextConsumer } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
 
@@ -53,114 +52,95 @@ const ConfigPage: FC<ConfigPageProps> = ({
 	return (
 		<ApiContextConsumer>
 			{({ api }) => (
-				<AppTitleContextConsumer>
-					{({ setTitle }) => {
-						setTitle('Config Page')
-
-						return (
-							<Container className="config-page">
-								<Grid
-									container
-									alignItems="center"
-									justify="center"
-									className="api-container"
+				<Container className="config-page">
+					<Grid
+						container
+						alignItems="center"
+						justify="center"
+						className="api-container"
+					>
+						<Grid item>
+							<Typography variant="body1" gutterBottom>
+								API
+							</Typography>
+						</Grid>
+						<Grid item>
+							<input disabled readOnly value={api.apiUrl} />
+						</Grid>
+					</Grid>
+					<Container className="center-flex">
+						<Button
+							className="btn-health"
+							color="primary"
+							variant="contained"
+							onClick={() => {
+								defaultFireHealthCheck(api)
+							}}
+						>
+							Server Up?
+						</Button>
+						<Button
+							className="btn-token"
+							color="secondary"
+							variant="contained"
+							onClick={() => {
+								fireTokenCheck(api)
+							}}
+						>
+							Token valid?
+						</Button>
+					</Container>
+					<Container className="center-flex">
+						<List component="ol">
+							<ListItem>
+								<Typography variant="body1" gutterBottom>
+									Go to Riot site, login, generate token
+								</Typography>
+							</ListItem>
+							<ListItem>
+								<Link
+									href="https://developer.riotgames.com"
+									target="_blank"
+									rel="noopener noreferrer"
 								>
-									<Grid item>
-										<Typography
-											variant="body1"
-											gutterBottom
-										>
-											API
-										</Typography>
-									</Grid>
-									<Grid item>
-										<input
-											disabled
-											readOnly
-											value={api.apiUrl}
-										/>
-									</Grid>
-								</Grid>
-								<Container className="center-flex">
-									<Button
-										className="btn-health"
-										color="primary"
-										variant="contained"
-										onClick={() => {
-											defaultFireHealthCheck(api)
-										}}
-									>
-										Server Up?
-									</Button>
-									<Button
-										className="btn-token"
-										color="secondary"
-										variant="contained"
-										onClick={() => {
-											fireTokenCheck(api)
-										}}
-									>
-										Token valid?
-									</Button>
-								</Container>
-								<Container className="center-flex">
-									<List component="ol">
-										<ListItem>
-											<Typography
-												variant="body1"
-												gutterBottom
-											>
-												Go to Riot site, login, generate
-												token
-											</Typography>
-										</ListItem>
-										<ListItem>
-											<Link
-												href="https://developer.riotgames.com"
-												target="_blank"
-												rel="noopener noreferrer"
-											>
-												Riot Developer Site
-											</Link>
-										</ListItem>
-										<ListItem>
-											<input
-												className="input-new-token"
-												value={newToken}
-												onChange={(e) => {
-													setNewToken(e.target.value)
-												}}
-												placeholder="New token"
-											/>
-										</ListItem>
-										<ListItem>
-											<input
-												className="input-secret"
-												value={secret}
-												onChange={(e) => {
-													setSecret(e.target.value)
-												}}
-												placeholder="Secret"
-											/>
-										</ListItem>
-										<ListItem>
-											<Button
-												className="btn-update-token"
-												color="primary"
-												variant="contained"
-												onClick={() => {
-													fireTokenUpdate(api)
-												}}
-											>
-												Update Token
-											</Button>
-										</ListItem>
-									</List>
-								</Container>
-							</Container>
-						)
-					}}
-				</AppTitleContextConsumer>
+									Riot Developer Site
+								</Link>
+							</ListItem>
+							<ListItem>
+								<input
+									className="input-new-token"
+									value={newToken}
+									onChange={(e) => {
+										setNewToken(e.target.value)
+									}}
+									placeholder="New token"
+								/>
+							</ListItem>
+							<ListItem>
+								<input
+									className="input-secret"
+									value={secret}
+									onChange={(e) => {
+										setSecret(e.target.value)
+									}}
+									placeholder="Secret"
+								/>
+							</ListItem>
+							<ListItem>
+								<Button
+									className="btn-update-token"
+									color="primary"
+									variant="contained"
+									onClick={() => {
+										fireTokenUpdate(api)
+									}}
+								>
+									Update Token
+								</Button>
+							</ListItem>
+						</List>
+					</Container>
+				</Container>
 			)}
 		</ApiContextConsumer>
 	)
