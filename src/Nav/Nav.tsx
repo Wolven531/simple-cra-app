@@ -100,8 +100,24 @@ const Nav: FC = () => {
 								Icon Demo
 							</Link>
 						</MenuItem>
+						<MenuItem
+							onClick={() => {
+								handleClose()
+							}}
+						>
+							<Link
+								href="/search-users"
+								rel="noopener noreferrer"
+							>
+								Search Users
+							</Link>
+						</MenuItem>
 					</Menu>
-					<Typography variant="h4" component="h1" className={classes.title}>
+					<Typography
+						variant="h4"
+						component="h1"
+						className={classes.title}
+					>
 						<AppTitleContextConsumer>
 							{(context) => context.title}
 						</AppTitleContextConsumer>
