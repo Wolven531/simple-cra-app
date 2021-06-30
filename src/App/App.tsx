@@ -1,59 +1,83 @@
 import { Container } from '@material-ui/core'
-import React, { useEffect, useState } from 'react'
+import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { ApiContextConsumer, ApiContextProvider } from '../ApiContext'
+import {
+	AppTitleContextConsumer,
+	AppTitleContextProvider,
+} from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
-import { Header } from '../Header/Header'
 import { Home } from '../Home/Home'
 import { IconDemo } from '../IconDemo'
+import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
-import { ApiService } from '../services/ApiService'
 import './App.css'
 
 function App() {
-	const ENV_API_URL =
-		process.env.REACT_APP_API_URL || '!!! ENV WAS MISSING URL !!!'
-
-	const [api, setApi] = useState(new ApiService(ENV_API_URL))
-	const ApiContext = React.createContext(api)
-
-	useEffect(() => {
-		setApi(new ApiService(ENV_API_URL))
-	}, [ENV_API_URL])
-
 	return (
-		<ApiContext.Provider value={api}>
-			<Container maxWidth="sm" className="app">
-				<BrowserRouter>
-					<Header />
-					{/* Content outside of <Switch> renders on every page */}
-					<Switch>
-						<Route path="/" exact>
-							{/* Home page */}
-							<Home />
-						</Route>
-						<Route path="/config">
-							{/* Config page */}
-							<ConfigPage api={api} />
-						</Route>
-						<Route path="/icons">
-							{/* Icon demo page */}
-							<IconDemo />
-						</Route>
-						<Route path="/search-users" exact>
-							{/* Search Users page */}
-							<SearchUsersPage api={api} />
-						</Route>
-						<Route path="/">
-							{/* Not Found page */}
-							<PageNotFoundPage />
-						</Route>
-					</Switch>
-				</BrowserRouter>
-				<Footer />
-			</Container>
-		</ApiContext.Provider>
+		<ApiContextProvider>
+			<AppTitleContextProvider>
+				<Nav />
+				<Container maxWidth="sm" className="app">
+					<BrowserRouter>
+						{/* Content outside of <Switch> renders on every page */}
+						<Switch>
+							<Route path="/" exact>
+								{/* Home page */}
+								<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Home')
+
+										return <Home />
+									}}
+								</AppTitleContextConsumer>
+							</Route>
+							<Route path="/config">
+							<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Config Page')
+
+										return <ConfigPage />
+									}}
+								</AppTitleContextConsumer>
+							</Route>
+							<Route path="/icons">
+								<AppTitleContextConsumer>
+									{(context) => {
+										context.setTitle('Icon Demo')
+
+										return <IconDemo />
+									}}
+								</AppTitleContextConsumer>
+							</Route>
+							<Route path="/search-users" exact>
+								<ApiContextConsumer>
+									{({ api }) => (
+										<AppTitleContextConsumer>
+											{(context) => {
+												context.setTitle('Search Users')
+
+												return (
+													<SearchUsersPage
+														api={api}
+													/>
+												)
+											}}
+										</AppTitleContextConsumer>
+									)}
+								</ApiContextConsumer>
+							</Route>
+							<Route path="/">
+								<PageNotFoundPage />
+							</Route>
+						</Switch>
+					</BrowserRouter>
+					<Footer />
+				</Container>
+			</AppTitleContextProvider>
+		</ApiContextProvider>
 	)
 }
 

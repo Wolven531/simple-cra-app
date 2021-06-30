@@ -11,6 +11,8 @@
   "license": "MIT",
   "devDependencies": {
     "@testing-library/cypress": "^7.0.6",
-    "cypress": "^7.5.0"
+    "axe-core": "^4.2.3",
+    "cypress": "^7.6.0",
+    "cypress-axe": "^0.12.2"
   }
 }

@@ -21,42 +21,36 @@ const useStyles = makeStyles((theme: Theme) =>
 		root: {
 			color: theme.palette.text.primary,
 		},
-	}),
+	})
 )
 
 function IconDemo() {
 	const classes = useStyles()
 
 	return (
-		<Container className={classes.root} style={{
-			// alignItems: 'center',
-			// display: 'flex',
-			// flexDirection: 'column',
-			// justifyContent: 'center',
-			// justifyItems: 'center',
-		}}>
+		<Container className={classes.root}>
 			<Grid container alignItems="center" justify="center">
 				<Grid item>
-					<Typography >Filled</Typography>
+					<Typography>Filled</Typography>
 					<DeleteIcon />
 					<DeleteForeverIcon />
-					<br/>
+					<br />
 					<Typography>Outlined</Typography>
 					<DeleteOutlinedIcon />
 					<DeleteForeverOutlinedIcon />
-					<br/>
+					<br />
 					<Typography>Rounded</Typography>
 					<DeleteRoundedIcon />
 					<DeleteForeverRoundedIcon />
-					<br/>
+					<br />
 					<Typography>Two Tone</Typography>
 					<DeleteTwoToneIcon />
 					<DeleteForeverTwoToneIcon />
-					<br/>
+					<br />
 					<Typography>Sharp</Typography>
 					<DeleteSharpIcon />
 					<DeleteForeverSharpIcon />
-					<br/>
+					<br />
 					<Typography>Edge-cases</Typography>
 					<ThreeDRotationIcon />
 					<FourKIcon />
