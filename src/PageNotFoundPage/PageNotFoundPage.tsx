@@ -1,42 +1,40 @@
 import { Grid, Typography } from '@material-ui/core'
-import React, { FC } from 'react'
+import React, { FC, useContext, useEffect } from 'react'
+import { AppTitleContext } from '../AppTitleContext'
 import PageNotFoundImage from './PageNotFound.jpg'
-import { AppTitleContextConsumer } from '../AppTitleContext'
 import './PageNotFoundPage.css'
 
 const PageNotFoundPage: FC = () => {
-	return (
-		<AppTitleContextConsumer>
-			{(context) => {
-				context.setTitle('Page Not Found')
+	const context = useContext(AppTitleContext)
 
-				return (
-					<Grid
-						container
-						alignItems="center"
-						justify="center"
-						className="page-not-found"
-					>
-						<Grid item>
-							<Typography
-								variant="h5"
-								align="center"
-								color="error"
-								gutterBottom
-							>
-								Page not found. How did you even get here?
-							</Typography>
-						</Grid>
-						<img
-							src={PageNotFoundImage}
-							width="300"
-							height="400"
-							alt="pile of question marks"
-						/>
-					</Grid>
-				)
-			}}
-		</AppTitleContextConsumer>
+	useEffect(() => {
+		context.setTitle('Page Not Found')
+	}, [context])
+
+	return (
+		<Grid
+			alignItems="center"
+			className="page-not-found"
+			container
+			justify="center"
+		>
+			<Grid item>
+				<Typography
+					align="center"
+					color="error"
+					gutterBottom
+					variant="h5"
+				>
+					Page not found. How did you even get here?
+				</Typography>
+			</Grid>
+			<img
+				alt="pile of question marks"
+				height="400"
+				src={PageNotFoundImage}
+				width="300"
+			/>
+		</Grid>
 	)
 }
 

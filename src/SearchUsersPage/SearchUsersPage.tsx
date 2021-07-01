@@ -6,7 +6,8 @@ import {
 	Theme,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
+import { AppTitleContext } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -62,8 +63,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 
 	const classes = useStyles(theme)
 
+	const context = useContext(AppTitleContext)
+
+	useEffect(() => {
+		context.setTitle('Search Users Page')
+	}, [context])
+
 	return (
-		<Container className="config-page">
+		<Container className="search-users-page">
 			<Typography
 				align="center"
 				color="secondary"
