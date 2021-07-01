@@ -7,15 +7,16 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
+import { ApiContext } from '../ApiContext'
 import { AppTitleContext } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
-	api: ApiService
 	initialSearchValue?: string
 	userSearchFunc?: (
+		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
 	) => Promise<void>
@@ -34,9 +35,9 @@ const useStyles = makeStyles({
 })
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
-	api,
 	initialSearchValue = '',
 	userSearchFunc = async (
+		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
 	) => {
@@ -63,6 +64,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 
 	const classes = useStyles(theme)
 
+	const { api } = useContext(ApiContext)
 	const context = useContext(AppTitleContext)
 
 	useEffect(() => {
@@ -94,7 +96,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							if (e.key !== 'Enter') {
 								return
 							}
-							userSearchFunc(searchValue, setResult).then(() => {
+							userSearchFunc(api, searchValue, setResult).then(() => {
 								setHasSearched(true)
 							})
 						}}
@@ -106,7 +108,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
-							userSearchFunc(searchValue, setResult).then(() => {
+							userSearchFunc(api, searchValue, setResult).then(() => {
 								setHasSearched(true)
 							})
 						}}
