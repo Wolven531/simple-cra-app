@@ -1,7 +1,7 @@
 import { Container } from '@material-ui/core'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { ApiContextConsumer, ApiContextProvider } from '../ApiContext'
+import { ApiContextProvider } from '../ApiContext'
 import { AppTitleContextProvider } from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
@@ -31,9 +31,7 @@ function App() {
 								<IconDemo />
 							</Route>
 							<Route path="/search-users" exact>
-								<ApiContextConsumer>
-									{({ api }) => <SearchUsersPage api={api} />}
-								</ApiContextConsumer>
+								<SearchUsersPage />
 							</Route>
 							<Route path="/">
 								<PageNotFoundPage />
