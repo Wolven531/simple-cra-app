@@ -9,8 +9,8 @@ import {
 	Typography,
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
-import React, { FC, MouseEvent, useState } from 'react'
-import { AppTitleContextConsumer } from '../AppTitleContext'
+import React, { FC, MouseEvent, useContext, useState } from 'react'
+import { AppTitleContext } from '../AppTitleContext'
 
 const useStyles = makeStyles((theme) => ({
 	menuButton: {
@@ -38,6 +38,8 @@ const Nav: FC = () => {
 		setMenuIsOpen(false)
 		setAnchorElem(null)
 	}
+
+	const { title } = useContext(AppTitleContext)
 
 	return (
 		<div className={classes.root}>
@@ -114,13 +116,10 @@ const Nav: FC = () => {
 						</MenuItem>
 					</Menu>
 					<Typography
-						variant="h4"
-						component="h1"
 						className={classes.title}
+						variant="h4"
 					>
-						<AppTitleContextConsumer>
-							{(context) => context.title}
-						</AppTitleContextConsumer>
+						{title}
 					</Typography>
 				</Toolbar>
 			</AppBar>
