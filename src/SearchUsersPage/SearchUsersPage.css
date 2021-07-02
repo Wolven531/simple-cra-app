@@ -1,3 +1,7 @@
 .display-data {
 	margin: 0 1rem;
 }
+
+.loading-spinner{
+	margin-left: 10px;
+}

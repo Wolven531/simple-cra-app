@@ -14,6 +14,7 @@ import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import './App.css'
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
 	return (

@@ -7,6 +7,7 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useState } from 'react'
+import { Spinner } from 'react-bootstrap'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -38,29 +39,31 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	userSearchFunc = async (
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
-	) => {
-		const response = await api.pingUserSearchEndpoint(searchKey)
-
-		// !! must use keys as returned by server here, but can alias them as seen below
-		const { name, profileIconId, summonerLevel } = response
-
-		updateFunc({
-			icon: profileIconId,
-			level: summonerLevel,
-			name,
-		})
-	},
-}) => {
-	const DEFAULT_RESPONSE = {
-		icon: '',
-		level: '',
-		name: '',
-	}
-	const [result, setResult] = useState(DEFAULT_RESPONSE)
-	const [searchValue, setSearchValue] = useState(initialSearchValue)
-	const [hasSearched, setHasSearched] = useState(false)
-
-	const classes = useStyles(theme)
+		) => {
+			const response = await api.pingUserSearchEndpoint(searchKey)
+			
+			// !! must use keys as returned by server here, but can alias them as seen below
+			const { name, profileIconId, summonerLevel } = response
+			
+			updateFunc({
+				icon: profileIconId,
+				level: summonerLevel,
+				name,
+			})
+		},
+	}) => {
+		const DEFAULT_RESPONSE = {
+			icon: '',
+			level: '',
+			name: '',
+		}
+		
+		const [result, setResult] = useState(DEFAULT_RESPONSE)
+		const [searchValue, setSearchValue] = useState(initialSearchValue)
+		const [hasSearched, setHasSearched] = useState(false)
+		const [isLoading, setIsLoading] = useState(false)
+		
+		const classes = useStyles(theme)
 
 	return (
 		<Container className="config-page">
@@ -87,8 +90,10 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							if (e.key !== 'Enter') {
 								return
 							}
+							setIsLoading(true)
 							userSearchFunc(searchValue, setResult).then(() => {
 								setHasSearched(true)
+								setIsLoading(false)
 							})
 						}}
 						placeholder="Username"
@@ -99,13 +104,19 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
+							setIsLoading(true)
 							userSearchFunc(searchValue, setResult).then(() => {
 								setHasSearched(true)
+								setIsLoading(false)
 							})
 						}}
 						variant="contained"
 					>
 						Search
+						
+						{isLoading &&(
+							<Spinner className="loading-spinner" animation="border" variant="primary" />
+						)}
 					</Button>
 				</Grid>
 			</Grid>
