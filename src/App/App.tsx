@@ -1,14 +1,11 @@
 import { Container } from '@material-ui/core'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-import { ApiContextConsumer, ApiContextProvider } from '../ApiContext'
-import {
-	AppTitleContextConsumer,
-	AppTitleContextProvider,
-} from '../AppTitleContext'
+import { ApiContextProvider } from '../ApiContext'
+import { AppTitleContextProvider } from '../AppTitleContext'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { Footer } from '../Footer/Footer'
-import { Home } from '../Home/Home'
+import { HomePage } from '../HomePage/HomePage'
 import { IconDemo } from '../IconDemo'
 import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
@@ -26,49 +23,16 @@ function App() {
 						{/* Content outside of <Switch> renders on every page */}
 						<Switch>
 							<Route path="/" exact>
-								{/* Home page */}
-								<AppTitleContextConsumer>
-									{(context) => {
-										context.setTitle('Home')
-
-										return <Home />
-									}}
-								</AppTitleContextConsumer>
+								<HomePage />
 							</Route>
 							<Route path="/config">
-							<AppTitleContextConsumer>
-									{(context) => {
-										context.setTitle('Config Page')
-
-										return <ConfigPage />
-									}}
-								</AppTitleContextConsumer>
+								<ConfigPage />
 							</Route>
 							<Route path="/icons">
-								<AppTitleContextConsumer>
-									{(context) => {
-										context.setTitle('Icon Demo')
-
-										return <IconDemo />
-									}}
-								</AppTitleContextConsumer>
+								<IconDemo />
 							</Route>
 							<Route path="/search-users" exact>
-								<ApiContextConsumer>
-									{({ api }) => (
-										<AppTitleContextConsumer>
-											{(context) => {
-												context.setTitle('Search Users')
-
-												return (
-													<SearchUsersPage
-														api={api}
-													/>
-												)
-											}}
-										</AppTitleContextConsumer>
-									)}
-								</ApiContextConsumer>
+								<SearchUsersPage />
 							</Route>
 							<Route path="/">
 								<PageNotFoundPage />

@@ -14,7 +14,8 @@ import DeleteTwoToneIcon from '@material-ui/icons/DeleteTwoTone'
 import FourKIcon from '@material-ui/icons/FourK'
 import ThreeDRotationIcon from '@material-ui/icons/ThreeDRotation'
 import ThreeSixtyIcon from '@material-ui/icons/ThreeSixty'
-import React from 'react'
+import React, { useContext, useEffect } from 'react'
+import { AppTitleContext } from './AppTitleContext'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -26,6 +27,11 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function IconDemo() {
 	const classes = useStyles()
+	const context = useContext(AppTitleContext)
+
+	useEffect(() => {
+		context.setTitle('Icon Demo Page')
+	}, [context])
 
 	return (
 		<Container className={classes.root}>

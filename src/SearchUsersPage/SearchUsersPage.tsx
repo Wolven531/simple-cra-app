@@ -6,16 +6,18 @@ import {
 	Theme,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useState } from 'react'
 import { Spinner } from 'react-bootstrap'
+import React, { FC, useContext, useEffect, useState } from 'react'
+import { ApiContext } from '../ApiContext'
+import { AppTitleContext } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
-	api: ApiService
 	initialSearchValue?: string
 	userSearchFunc?: (
+		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
 	) => Promise<void>
@@ -34,9 +36,9 @@ const useStyles = makeStyles({
 })
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
-	api,
 	initialSearchValue = '',
 	userSearchFunc = async (
+		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
 		) => {
@@ -65,8 +67,15 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		
 		const classes = useStyles(theme)
 
+	const { api } = useContext(ApiContext)
+	const context = useContext(AppTitleContext)
+
+	useEffect(() => {
+		context.setTitle('Search Users Page')
+	}, [context])
+
 	return (
-		<Container className="config-page">
+		<Container className="search-users-page">
 			<Typography
 				align="center"
 				color="secondary"
@@ -91,7 +100,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 								return
 							}
 							setIsLoading(true)
-							userSearchFunc(searchValue, setResult).then(() => {
+							userSearchFunc(api, searchValue, setResult).then(() => {
 								setHasSearched(true)
 								setIsLoading(false)
 							})
@@ -105,7 +114,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						color="primary"
 						onClick={() => {
 							setIsLoading(true)
-							userSearchFunc(searchValue, setResult).then(() => {
+							userSearchFunc(api, searchValue, setResult).then(() => {
 								setHasSearched(true)
 								setIsLoading(false)
 							})

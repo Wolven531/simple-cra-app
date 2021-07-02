@@ -7,8 +7,9 @@ import {
 	ListItem,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useState } from 'react'
+import React, { FC, useContext, useEffect, useState } from 'react'
 import { ApiContextConsumer } from '../ApiContext'
+import { AppTitleContext } from '../AppTitleContext'
 import { ApiService } from '../services/ApiService'
 import './ConfigPage.css'
 
@@ -48,6 +49,11 @@ const ConfigPage: FC<ConfigPageProps> = ({
 
 		alert(wasSuccessful ? 'Token updated' : 'Token update failed')
 	}
+	const context = useContext(AppTitleContext)
+
+	useEffect(() => {
+		context.setTitle('Config Page')
+	}, [context])
 
 	return (
 		<ApiContextConsumer>

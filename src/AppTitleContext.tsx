@@ -1,16 +1,21 @@
 import React, { createContext, FC, useState } from 'react'
 
-const { Provider, Consumer } = createContext({
+const context = createContext({
 	setTitle: (newTitle: string) => {
 		alert('using default function to set title, WONT WORK')
 	},
 	title: 'Default Title From Creation',
 })
+const AppTitleContextConsumer = context.Consumer
 
 const AppTitleContextProvider: FC<any> = (props: any) => {
 	const [title, setTitle] = useState('Default Title From useState')
 
-	return <Provider value={{ title, setTitle }}>{props.children}</Provider>
+	return <context.Provider value={{ title, setTitle }}>{props.children}</context.Provider>
 }
 
-export { AppTitleContextProvider, Consumer as AppTitleContextConsumer }
+export {
+	context as AppTitleContext,
+	AppTitleContextProvider,
+	AppTitleContextConsumer,
+}
