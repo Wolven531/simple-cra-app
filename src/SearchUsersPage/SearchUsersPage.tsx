@@ -7,8 +7,7 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
-import { ApiContext } from '../ApiContext'
-import { AppTitleContext } from '../AppTitleContext'
+import { GlobalContext } from '../GlobalContext'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -64,8 +63,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 
 	const classes = useStyles(theme)
 
-	const { api } = useContext(ApiContext)
-	const context = useContext(AppTitleContext)
+	const context = useContext(GlobalContext)
 
 	useEffect(() => {
 		context.setTitle('Search Users Page')
@@ -96,7 +94,11 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							if (e.key !== 'Enter') {
 								return
 							}
-							userSearchFunc(api, searchValue, setResult).then(() => {
+							userSearchFunc(
+								context.api,
+								searchValue,
+								setResult
+							).then(() => {
 								setHasSearched(true)
 							})
 						}}
@@ -108,7 +110,11 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
-							userSearchFunc(api, searchValue, setResult).then(() => {
+							userSearchFunc(
+								context.api,
+								searchValue,
+								setResult
+							).then(() => {
 								setHasSearched(true)
 							})
 						}}
