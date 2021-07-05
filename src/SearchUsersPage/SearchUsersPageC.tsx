@@ -1,16 +1,25 @@
 import { Button, Container, Grid, Typography } from '@material-ui/core'
 import React, { Component, ContextType, CSSProperties } from 'react'
-import { ApiContext } from '../ApiContext'
+import { GlobalContext } from '../GlobalContext'
 import { theme } from '../theme'
 
-// TODO - add interfaces for props and state types and fix typing for this component
+interface SearchUsersPageCProps {
+	
+}
 
-class SearchUsersPageC extends Component<any, any> {
-	static contextType = ApiContext
+interface SearchUsersPageCState {
+	hasSearched: boolean
+	icon: string
+	level: string
+	name: string
+	searchValue: string
+}
 
-	// TODO - add higher order context that contains both app title and API
+class SearchUsersPageC extends Component<SearchUsersPageCProps, SearchUsersPageCState> {
+	static contextType = GlobalContext
+
 	// uses experimental public fields - limited to a single context type
-	declare context: ContextType<typeof ApiContext>
+	declare context: ContextType<typeof GlobalContext>
 
 	private rowStyle: CSSProperties = {
 		alignSelf: 'stretch',
