@@ -10,7 +10,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import React, { FC, MouseEvent, useContext, useState } from 'react'
-import { AppTitleContext } from '../AppTitleContext'
+import { GlobalContext } from '../GlobalContext'
 
 const useStyles = makeStyles((theme) => ({
 	menuButton: {
@@ -39,7 +39,7 @@ const Nav: FC = () => {
 		setAnchorElem(null)
 	}
 
-	const { title } = useContext(AppTitleContext)
+	const { title } = useContext(GlobalContext)
 
 	return (
 		<div className={classes.root}>
@@ -115,10 +115,7 @@ const Nav: FC = () => {
 							</Link>
 						</MenuItem>
 					</Menu>
-					<Typography
-						className={classes.title}
-						variant="h4"
-					>
+					<Typography className={classes.title} variant="h4">
 						{title}
 					</Typography>
 				</Toolbar>
