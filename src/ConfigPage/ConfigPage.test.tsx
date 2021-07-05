@@ -1,12 +1,27 @@
 import { fireEvent, render, RenderResult } from '@testing-library/react'
-import React from 'react'
+import React, { FC, useContext } from 'react'
+import { GlobalContext } from '../GlobalContext'
+import { ApiService } from '../services/ApiService'
 import { ConfigPage } from './ConfigPage'
 
 describe('ConfigPage component', () => {
 	let comp: RenderResult
+	let mockSetTitle: jest.Mock
 
 	beforeEach(() => {
-		comp = render(<ConfigPage />)
+		mockSetTitle = jest.fn()
+		// comp = render(<ConfigPage />)
+		const FakeWrapperComp: FC<any> = (props: any) => {
+			const context = useContext(GlobalContext)
+			context.setTitle = mockSetTitle
+			context.api = {
+				apiUrl: '',
+			} as unknown as ApiService
+
+			return <ConfigPage />
+		}
+
+		comp = render(<FakeWrapperComp />)
 	})
 
 	it('renders ConfigPage component', () => {
