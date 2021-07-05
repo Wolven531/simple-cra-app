@@ -35,7 +35,17 @@ const useStyles = makeStyles({
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	initialSearchValue = '',
-	userSearchFunc = async (
+}) => {
+	const DEFAULT_RESPONSE = {
+		icon: '',
+		level: '',
+		name: '',
+	}
+	const [result, setResult] = useState(DEFAULT_RESPONSE)
+	const [searchValue, setSearchValue] = useState(initialSearchValue)
+	const [hasSearched, setHasSearched] = useState(false)
+
+	const userSearchFunc = async (
 		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
@@ -50,16 +60,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 			level: summonerLevel,
 			name,
 		})
-	},
-}) => {
-	const DEFAULT_RESPONSE = {
-		icon: '',
-		level: '',
-		name: '',
 	}
-	const [result, setResult] = useState(DEFAULT_RESPONSE)
-	const [searchValue, setSearchValue] = useState(initialSearchValue)
-	const [hasSearched, setHasSearched] = useState(false)
 
 	const classes = useStyles(theme)
 
