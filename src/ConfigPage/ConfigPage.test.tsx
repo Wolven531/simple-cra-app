@@ -1,4 +1,4 @@
-import { RenderResult } from '@testing-library/react'
+import { RenderResult, waitFor } from '@testing-library/react'
 import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
 
@@ -21,9 +21,18 @@ describe('ConfigPage component', () => {
 		expect(comp).toBeDefined()
 	})
 
-	it('sets title appropriately', () => {
+	it('sets title appropriately (Anthony check)', () => {
 		expect(mockSetTitle).toHaveBeenCalledTimes(1)
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Config Page')
+	})
+
+	xit('sets title appropriately (Jim / RTL check)', async () => {
+		comp = renderCompWithMockedContext(ConfigPage, {
+			api: {
+				apiUrl: '',
+			},
+		})
+		await waitFor(() => comp.getByText('Config Page'))
 	})
 
 	// 	describe('click the health button while providing health check method', () => {
