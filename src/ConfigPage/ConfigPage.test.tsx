@@ -8,6 +8,7 @@ describe('ConfigPage component', () => {
 	const fakeApiHealthResponse = 'OK'
 
 	let comp: RenderResult
+	let container: HTMLElement
 
 	let mockAlert: jest.SpyInstance
 	let mockPingApiHealthEndpoint: jest.Mock
@@ -33,6 +34,7 @@ describe('ConfigPage component', () => {
 			} as unknown as ApiService,
 			setTitle: mockSetTitle,
 		})
+		container = comp?.container // optional access (in case render failed)
 	})
 
 	it('renders ConfigPage component', () => {
@@ -55,7 +57,6 @@ describe('ConfigPage component', () => {
 
 	describe('click health check button', () => {
 		beforeEach(() => {
-			const container = comp.container
 			const healthCheckButton: Element = container.querySelector(
 				'.btn-health'
 			) as Element
@@ -76,7 +77,6 @@ describe('ConfigPage component', () => {
 
 	describe('click token check button', () => {
 		beforeEach(() => {
-			const container = comp.container
 			const tokenCheckButton: Element = container.querySelector(
 				'.btn-token'
 			) as Element
@@ -93,7 +93,6 @@ describe('ConfigPage component', () => {
 
 	describe('click update token button w/o setting secret or token inputs', () => {
 		beforeEach(() => {
-			const container = comp.container
 			const updateTokenButton: Element = container.querySelector(
 				'.btn-update-token'
 			) as Element
