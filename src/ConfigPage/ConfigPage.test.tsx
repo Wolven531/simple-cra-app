@@ -1,4 +1,5 @@
 import { createEvent, fireEvent, RenderResult } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
 import { ApiService } from '../services/ApiService'
 import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
@@ -109,39 +110,52 @@ describe('ConfigPage component', () => {
 		})
 	})
 
-	// 	// describe('click update token button when using provided secret and token props for inputs', () => {
-	// 	// 	const fakeSecret = 'some-secret'
-	// 	// 	const fakeToken = 'some-token'
-	// 	// 	let buttonUpdateToken: ShallowWrapper
-	// 	// 	// let inputSecret: ShallowWrapper
-	// 	// 	// let inputToken: ShallowWrapper
+	describe('click update token button after setting valid secret and token input values', () => {
+		const fakeSecret = 'some-secret'
+		const fakeToken = 'some-token'
 
-	// 	// 	beforeEach(() => {
-	// 	// 		comp = shallow(<ConfigPage api={mockApiService} defaultSecret={fakeSecret} defaultToken={fakeToken} />)
+		beforeEach(() => {
+			// gather the elements that will need interaction / setup
+			const secretInput: HTMLInputElement = container.querySelector(
+				'.input-secret'
+			) as HTMLInputElement
+			// const tokenInput: HTMLInputElement = container.querySelector(
+			// 	'.input-new-token'
+			// ) as HTMLInputElement
+			const tokenInput: HTMLInputElement = comp.getByPlaceholderText('New token') as HTMLInputElement
+			const updateTokenButton: Element = container.querySelector(
+				'.btn-update-token'
+			) as Element
 
-	// 	// 		// const mockSetNewToken = jest.fn()
-	// 	// 		// const mockSetSecret = jest.fn()
-	// 	// 		// jest.spyOn(React, 'useState')
-	// 	// 		// 	.mockImplementationOnce((defaultNewToken: string) => [defaultNewToken, mockSetNewToken])
-	// 	// 		// 	.mockImplementationOnce((defaultSecret: string) => [defaultSecret, mockSetSecret])
+			// create fake interaction events
+			// const fakeChangeSecretEvent = createEvent('change', secretInput, {
+			// 	target: { value: fakeSecret },
+			// })
+			// const fakeChangeTokenEvent = createEvent('change', tokenInput, {
+			// 	target: { value: fakeToken },
+			// })
+			// const fakeClickEvent = createEvent('click', updateTokenButton)
 
-	// 	// 		buttonUpdateToken = comp.find('.btn-update-token')
-	// 	// 		// inputSecret = comp.find('.input-secret')
-	// 	// 		// inputToken = comp.find('.input-new-token')
+			// update required text inputs first using fake events
+			// fireEvent.change(tokenInput, fakeChangeTokenEvent)
+			// fireEvent.change(secretInput, fakeChangeSecretEvent)
+			userEvent.type(secretInput, fakeSecret)
+			userEvent.type(tokenInput, fakeToken)
 
-	// 	// 		// inputSecret.simulate('change', { target: { value: fakeSecret } })
-	// 	// 		// inputToken.simulate('change', { target: { value: fakeToken } })
+			// then click update button using fake event
+			// fireEvent.click(updateTokenButton, fakeClickEvent)
+			userEvent.click(updateTokenButton)
+		})
 
-	// 	// 		buttonUpdateToken.simulate('click')
-	// 	// 	})
+		it('renders button properly, invokes pingTokenUpdateEndpoint() on API w/ proper params', () => {
+			expect(mockPingTokenUpdateEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockPingTokenUpdateEndpoint).toHaveBeenCalledWith(
+				fakeSecret,
+				fakeToken
+			)
 
-	// 	// 	it('renders button properly, invokes pingTokenUpdateEndpoint() on API w/ proper params', () => {
-	// 	// 		expect(buttonUpdateToken.text()).toEqual('Update Token')
-
-	// 	// 		expect(mockApiService.pingTokenUpdateEndpoint).toHaveBeenCalledTimes(1)
-	// 	// 		expect(mockApiService.pingTokenUpdateEndpoint).toHaveBeenCalledWith(fakeSecret, fakeToken)
-
-	// 	// 		expect(window.alert).toHaveBeenCalledTimes(1)
-	// 	// 	})
-	// 	// })
+			expect(window.alert).toHaveBeenCalledTimes(1)
+			expect(window.alert).toHaveBeenLastCalledWith('Token updated')
+		})
+	})
 })
