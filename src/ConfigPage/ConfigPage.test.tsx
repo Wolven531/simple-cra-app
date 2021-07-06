@@ -1,32 +1,6 @@
-import { fireEvent, render, RenderResult } from '@testing-library/react'
-import React, { FC, useContext } from 'react'
-import { GlobalContext } from '../GlobalContext'
-import { ApiService } from '../services/ApiService'
+import { RenderResult } from '@testing-library/react'
+import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
-
-/**
- * This method allows us to mock parts of the GlobalContext w/ ease
- *
- * @param functionalComp
- * @param mockedContext
- * @returns
- */
-const renderCompWithMockedContext = (
-	functionalComp: FC,
-	mockedContext: any
-) => {
-	const MockedContextProvider: FC = () => {
-		const context = useContext(GlobalContext)
-		context.setTitle = mockedContext.setTitle
-		context.api = mockedContext.api as unknown as ApiService
-
-		// render the Functional Component provided to us
-		return functionalComp({})
-	}
-
-	// render the context-enabled wrapper
-	return render(<MockedContextProvider />)
-}
 
 describe('ConfigPage component', () => {
 	let comp: RenderResult
