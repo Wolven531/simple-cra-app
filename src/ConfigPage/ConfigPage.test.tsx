@@ -1,18 +1,31 @@
-import { RenderResult, waitFor } from '@testing-library/react'
+import {
+	createEvent,
+	fireEvent,
+	RenderResult,
+	waitFor,
+} from '@testing-library/react'
+import { ApiService } from '../services/ApiService'
 import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
 
 describe('ConfigPage component', () => {
+	const fakeApiUrl = 'https://some-api.co'
 	let comp: RenderResult
+
+	let mockAlert: jest.SpyInstance
+	let mockPingApiHealthEndpoint: jest.Mock
 	let mockSetTitle: jest.Mock
 
 	beforeEach(() => {
+		mockAlert = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
+		mockPingApiHealthEndpoint = jest.fn().mockResolvedValue('OK')
 		mockSetTitle = jest.fn()
 
 		comp = renderCompWithMockedContext(ConfigPage, {
 			api: {
-				apiUrl: '',
-			},
+				apiUrl: fakeApiUrl,
+				pingApiHealthEndpoint: mockPingApiHealthEndpoint,
+			} as unknown as ApiService,
 			setTitle: mockSetTitle,
 		})
 	})
@@ -29,56 +42,32 @@ describe('ConfigPage component', () => {
 	xit('sets title appropriately (Jim / RTL check)', async () => {
 		comp = renderCompWithMockedContext(ConfigPage, {
 			api: {
-				apiUrl: '',
+				apiUrl: fakeApiUrl,
 			},
 		})
 		await waitFor(() => comp.getByText('Config Page'))
 	})
 
-	// 	describe('click the health button while providing health check method', () => {
-	// 		let mockHealthCheck: jest.Mock
+	describe('click the health button while providing health check method', () => {
+		beforeEach(() => {
+			const container = comp.container
+			const healthButton: Element = container.querySelector(
+				'.btn-health'
+			) as Element
+			const fakeClickEvent = createEvent('click', healthButton)
+			fireEvent.click(healthButton, fakeClickEvent)
 
-	// 		beforeEach(() => {
-	// 			mockHealthCheck = jest.fn().mockResolvedValue(undefined)
+			// method 3 - not yet working
+			// comp.getByRole('button', {
+			// })
+		})
 
-	// 			comp = render(
-	// 				<ConfigPage defaultFireHealthCheck={mockHealthCheck} />
-	// 			)
-
-	// 			const container = comp.container
-
-	// 			// method 1 - works
-	// 			// const healthButton = container.querySelector('.btn-health')
-	// 			// healthButton?.dispatchEvent(
-	// 			// 	new MouseEvent('click', {
-	// 			// 		bubbles: true,
-	// 			// 		cancelable: true,
-	// 			// 		view: window,
-	// 			// 	})
-	// 			// )
-
-	// 			// method 2 - works
-	// 			const healthButton = container.querySelector('.btn-health')
-	// 			fireEvent.click(healthButton as Element)
-
-	// 			// method 3
-	// 			// screen.getByRole('button', {
-
-	// 			// }).querySelector
-	// 		})
-
-	// 		it('invokes provided fireHealthCheck()', () => {
-	// 			expect(mockHealthCheck).toHaveBeenCalledTimes(1)
-	// 			// expect(mockHealthCheck).toHaveBeenLastCalledWith()
-	// 			// expect(healthButton?.textContent).toEqual('')
-
-	// 			// const buttons = comp.getAllByRole('button', { })
-
-	// 			// expect(buttons[0].classList.contains('btn-health')).toBeTruthy()
-	// 			// expect(buttons[1].classList.contains('btn-token')).toBeTruthy()
-	// 			// expect(buttons[2].classList.contains('btn-update-token')).toBeTruthy()
-	// 		})
-	// 	})
+		it('invokes api.pingApiHealthEndpoint()', () => {
+			expect(mockPingApiHealthEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockAlert).toHaveBeenCalledTimes(1)
+			expect(mockAlert).toHaveBeenLastCalledWith('OK') // val specified using mockResolvedValue() above
+		})
+	})
 
 	// 	describe('click the health button w/o health check method', () => {
 	// 		beforeEach(() => {
