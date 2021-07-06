@@ -1,9 +1,9 @@
 import { Container, Typography } from '@material-ui/core'
 import { FC, useContext, useEffect } from 'react'
-import { AppTitleContext } from '../AppTitleContext'
+import { GlobalContext } from '../GlobalContext'
 
 const HomePage: FC = () => {
-	const context = useContext(AppTitleContext)
+	const context = useContext(GlobalContext)
 
 	useEffect(() => {
 		context.setTitle('Home')
@@ -19,4 +19,3 @@ const HomePage: FC = () => {
 }
 
 export { HomePage }
-

@@ -1,34 +1,34 @@
-import { render, RenderResult } from '@testing-library/react'
+import { render } from '@testing-library/react'
 import React from 'react'
-// import { ConfigPage } from '../ConfigPage/ConfigPage'
 import App from './App'
 
 describe('App component when process.env.REACT_APP_API_URL has value', () => {
-	const fakeApiUrl = 'http://fake-api.co'
-	let comp: RenderResult
-	let origEnv: NodeJS.ProcessEnv
+	// const fakeApiUrl = 'http://fake-api.co'
+	// let comp: RenderResult
+	// let origEnv: NodeJS.ProcessEnv
 
-	beforeEach(() => {
-		// !!! this should NOT be necessary, but is currently based on the error from
-		// !!!     updating context value in render code
-		jest.spyOn(console, 'error').mockImplementation(jest.fn())
+	// beforeEach(() => {
+	// 	// !!! this should NOT be necessary, but is currently based on the error from
+	// 	// !!!     updating context value in render code
+	// 	jest.spyOn(console, 'error').mockImplementation(jest.fn())
 
-		origEnv = process.env
+	// 	origEnv = process.env
 
-		process.env = {
-			NODE_ENV: process.env.NODE_ENV,
-			PUBLIC_URL: process.env.PUBLIC_URL,
-			REACT_APP_API_URL: fakeApiUrl,
-		}
+	// 	process.env = {
+	// 		NODE_ENV: process.env.NODE_ENV,
+	// 		PUBLIC_URL: process.env.PUBLIC_URL,
+	// 		REACT_APP_API_URL: fakeApiUrl,
+	// 	}
 
-		comp = render(<App />)
-	})
+	// 	comp = render(<App />)
+	// })
 
-	afterEach(() => {
-		process.env = origEnv
-	})
+	// afterEach(() => {
+	// 	process.env = origEnv
+	// })
 
-	it('renders mounted App', () => {
+	it('renders App', () => {
+		const comp = render(<App />)
 		expect(comp).toBeDefined()
 	})
 })

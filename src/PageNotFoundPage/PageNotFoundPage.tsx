@@ -1,11 +1,11 @@
 import { Grid, Typography } from '@material-ui/core'
 import React, { FC, useContext, useEffect } from 'react'
-import { AppTitleContext } from '../AppTitleContext'
+import { GlobalContext } from '../GlobalContext'
 import PageNotFoundImage from './PageNotFound.jpg'
 import './PageNotFoundPage.css'
 
 const PageNotFoundPage: FC = () => {
-	const context = useContext(AppTitleContext)
+	const context = useContext(GlobalContext)
 
 	useEffect(() => {
 		context.setTitle('Page Not Found')

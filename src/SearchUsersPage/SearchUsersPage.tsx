@@ -7,8 +7,7 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
-import { ApiContext } from '../ApiContext'
-import { AppTitleContext } from '../AppTitleContext'
+import { GlobalContext } from '../GlobalContext'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -36,7 +35,18 @@ const useStyles = makeStyles({
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	initialSearchValue = '',
-	userSearchFunc = async (
+}) => {
+	const DEFAULT_RESPONSE = {
+		icon: '',
+		level: '',
+		name: '',
+	}
+	const [result, setResult] = useState(DEFAULT_RESPONSE)
+	const [searchValue, setSearchValue] = useState(initialSearchValue)
+	const [hasSearched, setHasSearched] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+
+	const userSearchFunc = async (
 		api: ApiService,
 		searchKey: string,
 		updateFunc: (updatedResult: any) => void
@@ -51,23 +61,11 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 			level: summonerLevel,
 			name,
 		})
-	},
-}) => {
-	const DEFAULT_RESPONSE = {
-		icon: '',
-		level: '',
-		name: '',
 	}
-
-	const [result, setResult] = useState(DEFAULT_RESPONSE)
-	const [searchValue, setSearchValue] = useState(initialSearchValue)
-	const [hasSearched, setHasSearched] = useState(false)
-	const [isLoading, setIsLoading] = useState(false)
 
 	const classes = useStyles(theme)
 
-	const { api } = useContext(ApiContext)
-	const context = useContext(AppTitleContext)
+	const context = useContext(GlobalContext)
 
 	useEffect(() => {
 		context.setTitle('Search Users Page')
@@ -99,12 +97,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 								return
 							}
 							setIsLoading(true)
-							userSearchFunc(api, searchValue, setResult).then(
-								() => {
-									setHasSearched(true)
-									setIsLoading(false)
-								}
-							)
+							userSearchFunc(
+								context.api,
+								searchValue,
+								setResult
+							).then(() => {
+								setHasSearched(true)
+								setIsLoading(false)
+							})
 						}}
 						placeholder="Username"
 						value={searchValue}
@@ -115,12 +115,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						color="primary"
 						onClick={() => {
 							setIsLoading(true)
-							userSearchFunc(api, searchValue, setResult).then(
-								() => {
-									setHasSearched(true)
-									setIsLoading(false)
-								}
-							)
+							userSearchFunc(
+								context.api,
+								searchValue,
+								setResult
+							).then(() => {
+								setHasSearched(true)
+								setIsLoading(false)
+							})
 						}}
 						variant="contained"
 					>

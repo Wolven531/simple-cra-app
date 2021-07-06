@@ -15,7 +15,7 @@ import FourKIcon from '@material-ui/icons/FourK'
 import ThreeDRotationIcon from '@material-ui/icons/ThreeDRotation'
 import ThreeSixtyIcon from '@material-ui/icons/ThreeSixty'
 import React, { useContext, useEffect } from 'react'
-import { AppTitleContext } from './AppTitleContext'
+import { GlobalContext } from './GlobalContext'
 
 const useStyles = makeStyles((theme: Theme) =>
 	createStyles({
@@ -27,7 +27,7 @@ const useStyles = makeStyles((theme: Theme) =>
 
 function IconDemo() {
 	const classes = useStyles()
-	const context = useContext(AppTitleContext)
+	const context = useContext(GlobalContext)
 
 	useEffect(() => {
 		context.setTitle('Icon Demo Page')
@@ -68,4 +68,3 @@ function IconDemo() {
 }
 
 export { IconDemo }
-
