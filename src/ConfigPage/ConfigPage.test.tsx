@@ -12,6 +12,7 @@ describe('ConfigPage component', () => {
 	let mockAlert: jest.SpyInstance
 	let mockPingApiHealthEndpoint: jest.Mock
 	let mockPingTokenCheckEndpoint: jest.Mock
+	let mockPingTokenUpdateEndpoint: jest.Mock
 	let mockSetTitle: jest.Mock
 
 	beforeEach(() => {
@@ -19,7 +20,8 @@ describe('ConfigPage component', () => {
 		mockPingApiHealthEndpoint = jest
 			.fn()
 			.mockResolvedValue(fakeApiHealthResponse)
-		mockPingTokenCheckEndpoint = jest.fn().mockResolvedValue('true')
+		mockPingTokenCheckEndpoint = jest.fn().mockResolvedValue(true)
+		mockPingTokenUpdateEndpoint = jest.fn().mockResolvedValue(true)
 		mockSetTitle = jest.fn()
 
 		comp = renderCompWithMockedContext(ConfigPage, {
@@ -27,6 +29,7 @@ describe('ConfigPage component', () => {
 				apiUrl: fakeApiUrl,
 				pingApiHealthEndpoint: mockPingApiHealthEndpoint,
 				pingTokenCheckEndpoint: mockPingTokenCheckEndpoint,
+				pingTokenUpdateEndpoint: mockPingTokenUpdateEndpoint,
 			} as unknown as ApiService,
 			setTitle: mockSetTitle,
 		})
@@ -53,11 +56,11 @@ describe('ConfigPage component', () => {
 	describe('click health check button', () => {
 		beforeEach(() => {
 			const container = comp.container
-			const healthButton: Element = container.querySelector(
+			const healthCheckButton: Element = container.querySelector(
 				'.btn-health'
 			) as Element
-			const fakeClickEvent = createEvent('click', healthButton)
-			fireEvent.click(healthButton, fakeClickEvent)
+			const fakeClickEvent = createEvent('click', healthCheckButton)
+			fireEvent.click(healthCheckButton, fakeClickEvent)
 
 			// method 3 - not yet working
 			// comp.getByRole('button', {
@@ -74,11 +77,11 @@ describe('ConfigPage component', () => {
 	describe('click token check button', () => {
 		beforeEach(() => {
 			const container = comp.container
-			const healthButton: Element = container.querySelector(
+			const tokenCheckButton: Element = container.querySelector(
 				'.btn-token'
 			) as Element
-			const fakeClickEvent = createEvent('click', healthButton)
-			fireEvent.click(healthButton, fakeClickEvent)
+			const fakeClickEvent = createEvent('click', tokenCheckButton)
+			fireEvent.click(tokenCheckButton, fakeClickEvent)
 		})
 
 		it('invokes api.pingTokenCheckEndpoint()', () => {
@@ -88,23 +91,24 @@ describe('ConfigPage component', () => {
 		})
 	})
 
-	// 	// describe('click update token button w/o setting secret or token inputs', () => {
-	// 	// 	let buttonUpdateToken: ShallowWrapper
+	describe('click update token button w/o setting secret or token inputs', () => {
+		beforeEach(() => {
+			const container = comp.container
+			const updateTokenButton: Element = container.querySelector(
+				'.btn-update-token'
+			) as Element
+			const fakeClickEvent = createEvent('click', updateTokenButton)
+			fireEvent.click(updateTokenButton, fakeClickEvent)
+		})
 
-	// 	// 	beforeEach(() => {
-	// 	// 		buttonUpdateToken = comp.find('.btn-update-token')
-
-	// 	// 		buttonUpdateToken.simulate('click')
-	// 	// 	})
-
-	// 	// 	it('shows alert and does NOT invoke API', () => {
-	// 	// 		expect(buttonUpdateToken.text()).toEqual('Update Token')
-
-	// 	// 		expect(mockApiService.pingTokenUpdateEndpoint).not.toHaveBeenCalled()
-
-	// 	// 		expect(window.alert).toHaveBeenCalledTimes(1)
-	// 	// 	})
-	// 	// })
+		it('shows validation alert and does NOT invoke API method', () => {
+			expect(mockPingTokenUpdateEndpoint).not.toHaveBeenCalled()
+			expect(mockAlert).toHaveBeenCalledTimes(1)
+			expect(mockAlert).toHaveBeenLastCalledWith(
+				'Secret and Token are required to update token'
+			)
+		})
+	})
 
 	// 	// describe('click update token button when using provided secret and token props for inputs', () => {
 	// 	// 	const fakeSecret = 'some-secret'
