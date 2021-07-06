@@ -1,12 +1,12 @@
-import { createEvent, fireEvent, RenderResult } from '@testing-library/react'
+import { RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ApiService } from '../services/ApiService'
 import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
 
 describe('ConfigPage component', () => {
-	const fakeApiUrl = 'https://some-api.co'
 	const fakeApiHealthResponse = 'OK'
+	const fakeApiUrl = 'https://some-api.co'
 
 	let comp: RenderResult
 	let container: HTMLElement
@@ -47,26 +47,10 @@ describe('ConfigPage component', () => {
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Config Page')
 	})
 
-	// xit('sets title appropriately (Jim / RTL check)', async () => {
-	// 	comp = renderCompWithMockedContext(ConfigPage, {
-	// 		api: {
-	// 			apiUrl: fakeApiUrl,
-	// 		},
-	// 	})
-	// 	await waitFor(() => comp.getByText('Config Page'))
-	// })
-
 	describe('click health check button', () => {
 		beforeEach(() => {
-			const healthCheckButton: Element = container.querySelector(
-				'.btn-health'
-			) as Element
-			const fakeClickEvent = createEvent('click', healthCheckButton)
-			fireEvent.click(healthCheckButton, fakeClickEvent)
-
-			// method 3 - not yet working
-			// comp.getByRole('button', {
-			// })
+			const healthCheckButton: Element = comp.getByText('Server Up?')
+			userEvent.click(healthCheckButton)
 		})
 
 		it('invokes api.pingApiHealthEndpoint()', () => {
@@ -78,11 +62,8 @@ describe('ConfigPage component', () => {
 
 	describe('click token check button', () => {
 		beforeEach(() => {
-			const tokenCheckButton: Element = container.querySelector(
-				'.btn-token'
-			) as Element
-			const fakeClickEvent = createEvent('click', tokenCheckButton)
-			fireEvent.click(tokenCheckButton, fakeClickEvent)
+			const tokenCheckButton: Element = comp.getByText('Token valid?')
+			userEvent.click(tokenCheckButton)
 		})
 
 		it('invokes api.pingTokenCheckEndpoint()', () => {
@@ -94,11 +75,8 @@ describe('ConfigPage component', () => {
 
 	describe('click update token button w/o setting secret or token inputs', () => {
 		beforeEach(() => {
-			const updateTokenButton: Element = container.querySelector(
-				'.btn-update-token'
-			) as Element
-			const fakeClickEvent = createEvent('click', updateTokenButton)
-			fireEvent.click(updateTokenButton, fakeClickEvent)
+			const updateTokenButton: Element = comp.getByText('Update Token')
+			userEvent.click(updateTokenButton)
 		})
 
 		it('shows validation alert and does NOT invoke API method', () => {
@@ -115,39 +93,20 @@ describe('ConfigPage component', () => {
 		const fakeToken = 'some-token'
 
 		beforeEach(() => {
-			// gather the elements that will need interaction / setup
-			const secretInput: HTMLInputElement = container.querySelector(
-				'.input-secret'
-			) as HTMLInputElement
-			// const tokenInput: HTMLInputElement = container.querySelector(
-			// 	'.input-new-token'
-			// ) as HTMLInputElement
-			const tokenInput: HTMLInputElement = comp.getByPlaceholderText('New token') as HTMLInputElement
-			const updateTokenButton: Element = container.querySelector(
-				'.btn-update-token'
-			) as Element
+			// gather elements that need interaction / setup
+			const secretInput: Element = comp.getByPlaceholderText('Secret')
+			const tokenInput: Element = comp.getByPlaceholderText('New token')
+			const updateTokenButton: Element = comp.getByText('Update Token')
 
-			// create fake interaction events
-			// const fakeChangeSecretEvent = createEvent('change', secretInput, {
-			// 	target: { value: fakeSecret },
-			// })
-			// const fakeChangeTokenEvent = createEvent('change', tokenInput, {
-			// 	target: { value: fakeToken },
-			// })
-			// const fakeClickEvent = createEvent('click', updateTokenButton)
-
-			// update required text inputs first using fake events
-			// fireEvent.change(tokenInput, fakeChangeTokenEvent)
-			// fireEvent.change(secretInput, fakeChangeSecretEvent)
+			// update required text inputs
 			userEvent.type(secretInput, fakeSecret)
 			userEvent.type(tokenInput, fakeToken)
 
-			// then click update button using fake event
-			// fireEvent.click(updateTokenButton, fakeClickEvent)
+			// click update button
 			userEvent.click(updateTokenButton)
 		})
 
-		it('renders button properly, invokes pingTokenUpdateEndpoint() on API w/ proper params', () => {
+		it('invokes api.pingTokenUpdateEndpoint() w/ proper params and shows success alert', () => {
 			expect(mockPingTokenUpdateEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockPingTokenUpdateEndpoint).toHaveBeenCalledWith(
 				fakeSecret,
