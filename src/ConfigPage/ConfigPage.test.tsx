@@ -1,30 +1,32 @@
-import {
-	createEvent,
-	fireEvent,
-	RenderResult,
-	waitFor,
-} from '@testing-library/react'
+import { createEvent, fireEvent, RenderResult } from '@testing-library/react'
 import { ApiService } from '../services/ApiService'
 import { renderCompWithMockedContext } from '../testing-utils'
 import { ConfigPage } from './ConfigPage'
 
 describe('ConfigPage component', () => {
 	const fakeApiUrl = 'https://some-api.co'
+	const fakeApiHealthResponse = 'OK'
+
 	let comp: RenderResult
 
 	let mockAlert: jest.SpyInstance
 	let mockPingApiHealthEndpoint: jest.Mock
+	let mockPingTokenCheckEndpoint: jest.Mock
 	let mockSetTitle: jest.Mock
 
 	beforeEach(() => {
 		mockAlert = jest.spyOn(window, 'alert').mockImplementation(jest.fn())
-		mockPingApiHealthEndpoint = jest.fn().mockResolvedValue('OK')
+		mockPingApiHealthEndpoint = jest
+			.fn()
+			.mockResolvedValue(fakeApiHealthResponse)
+		mockPingTokenCheckEndpoint = jest.fn().mockResolvedValue('true')
 		mockSetTitle = jest.fn()
 
 		comp = renderCompWithMockedContext(ConfigPage, {
 			api: {
 				apiUrl: fakeApiUrl,
 				pingApiHealthEndpoint: mockPingApiHealthEndpoint,
+				pingTokenCheckEndpoint: mockPingTokenCheckEndpoint,
 			} as unknown as ApiService,
 			setTitle: mockSetTitle,
 		})
@@ -39,16 +41,16 @@ describe('ConfigPage component', () => {
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Config Page')
 	})
 
-	xit('sets title appropriately (Jim / RTL check)', async () => {
-		comp = renderCompWithMockedContext(ConfigPage, {
-			api: {
-				apiUrl: fakeApiUrl,
-			},
-		})
-		await waitFor(() => comp.getByText('Config Page'))
-	})
+	// xit('sets title appropriately (Jim / RTL check)', async () => {
+	// 	comp = renderCompWithMockedContext(ConfigPage, {
+	// 		api: {
+	// 			apiUrl: fakeApiUrl,
+	// 		},
+	// 	})
+	// 	await waitFor(() => comp.getByText('Config Page'))
+	// })
 
-	describe('click the health button while providing health check method', () => {
+	describe('click health check button', () => {
 		beforeEach(() => {
 			const container = comp.container
 			const healthButton: Element = container.querySelector(
@@ -65,43 +67,26 @@ describe('ConfigPage component', () => {
 		it('invokes api.pingApiHealthEndpoint()', () => {
 			expect(mockPingApiHealthEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockAlert).toHaveBeenCalledTimes(1)
-			expect(mockAlert).toHaveBeenLastCalledWith('OK') // val specified using mockResolvedValue() above
+			expect(mockAlert).toHaveBeenLastCalledWith(fakeApiHealthResponse)
 		})
 	})
 
-	// 	describe('click the health button w/o health check method', () => {
-	// 		beforeEach(() => {
-	// 			const container = comp.container
+	describe('click token check button', () => {
+		beforeEach(() => {
+			const container = comp.container
+			const healthButton: Element = container.querySelector(
+				'.btn-token'
+			) as Element
+			const fakeClickEvent = createEvent('click', healthButton)
+			fireEvent.click(healthButton, fakeClickEvent)
+		})
 
-	// 			// method 2 - works
-	// 			const healthButton = container.querySelector('.btn-health')
-	// 			fireEvent.click(healthButton as Element)
-	// 		})
-
-	// 		it('invokes default fireHealthCheck()', () => {
-	// 			// TODO - add code to test default fireHealthCheck more thoroughly
-	// 			expect(true).toBeTruthy()
-	// 		})
-	// 	})
-
-	// 	// describe('click check token button', () => {
-	// 	// 	let buttonCheckToken: ShallowWrapper
-
-	// 	// 	beforeEach(() => {
-	// 	// 		buttonCheckToken = comp.find('.btn-token')
-
-	// 	// 		buttonCheckToken.simulate('click')
-	// 	// 	})
-
-	// 	// 	it('renders button properly, invokes pingTokenCheckEndpoint() on API w/ no params', () => {
-	// 	// 		expect(buttonCheckToken.text()).toEqual('Token valid?')
-
-	// 	// 		expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenCalledTimes(1)
-	// 	// 		expect(mockApiService.pingTokenCheckEndpoint).toHaveBeenLastCalledWith()
-
-	// 	// 		expect(window.alert).toHaveBeenCalledTimes(1)
-	// 	// 	})
-	// 	// })
+		it('invokes api.pingTokenCheckEndpoint()', () => {
+			expect(mockPingTokenCheckEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockAlert).toHaveBeenCalledTimes(1)
+			expect(mockAlert).toHaveBeenLastCalledWith('Token is valid')
+		})
+	})
 
 	// 	// describe('click update token button w/o setting secret or token inputs', () => {
 	// 	// 	let buttonUpdateToken: ShallowWrapper
