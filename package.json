@@ -21,6 +21,7 @@
     "web-vitals": "^2.0.1"
   },
   "devDependencies": {
+    "@react-mock/state": "^0.1.8",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
