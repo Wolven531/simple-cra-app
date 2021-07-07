@@ -1,6 +1,6 @@
 import { RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { createMemoryHistory, MemoryHistory } from 'history'
+import { createBrowserHistory, History } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
 import { renderElemWithMockedContext } from '../testing-utils'
@@ -10,10 +10,13 @@ describe('Nav component', () => {
 	const fakeTitle = 'Some Page Title'
 
 	let comp: RenderResult
-	let history: MemoryHistory<unknown>
+	let history: History<unknown>
 
 	beforeEach(() => {
-		history = createMemoryHistory()
+		history = createBrowserHistory({
+			// initialEntries: ['/'],
+			// initialIndex: 0,
+		})
 		comp = renderElemWithMockedContext(
 			<Router history={history}>
 				<Nav />
@@ -66,12 +69,17 @@ describe('Nav component', () => {
 		// 	})
 		// })
 
+		// !!! FIXME
 		// describe('click link to go to Config page', () => {
 		// 	beforeEach(() => {
+		// 		expect(history.length).toBe(1)
+		// 		expect(history.location.pathname).toEqual('/')
+
 		// 		userEvent.click(comp.getByText('Config'))
 		// 	})
 
 		// 	it('navigates to Config page route', () => {
+		// 		expect(history.length).toBe(2)
 		// 		expect(history.location.pathname).toEqual('/config')
 		// 	})
 		// })
