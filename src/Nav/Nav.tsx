@@ -42,85 +42,85 @@ const Nav: FC = () => {
 	const { title } = useContext(GlobalContext)
 
 	return (
-		<div className={classes.root}>
-			<AppBar position="static">
-				<Toolbar>
-					<IconButton
-						aria-controls="menu-appbar"
-						aria-haspopup="true"
-						aria-label="menu"
-						className={classes.menuButton}
-						color="inherit"
-						edge="start"
-						onClick={(evt: any) => {
-							handleMenuOpen(evt)
-						}}
-					>
-						<MenuIcon />
-					</IconButton>
-					<Menu
-						anchorEl={anchorElem}
-						anchorOrigin={{
-							horizontal: 'right',
-							vertical: 'top',
-						}}
-						id="menu-appbar"
-						keepMounted
-						onClose={() => {
+		<AppBar position="static" className={classes.root}>
+			<Toolbar>
+				<IconButton
+					aria-controls="menu-appbar"
+					aria-haspopup="true"
+					aria-label="menu"
+					className={classes.menuButton}
+					color="inherit"
+					edge="start"
+					onClick={(evt) => {
+						handleMenuOpen(evt)
+					}}
+				>
+					<MenuIcon />
+				</IconButton>
+				<Menu
+					anchorEl={anchorElem}
+					anchorOrigin={{
+						horizontal: 'right',
+						vertical: 'top',
+					}}
+					id="menu-appbar"
+					keepMounted
+					onClose={() => {
+						handleClose()
+					}}
+					open={menuIsOpen}
+					transformOrigin={{
+						horizontal: 'right',
+						vertical: 'top',
+					}}
+				>
+					<MenuItem
+						onClick={() => {
 							handleClose()
 						}}
-						open={menuIsOpen}
-						transformOrigin={{
-							horizontal: 'right',
-							vertical: 'top',
+					>
+						<Link href="/" rel="noopener noreferrer">
+							Home
+						</Link>
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
 						}}
 					>
-						<MenuItem
-							onClick={() => {
-								handleClose()
-							}}
-						>
-							<Link href="/" rel="noopener noreferrer">
-								Home
-							</Link>
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								handleClose()
-							}}
-						>
-							<Link href="/config" rel="noopener noreferrer">
-								Config
-							</Link>
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								handleClose()
-							}}
-						>
-							<Link href="/icons" rel="noopener noreferrer">
-								Icon Demo
-							</Link>
-						</MenuItem>
-						<MenuItem
-							onClick={() => {
-								handleClose()
-							}}
-						>
-							<Link
-								href="/search-users"
-								rel="noopener noreferrer"
-							>
-								Search Users
-							</Link>
-						</MenuItem>
-					</Menu>
-					<Typography className={classes.title} variant="h4">
-						{title}
-					</Typography>
-				</Toolbar>
-			</AppBar>
-		</div>
+						<Link href="/config" rel="noopener noreferrer">
+							Config
+						</Link>
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link href="/icons" rel="noopener noreferrer">
+							Icon Demo
+						</Link>
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link href="/search-users" rel="noopener noreferrer">
+							Search Users
+						</Link>
+					</MenuItem>
+				</Menu>
+				<Typography
+					aria-roledescription="title of page"
+					className={classes.title}
+					role="heading"
+					variant="h4"
+				>
+					{title}
+				</Typography>
+			</Toolbar>
+		</AppBar>
 	)
 }
 
