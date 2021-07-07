@@ -42,7 +42,7 @@ const Nav: FC = () => {
 	const { title } = useContext(GlobalContext)
 
 	return (
-		<AppBar position="static" className={classes.root}>
+		<AppBar position="static" className={classes.root} role="menubar">
 			<Toolbar>
 				<IconButton
 					aria-controls="menu-appbar"
@@ -54,6 +54,7 @@ const Nav: FC = () => {
 					onClick={(evt) => {
 						handleMenuOpen(evt)
 					}}
+					role="menuitem"
 				>
 					<MenuIcon />
 				</IconButton>
@@ -69,7 +70,7 @@ const Nav: FC = () => {
 						handleClose()
 					}}
 					open={menuIsOpen}
-					role="menubar"
+					role="menuitem"
 					transformOrigin={{
 						horizontal: 'right',
 						vertical: 'top',
