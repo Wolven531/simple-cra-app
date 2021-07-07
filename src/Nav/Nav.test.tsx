@@ -55,5 +55,45 @@ describe('Nav component', () => {
 				expectedLinkTexts
 			)
 		})
+
+		// describe('click link to go to Home page', () => {
+		// 	beforeEach(() => {
+		// 		userEvent.click(comp.getByText('Home'))
+		// 	})
+
+		// 	it('navigates to Home page route', () => {
+		// 		expect(history.location.pathname).toEqual('/')
+		// 	})
+		// })
+
+		// describe('click link to go to Config page', () => {
+		// 	beforeEach(() => {
+		// 		userEvent.click(comp.getByText('Config'))
+		// 	})
+
+		// 	it('navigates to Config page route', () => {
+		// 		expect(history.location.pathname).toEqual('/config')
+		// 	})
+		// })
+
+		// describe('click link to go to Icon Demo page', () => {
+		// 	beforeEach(() => {
+		// 		userEvent.click(comp.getByText('Icon Demo'))
+		// 	})
+
+		// 	it('navigates to Icon Demo page route', () => {
+		// 		expect(history.location.pathname).toEqual('/icon-demo')
+		// 	})
+		// })
+
+		// describe('click link to go to Search Users page', () => {
+		// 	beforeEach(() => {
+		// 		userEvent.click(comp.getByText('Search Users'))
+		// 	})
+
+		// 	it('navigates to Search Users page route', () => {
+		// 		expect(history.location.pathname).toEqual('/search-users')
+		// 	})
+		// })
 	})
 })
