@@ -40,7 +40,7 @@ describe('ConfigPage component', () => {
 		expect(comp).toBeDefined()
 	})
 
-	it('sets title appropriately (Anthony check)', () => {
+	it('sets title appropriately', () => {
 		expect(mockSetTitle).toHaveBeenCalledTimes(1)
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Config Page')
 	})
