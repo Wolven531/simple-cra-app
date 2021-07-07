@@ -1,16 +1,26 @@
 import { RenderResult } from '@testing-library/react'
-import { renderCompWithMockedContext } from '../testing-utils'
+import { renderElemWithMockedContext } from '../testing-utils'
 import { Nav } from './Nav'
+import { createMemoryHistory, MemoryHistory } from 'history'
+import React from 'react'
+import { Router } from 'react-router-dom'
 
 describe('Nav component', () => {
 	const fakeTitle = 'Some Page Title'
 
 	let comp: RenderResult
+	let history: MemoryHistory<unknown>
 
 	beforeEach(() => {
-		comp = renderCompWithMockedContext(Nav, {
-			title: fakeTitle,
-		})
+		history = createMemoryHistory()
+		comp = renderElemWithMockedContext(
+			<Router history={history}>
+				<Nav />
+			</Router>,
+			{
+				title: fakeTitle,
+			}
+		)
 	})
 
 	it('renders Nav', () => {
