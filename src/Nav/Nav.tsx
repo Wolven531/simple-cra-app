@@ -69,6 +69,7 @@ const Nav: FC = () => {
 						handleClose()
 					}}
 					open={menuIsOpen}
+					role="menubar"
 					transformOrigin={{
 						horizontal: 'right',
 						vertical: 'top',
