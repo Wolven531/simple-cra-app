@@ -1,15 +1,11 @@
 import {
-	Box,
 	Button,
-	CircularProgress,
 	Container,
 	Grid,
 	makeStyles,
-	Modal,
 	Theme,
 	Typography,
 } from '@material-ui/core'
-import { FormatAlignJustify } from '@material-ui/icons'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
 import { LoadingModal } from '../LoadingModal'
@@ -134,9 +130,6 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						Search
 						{isLoading && (
 							<LoadingModal />
-
-							// Create popout for loading so user cannot interact with window while loading
-							// <Spinner className="loading-spinner" animation="border" variant="primary" />
 						)}
 					</Button>
 				</Grid>
