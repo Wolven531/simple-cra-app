@@ -79,7 +79,7 @@ const Nav: FC = () => {
 							handleClose()
 						}}
 					>
-						<Link href="/" rel="noopener noreferrer">
+						<Link href="/" rel="noopener noreferrer" role="link">
 							Home
 						</Link>
 					</MenuItem>
@@ -88,7 +88,11 @@ const Nav: FC = () => {
 							handleClose()
 						}}
 					>
-						<Link href="/config" rel="noopener noreferrer">
+						<Link
+							href="/config"
+							rel="noopener noreferrer"
+							role="link"
+						>
 							Config
 						</Link>
 					</MenuItem>
@@ -97,7 +101,11 @@ const Nav: FC = () => {
 							handleClose()
 						}}
 					>
-						<Link href="/icons" rel="noopener noreferrer">
+						<Link
+							href="/icons"
+							rel="noopener noreferrer"
+							role="link"
+						>
 							Icon Demo
 						</Link>
 					</MenuItem>
@@ -106,7 +114,11 @@ const Nav: FC = () => {
 							handleClose()
 						}}
 					>
-						<Link href="/search-users" rel="noopener noreferrer">
+						<Link
+							href="/search-users"
+							rel="noopener noreferrer"
+							role="link"
+						>
 							Search Users
 						</Link>
 					</MenuItem>
