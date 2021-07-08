@@ -24,3 +24,8 @@ API Environments (other than localhost)
 
 * Staging API - [https://simple-nest-staging.herokuapp.com](https://simple-nest-staging.herokuapp.com)
 * Production API - [https://simple-nest-prod.herokuapp.com](https://simple-nest-prod.herokuapp.com)
+
+## Misc.
+
+* Heroku CRA buildpack used - `mars/create-react-app` (full URL - `https://buildpack-registry.s3.amazonaws.com/buildpacks/mars/create-react-app.tgz`)
+* Also can run on `heroku/nodejs` buildpack
