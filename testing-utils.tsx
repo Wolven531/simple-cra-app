@@ -1,7 +1,7 @@
 import { render } from '@testing-library/react'
 import { FC, useContext } from 'react'
-import { GlobalContext } from './GlobalContext'
-import { ApiService } from './services/ApiService'
+import { GlobalContext } from './src/GlobalContext'
+import { ApiService } from './src/services/ApiService'
 
 /**
  * This method allows us to mock parts of the GlobalContext w/ ease
