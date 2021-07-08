@@ -1,7 +1,7 @@
 import { RenderResult } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { ApiService } from '../services/ApiService'
-import { renderCompWithMockedContext } from '../testing-utils'
+import { renderCompWithMockedContext } from '../../testing-utils'
 import { ConfigPage } from './ConfigPage'
 
 describe('ConfigPage component', () => {

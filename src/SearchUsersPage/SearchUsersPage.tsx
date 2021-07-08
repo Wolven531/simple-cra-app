@@ -8,6 +8,7 @@ import {
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
+import { LoadingModal } from '../LoadingModal/LoadingModal'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -44,6 +45,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	const [result, setResult] = useState(DEFAULT_RESPONSE)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
 	const [hasSearched, setHasSearched] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
 
 	const userSearchFunc = async (
 		api: ApiService,
@@ -95,12 +97,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							if (e.key !== 'Enter') {
 								return
 							}
+							setIsLoading(true)
 							userSearchFunc(
 								context.api,
 								searchValue,
 								setResult
 							).then(() => {
 								setHasSearched(true)
+								setIsLoading(false)
 							})
 						}}
 						placeholder="Username"
@@ -111,12 +115,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
+							setIsLoading(true)
 							userSearchFunc(
 								context.api,
 								searchValue,
 								setResult
 							).then(() => {
 								setHasSearched(true)
+								setIsLoading(false)
 							})
 						}}
 						variant="contained"
@@ -174,6 +180,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Container>
 				</Container>
 			)}
+			{isLoading && <LoadingModal />}
 		</Container>
 	)
 }
