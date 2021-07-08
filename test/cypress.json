@@ -6,7 +6,6 @@
 		"runMode": 2,
 		"openMode": 0
 	},
-	"experimentalFetchPolyfill": true,
 	"integrationFolder": "cypress/integration",
 	"testFiles": [
 		"**/ConfigPage.spec.{js,ts}",
