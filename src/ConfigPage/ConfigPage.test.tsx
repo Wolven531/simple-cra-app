@@ -9,7 +9,6 @@ describe('ConfigPage component', () => {
 	const fakeApiUrl = 'https://some-api.co'
 
 	let comp: RenderResult
-	let container: HTMLElement
 
 	let mockAlert: jest.SpyInstance
 	let mockPingApiHealthEndpoint: jest.Mock
@@ -35,14 +34,13 @@ describe('ConfigPage component', () => {
 			} as unknown as ApiService,
 			setTitle: mockSetTitle,
 		})
-		container = comp?.container // optional access (in case render failed)
 	})
 
 	it('renders ConfigPage component', () => {
 		expect(comp).toBeDefined()
 	})
 
-	it('sets title appropriately (Anthony check)', () => {
+	it('sets title appropriately', () => {
 		expect(mockSetTitle).toHaveBeenCalledTimes(1)
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Config Page')
 	})

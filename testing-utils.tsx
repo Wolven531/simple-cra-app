@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render, RenderResult } from '@testing-library/react'
 import { FC, useContext } from 'react'
 import { GlobalContext } from './src/GlobalContext'
 import { ApiService } from './src/services/ApiService'
@@ -13,7 +13,7 @@ import { ApiService } from './src/services/ApiService'
 const renderCompWithMockedContext = (
 	functionalComp: FC,
 	mockedContext: any
-) => {
+): RenderResult => {
 	const MockedContextProvider: FC = () => {
 		const context = useContext(GlobalContext)
 
@@ -38,4 +38,40 @@ const renderCompWithMockedContext = (
 	return render(<MockedContextProvider />)
 }
 
-export { renderCompWithMockedContext }
+/**
+ * This method allows us to mock parts of the GlobalContext w/ ease
+ *
+ * @param elem
+ * @param mockedContext
+ * @returns
+ */
+const renderElemWithMockedContext = (
+	elem: JSX.Element | Element,
+	mockedContext: any
+): RenderResult => {
+	const MockedContextProvider: FC = () => {
+		const context = useContext(GlobalContext)
+
+		if (mockedContext.api) {
+			context.api = mockedContext.api as unknown as ApiService
+		}
+		if (mockedContext.setApi) {
+			context.setApi = mockedContext.setApi
+		}
+		if (mockedContext.title) {
+			context.title = mockedContext.title
+		}
+		if (mockedContext.setTitle) {
+			context.setTitle = mockedContext.setTitle
+		}
+
+		// if simple Element, need to wrap in JSX tags;
+		// otherwise, elem is a JSX Element so just return it
+		return elem instanceof Element ? <>{elem}</> : elem
+	}
+
+	// render the context-enabled wrapper
+	return render(<MockedContextProvider />)
+}
+
+export { renderCompWithMockedContext, renderElemWithMockedContext }
