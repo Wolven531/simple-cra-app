@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event'
 import { createBrowserHistory, History } from 'history'
 import React from 'react'
 import { Router } from 'react-router-dom'
-import { renderElemWithMockedContext } from '../testing-utils'
+import { renderElemWithMockedContext } from '../../testing-utils'
 import { Nav } from './Nav'
 
 describe('Nav component', () => {
