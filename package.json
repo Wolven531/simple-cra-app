@@ -33,7 +33,7 @@
     "prebuild": "npm test",
     "start": "react-scripts start",
     "start:heroku": "serve -s build",
-    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/{App,ConfigPage,Footer,Nav,PageNotFoundPage,SearchUsersPage,services}/**.{ts,tsx}"
+    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/*/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
