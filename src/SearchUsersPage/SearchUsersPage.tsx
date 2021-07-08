@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
-import { LoadingModal } from '../LoadingModal'
+import { LoadingModal } from '../LoadingModal/LoadingModal'
 import { ApiService } from '../services/ApiService'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
@@ -128,9 +128,6 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						variant="contained"
 					>
 						Search
-						{isLoading && (
-							<LoadingModal />
-						)}
 					</Button>
 				</Grid>
 			</Grid>
@@ -183,6 +180,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Container>
 				</Container>
 			)}
+			{isLoading && <LoadingModal />}
 		</Container>
 	)
 }
