@@ -1,12 +1,6 @@
-import {
-	createEvent,
-	fireEvent,
-	render,
-	RenderResult,
-	// waitFor,
-} from '@testing-library/react'
-import React, { useContext } from 'react'
-import { FC } from 'react'
+import { render, RenderResult } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+import React, { FC, useContext } from 'react'
 import { GlobalContext } from '../GlobalContext'
 import { ApiService } from '../services/ApiService'
 import { SearchUsersPage } from './SearchUsersPage'
@@ -50,31 +44,19 @@ describe('SearchUsersPage component', () => {
 		expect(mockSetTitle).toHaveBeenLastCalledWith('Search Users Page')
 	})
 
-	describe('updating the search input and pressing Enter', () => {
-		let searchInput: HTMLElement
-
+	describe('update search input and press Enter', () => {
 		beforeEach(() => {
-			searchInput = comp.getByPlaceholderText('Username')
-			const fakeKeyPress = createEvent.keyPress(searchInput, {
-				code: 'Enter',
-				key: 'Enter',
-			})
-			fireEvent.change(searchInput, {
-				target: { value: fakeUsername },
-			})
-			fireEvent.keyPress(searchInput, fakeKeyPress)
+			userEvent.type(
+				comp.getByPlaceholderText('Username'),
+				`${fakeUsername}{enter}`
+			)
 		})
 
-		it('calls the api method', async () => {
-			expect(searchInput.getAttribute('value')).toEqual(fakeUsername)
-
-			// !!! FIXME
-			// await waitFor(() => {
-			// 	expect(mockPingUserSearchEndpoint).toHaveBeenCalledTimes(1)
-			// 	expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
-			// 		fakeUsername
-			// 	)
-			// })
+		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
+			expect(mockPingUserSearchEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
+				fakeUsername
+			)
 		})
 	})
 })
