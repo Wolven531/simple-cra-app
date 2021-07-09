@@ -46,7 +46,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	const [isLoading, setIsLoading] = useState(false)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
 
-	const fireUserSearch = async (searchKey: string) => {
+	const fireUserSearch = async (searchKey: string): Promise<void> => {
 		setIsLoading(true)
 
 		const response = await context.api.pingUserSearchEndpoint(searchKey)
@@ -54,6 +54,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		// !! must use keys as returned by server here, but can alias them as seen below
 		const { name, profileIconId, summonerLevel } = response
 
+		// TODO - can these updates be batched / performed as one?
 		setResult({
 			icon: profileIconId,
 			level: summonerLevel,
