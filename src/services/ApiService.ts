@@ -47,9 +47,11 @@ class ApiService {
 	/**
 	 * Use the fetch API over HTTP to hit user search endpoint on the server
 	 *
+	 * @param searchKey string sent to the API for search
+	 * @param handleErr optional function that accepts an error as its only parameter; called when an error occurs
 	 * @returns Promise that resolves to user object if successful; otherwise, Promise that resolves to empty object
 	 */
-	 pingUserSearchEndpoint(searchKey: string): Promise<any> {
+	 pingUserSearchEndpoint(searchKey: string, handleErr?: Function): Promise<any> {
 		return fetch(`${this._apiUrl}/user/search?searchKey=${searchKey}`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,
@@ -57,6 +59,12 @@ class ApiService {
 			.then((resp) => resp.json())
 			.then((obj) => obj)
 			.catch((err) => {
+				// if an error handler was provided, use it
+				if (handleErr !== undefined) {
+					handleErr(err)
+					return Promise.resolve({})
+				}
+
 				this.handleError(err)
 
 				return Promise.resolve({})
