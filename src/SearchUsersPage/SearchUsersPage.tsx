@@ -83,6 +83,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 				className="api-container"
 				container
 				justify="center"
+				spacing={2}
 			>
 				<Grid item>
 					<input
