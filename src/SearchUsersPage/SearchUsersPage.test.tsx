@@ -59,4 +59,18 @@ describe('SearchUsersPage component', () => {
 			)
 		})
 	})
+
+	describe('update search input and click search button', () => {
+		beforeEach(() => {
+			userEvent.type(comp.getByPlaceholderText('Username'), fakeUsername)
+			userEvent.click(comp.getByRole('button'))
+		})
+
+		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
+			expect(mockPingUserSearchEndpoint).toHaveBeenCalledTimes(1)
+			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
+				fakeUsername
+			)
+		})
+	})
 })
