@@ -10,6 +10,7 @@
 	"testFiles": [
 		"**/ConfigPage.spec.{js,ts}",
 		"**/HomePage.spec.{js,ts}",
-		"**/SearchUserPage.spec.{js,ts}"
+		"**/SearchUserPage.spec.{js,ts}",
+		"**/PageNotFound.spec.{js,ts}"
 	]
 }
