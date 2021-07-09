@@ -10,7 +10,7 @@ describe('Search User Page', () => {
 
 	describe('nav manu', () => {
 		beforeEach(() => {
-			cy.findByRole('button', { name: 'menu' }).click()
+			cy.findByRole('menuitem').click()
 		})
 
 		it('should appear', () => {

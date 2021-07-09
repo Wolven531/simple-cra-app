@@ -14,7 +14,7 @@ describe('Home Page', () => {
 
 	describe('Nav menu', () => {
 		beforeEach(() => {
-			cy.findByRole('button', { name: 'menu' }).click()
+			cy.findByRole('menuitem').click()
 		})
 
 		it('should have correct links', () => {
