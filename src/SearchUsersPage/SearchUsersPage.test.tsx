@@ -1,20 +1,28 @@
-import { render, RenderResult } from '@testing-library/react'
+import { act, RenderResult, waitFor } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import React, { FC, useContext } from 'react'
-import { GlobalContext } from '../GlobalContext'
-import { ApiService } from '../services/ApiService'
+import { renderCompWithMockedContext } from '../../testing-utils'
 import { SearchUsersPage } from './SearchUsersPage'
 
 describe('SearchUsersPage component', () => {
-	const fakeUsername = 'someUserName'
 	const fakeIconId = '65478'
 	const fakeLevel = '36'
+	const fakeUsername = 'someUserName'
 
 	let comp: RenderResult
 	let mockPingUserSearchEndpoint: jest.Mock
 	let mockSetTitle: jest.Mock
 
-	beforeEach(() => {
+	// !!! hides warning due to multiple state updates inside MockedContextProvider
+	// !!! cannot seem to resolve error (even w/ act()), but tests pass; error below
+	/*
+	Warning: An update to MockedContextProvider inside a test was not wrapped in act(...).
+	When testing, code that causes React state updates should be wrapped into act(...):
+	*/
+	beforeAll(() => {
+		jest.spyOn(console, 'error').mockImplementation(jest.fn())
+	})
+
+	beforeEach((done) => {
 		mockSetTitle = jest.fn()
 		mockPingUserSearchEndpoint = jest.fn().mockResolvedValue({
 			name: fakeUsername,
@@ -22,17 +30,15 @@ describe('SearchUsersPage component', () => {
 			summonerLevel: fakeLevel,
 		})
 
-		const FakeWrapperComp: FC<any> = (props: any) => {
-			const context = useContext(GlobalContext)
-			context.setTitle = mockSetTitle
-			context.api = {
-				pingUserSearchEndpoint: mockPingUserSearchEndpoint,
-			} as unknown as ApiService
-
-			return <SearchUsersPage />
-		}
-
-		comp = render(<FakeWrapperComp />)
+		act(() => {
+			comp = renderCompWithMockedContext(SearchUsersPage, {
+				api: {
+					pingUserSearchEndpoint: mockPingUserSearchEndpoint,
+				},
+				setTitle: mockSetTitle,
+			})
+			done()
+		})
 	})
 
 	it('renders SearchUsersPage', () => {
@@ -46,10 +52,13 @@ describe('SearchUsersPage component', () => {
 
 	describe('update search input and press Enter', () => {
 		beforeEach(() => {
+			// !!! using act() here breaks the events
+			// act(() => {
 			userEvent.type(
 				comp.getByPlaceholderText('Username'),
 				`${fakeUsername}{enter}`
 			)
+			// })
 		})
 
 		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
@@ -57,13 +66,25 @@ describe('SearchUsersPage component', () => {
 			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
 				fakeUsername
 			)
+
+			await waitFor(() =>
+				expect(comp.getByText('Results')).toBeInTheDocument()
+			)
+			// waitFor(() =>
+			// 	expect(comp.getByText('Results')).toBeInTheDocument()
+			// ).then(() => {
+			// 	done()
+			// })
 		})
 	})
 
 	describe('update search input and click search button', () => {
 		beforeEach(() => {
+			// !!! using act() here breaks the events
+			// act(() => {
 			userEvent.type(comp.getByPlaceholderText('Username'), fakeUsername)
 			userEvent.click(comp.getByRole('button'))
+			// })
 		})
 
 		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
@@ -71,6 +92,15 @@ describe('SearchUsersPage component', () => {
 			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
 				fakeUsername
 			)
+
+			await waitFor(() =>
+				expect(comp.getByText('Results')).toBeInTheDocument()
+			)
+			// waitFor(() =>
+			// 	expect(comp.getByText('Results')).toBeInTheDocument()
+			// ).then(() => {
+			// 	done()
+			// })
 		})
 	})
 })
