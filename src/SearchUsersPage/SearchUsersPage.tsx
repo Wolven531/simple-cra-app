@@ -20,6 +20,11 @@ interface SearchUsersPageProps {
 }
 
 const useStyles = makeStyles({
+	errorContainer: (theme: Theme) => ({
+		display: 'flex',
+		justifyContent: 'center',
+		marginTop: theme.spacing(3),
+	}),
 	resultRow: (theme: Theme) => ({
 		alignSelf: 'stretch',
 		border: '1px solid',
@@ -43,13 +48,27 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		name: '',
 	})
 	const [hasSearched, setHasSearched] = useState(false)
+	const [searchError, setSearchError] = useState<any>(null)
 	const [isLoading, setIsLoading] = useState(false)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
 
 	const fireUserSearch = async (searchKey: string): Promise<void> => {
+		setSearchError(null)
 		setIsLoading(true)
 
-		const response = await context.api.pingUserSearchEndpoint(searchKey)
+		const response = await context.api.pingUserSearchEndpoint(
+			searchKey,
+			(err: any) => {
+				// TODO - can these updates be batched / performed as one?
+				setSearchError(err)
+				setHasSearched(true)
+				setIsLoading(false)
+			}
+		)
+
+		if (searchError) {
+			return
+		}
 
 		// !! must use keys as returned by server here, but can alias them as seen below
 		const { name, profileIconId, summonerLevel } = response
@@ -112,8 +131,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Button>
 				</Grid>
 			</Grid>
+			{hasSearched && !isLoading && !!searchError && (
+				<Container className={classes.errorContainer}>
+					<Typography color="error">There was a problem</Typography>
+				</Container>
+			)}
 			{/* display result if search has been made ; note the ID of icon will change to image when API updates */}
-			{hasSearched && (
+			{hasSearched && !isLoading && !searchError && (
 				<Container className="user-data-container">
 					<Typography
 						align="center"
