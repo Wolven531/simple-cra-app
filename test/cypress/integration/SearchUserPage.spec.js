@@ -8,7 +8,7 @@ describe('Search User Page', () => {
 		cy.get('h1').should('contain', 'Search Users Page')
 	})
 
-	describe('nav manu', () => {
+	describe('nav menu', () => {
 		beforeEach(() => {
 			cy.findByRole('menuitem').click()
 		})

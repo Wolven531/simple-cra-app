@@ -12,7 +12,7 @@ describe('Search User Page', () => {
 		)
 	})
 
-	describe('nav manu', () => {
+	describe('nav menu', () => {
 		beforeEach(() => {
 			cy.findByRole('menuitem').click()
 		})

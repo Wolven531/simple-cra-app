@@ -13,7 +13,7 @@ describe('Config Page', () => {
 			.and('contain', 'https://developer.riotgames.com')
 	})
 
-	describe('nav manu', () => {
+	describe('nav menu', () => {
 		beforeEach(() => {
 			cy.findByRole('menuitem').click()
 		})
