@@ -48,8 +48,8 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		name: '',
 	})
 	const [hasSearched, setHasSearched] = useState(false)
-	const [searchError, setSearchError] = useState<any>(null)
 	const [isLoading, setIsLoading] = useState(false)
+	const [searchError, setSearchError] = useState<any>(null)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
 
 	const fireUserSearch = async (searchKey: string): Promise<void> => {
