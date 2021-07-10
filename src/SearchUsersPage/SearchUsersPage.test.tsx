@@ -64,7 +64,8 @@ describe('SearchUsersPage component', () => {
 		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
 			expect(mockPingUserSearchEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
-				fakeUsername
+				fakeUsername,
+				expect.any(Function)
 			)
 
 			await waitFor(() =>
@@ -90,7 +91,8 @@ describe('SearchUsersPage component', () => {
 		it('invokes api.pingUserSearchEndpoint() w/ the correct search value', async () => {
 			expect(mockPingUserSearchEndpoint).toHaveBeenCalledTimes(1)
 			expect(mockPingUserSearchEndpoint).toHaveBeenLastCalledWith(
-				fakeUsername
+				fakeUsername,
+				expect.any(Function)
 			)
 
 			await waitFor(() =>
