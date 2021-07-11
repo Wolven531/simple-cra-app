@@ -7,5 +7,10 @@
 		"openMode": 0
 	},
 	"integrationFolder": "cypress/integration",
-	"testFiles": "**/simplePage.spec.{js,ts}"
+	"testFiles": [
+		"**/ConfigPage.spec.{js,ts}",
+		"**/HomePage.spec.{js,ts}",
+		"**/SearchUserPage.spec.{js,ts}",
+		"**/PageNotFound.spec.{js,ts}"
+	]
 }

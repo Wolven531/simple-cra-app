@@ -130,6 +130,7 @@ const Nav: FC = () => {
 					className={classes.title}
 					role="heading"
 					variant="h4"
+					component="h1"
 				>
 					{title}
 				</Typography>
