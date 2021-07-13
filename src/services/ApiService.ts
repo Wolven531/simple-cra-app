@@ -72,6 +72,25 @@ class ApiService {
 	}
 
 	/**
+	 * Use the fetch API over HTTP to hit get mastery total endpoint on the server
+	 *
+	 * @returns Promise that resolves to number if successful; otherwise, Promise that resolves to 0
+	 */
+	 pingMasteryTotalEndpoint(summonerId: string): Promise<number> {
+		return fetch(`${this._apiUrl}/mastery/total/${summonerId}`, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.text())
+			.then((str) => parseInt(str))
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve(0)
+			})
+	}
+
+	/**
 	 * Use the fetch API over HTTP to hit the check token endpoint on the server
 	 *
 	 * @returns Promise that resolves to true if token was valid; otherwise, Promise that resolves to false

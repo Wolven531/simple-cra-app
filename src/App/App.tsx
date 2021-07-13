@@ -2,6 +2,7 @@ import { Container } from '@material-ui/core'
 import React from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
+import { DisplayTotalMasteryPage } from '../DisplayTotalMasteryPage/DisplayTotalMasteryPage'
 import { Footer } from '../Footer/Footer'
 import { GlobalContextProvider } from '../GlobalContext'
 import { HomePage } from '../HomePage/HomePage'
@@ -30,6 +31,9 @@ function App() {
 						</Route>
 						<Route path="/search-users" exact>
 							<SearchUsersPage />
+						</Route>
+						<Route path="/mastery/:name" exact>
+							<DisplayTotalMasteryPage />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />
