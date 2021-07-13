@@ -7,22 +7,24 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
-import { ApiContext } from '../ApiContext'
-import { AppTitleContext } from '../AppTitleContext'
-import { ApiService } from '../services/ApiService'
+import { GlobalContext } from '../GlobalContext'
+import { LoadingModal } from '../LoadingModal/LoadingModal'
 import { theme } from '../theme'
 import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
+	/**
+	 * Optional initial value to populate search input
+	 */
 	initialSearchValue?: string
-	userSearchFunc?: (
-		api: ApiService,
-		searchKey: string,
-		updateFunc: (updatedResult: any) => void
-	) => Promise<void>
 }
 
 const useStyles = makeStyles({
+	errorContainer: (theme: Theme) => ({
+		display: 'flex',
+		justifyContent: 'center',
+		marginTop: theme.spacing(3),
+	}),
 	resultRow: (theme: Theme) => ({
 		alignSelf: 'stretch',
 		border: '1px solid',
@@ -36,36 +38,50 @@ const useStyles = makeStyles({
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	initialSearchValue = '',
-	userSearchFunc = async (
-		api: ApiService,
-		searchKey: string,
-		updateFunc: (updatedResult: any) => void
-	) => {
-		const response = await api.pingUserSearchEndpoint(searchKey)
+}) => {
+	const classes = useStyles(theme)
+	const context = useContext(GlobalContext)
+
+	const [result, setResult] = useState({
+		icon: '',
+		level: '',
+		name: '',
+	})
+	const [hasSearched, setHasSearched] = useState(false)
+	const [isLoading, setIsLoading] = useState(false)
+	const [searchError, setSearchError] = useState<any>(null)
+	const [searchValue, setSearchValue] = useState(initialSearchValue)
+
+	const fireUserSearch = async (searchKey: string): Promise<void> => {
+		setSearchError(null)
+		setIsLoading(true)
+
+		const response = await context.api.pingUserSearchEndpoint(
+			searchKey,
+			(err: any) => {
+				// TODO - can these updates be batched / performed as one?
+				setSearchError(err)
+				setHasSearched(true)
+				setIsLoading(false)
+			}
+		)
+
+		if (searchError) {
+			return
+		}
 
 		// !! must use keys as returned by server here, but can alias them as seen below
 		const { name, profileIconId, summonerLevel } = response
 
-		updateFunc({
+		// TODO - can these updates be batched / performed as one?
+		setResult({
 			icon: profileIconId,
 			level: summonerLevel,
 			name,
 		})
-	},
-}) => {
-	const DEFAULT_RESPONSE = {
-		icon: '',
-		level: '',
-		name: '',
+		setHasSearched(true)
+		setIsLoading(false)
 	}
-	const [result, setResult] = useState(DEFAULT_RESPONSE)
-	const [searchValue, setSearchValue] = useState(initialSearchValue)
-	const [hasSearched, setHasSearched] = useState(false)
-
-	const classes = useStyles(theme)
-
-	const { api } = useContext(ApiContext)
-	const context = useContext(AppTitleContext)
 
 	useEffect(() => {
 		context.setTitle('Search Users Page')
@@ -86,6 +102,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 				className="api-container"
 				container
 				justify="center"
+				spacing={2}
 			>
 				<Grid item>
 					<input
@@ -96,9 +113,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							if (e.key !== 'Enter') {
 								return
 							}
-							userSearchFunc(api, searchValue, setResult).then(() => {
-								setHasSearched(true)
-							})
+							fireUserSearch(searchValue)
 						}}
 						placeholder="Username"
 						value={searchValue}
@@ -108,9 +123,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Button
 						color="primary"
 						onClick={() => {
-							userSearchFunc(api, searchValue, setResult).then(() => {
-								setHasSearched(true)
-							})
+							fireUserSearch(searchValue)
 						}}
 						variant="contained"
 					>
@@ -118,8 +131,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Button>
 				</Grid>
 			</Grid>
+			{hasSearched && !isLoading && !!searchError && (
+				<Container className={classes.errorContainer}>
+					<Typography color="error">There was a problem</Typography>
+				</Container>
+			)}
 			{/* display result if search has been made ; note the ID of icon will change to image when API updates */}
-			{hasSearched && (
+			{hasSearched && !isLoading && !searchError && (
 				<Container className="user-data-container">
 					<Typography
 						align="center"
@@ -167,6 +185,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					</Container>
 				</Container>
 			)}
+			{isLoading && <LoadingModal />}
 		</Container>
 	)
 }

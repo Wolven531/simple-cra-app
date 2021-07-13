@@ -1,6 +1,6 @@
 {
   "name": "nextgen-league-compare-app",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "dependencies": {
     "@fontsource/roboto": "^4.4.5",
@@ -21,6 +21,8 @@
     "web-vitals": "^2.0.1"
   },
   "devDependencies": {
+    "@react-mock/state": "^0.1.8",
+    "@testing-library/dom": "^8.1.0",
     "@testing-library/jest-dom": "^5.13.0",
     "@testing-library/react": "^11.2.7",
     "@testing-library/user-event": "^13.1.9",
@@ -32,7 +34,7 @@
     "prebuild": "npm test",
     "start": "react-scripts start",
     "start:heroku": "serve -s build",
-    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/{App,ConfigPage,Footer,Nav,PageNotFoundPage,services}/**.{ts,tsx}"
+    "test": "react-scripts test --all --ci --coverage --watchAll=false --collectCoverageFrom=src/*/*.{ts,tsx}"
   },
   "eslintConfig": {
     "extends": [
