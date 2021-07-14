@@ -1,5 +1,12 @@
 import { HEADERS_JSON_CONTENT, HTTP_GET, HTTP_POST, NO_CACHE } from '../constants'
 
+export interface GetUsersEndpointResult {
+    accountId: string;
+    lastUpdated: number;
+    masteryTotal: number;
+    name: string;
+    summonerId: string;
+}
 /**
  * This service encapsulates API communication in a centralized location
  */
@@ -74,9 +81,28 @@ class ApiService {
 	/**
 	 * Use the fetch API over HTTP to hit the check token endpoint on the server
 	 *
+	 * @returns Promise that resolves user object if successful; otherwise, Promise that resolves to empty object
+	 */
+	pingGetUsersEndpoint(): Promise<GetUsersEndpointResult[]> {
+		return fetch(`${this._apiUrl}/user`, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((obj) => obj)
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve({})
+			})
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the check token endpoint on the server
+	 *
 	 * @returns Promise that resolves to true if token was valid; otherwise, Promise that resolves to false
 	 */
-	pingTokenCheckEndpoint(): Promise<boolean> {
+	 pingTokenCheckEndpoint(): Promise<boolean> {
 		return fetch(`${this._apiUrl}/config/check-token`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,

@@ -10,6 +10,7 @@ import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import './App.css'
+import DisplayUsers from './DsiplayUsers/DisplayUsers'
 
 function App() {
 	return (
@@ -30,6 +31,9 @@ function App() {
 						</Route>
 						<Route path="/search-users" exact>
 							<SearchUsersPage />
+						</Route>
+						<Route path="/display-users" exact>
+							<DisplayUsers />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />
