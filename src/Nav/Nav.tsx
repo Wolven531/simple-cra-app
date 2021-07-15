@@ -124,6 +124,19 @@ const Nav: FC = () => {
 							Search Users
 						</Link>
 					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link
+							href="/display-users"
+							rel="noopener noreferrer"
+							role="link"
+						>
+							All Users
+						</Link>
+					</MenuItem>
 				</Menu>
 				<Typography
 					aria-roledescription="title of page"

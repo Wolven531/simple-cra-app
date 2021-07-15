@@ -3,6 +3,7 @@ import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../../GlobalContext'
 import { theme } from '../../theme'
 import { GetUsersEndpointResult } from '../../services/ApiService'
+import { FormatAlignJustify } from '@material-ui/icons'
 
 function DisplayUsers() {
 	const { api, setTitle } = useContext(GlobalContext) // for page title and API access
@@ -10,6 +11,12 @@ function DisplayUsers() {
 	const useStyles = makeStyles({
 		errorContainer: (theme: Theme) => ({
 			display: 'flex',
+			justifyContent: 'center',
+			marginTop: theme.spacing(3),
+		}),
+		resultContainer: (theme: Theme) => ({
+			display: 'flex',
+			flexDirection: 'row',
 			justifyContent: 'center',
 			marginTop: theme.spacing(3),
 		}),
@@ -21,6 +28,9 @@ function DisplayUsers() {
 			display: 'flex',
 			justifyContent: 'space-between',
 			marginBottom: theme.spacing(3),
+		}),
+		resultTitle: (theme: Theme) => ({
+			whitespace: 'nowrap'
 		}),
 	})
 	const classes = useStyles(theme)
@@ -46,13 +56,13 @@ function DisplayUsers() {
 				align="center"
 				color="primary"
 				gutterBottom
-				variant="h5"
+				variant="h2"
 			>
 				All Users
 			</Typography>
 
 			{users.map((user) => (
-                <Container key={user.summonerId}>
+                <Container className={classes.resultContainer} key={user.summonerId}>
 					<Container className={classes.resultRow}>
 						<Typography align="left" color="primary" variant="h6">
 							Name:
@@ -67,7 +77,7 @@ function DisplayUsers() {
 						</Typography>
 					</Container>
 					<Container className={classes.resultRow}>
-						<Typography align="left" color="primary" variant="h6">
+						<Typography className={classes.resultTitle} align="left" color="primary" variant="h6">
 							Mastery Score:
 						</Typography>
 						<Typography
