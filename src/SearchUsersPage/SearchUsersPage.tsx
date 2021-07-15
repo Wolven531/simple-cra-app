@@ -171,7 +171,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							color="secondary"
 							variant="h6"
 						>
-							<Link href={`/mastery/${result.name}`} rel="noopener noreferrer">
+							<Link href={`/mastery/${result.summonerId}`} rel="noopener noreferrer">
 								{result.name}
 							</Link>
 						</Typography>

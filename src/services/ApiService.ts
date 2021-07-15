@@ -72,21 +72,21 @@ class ApiService {
 	}
 
 	/**
-	 * Use the fetch API over HTTP to hit get mastery total endpoint on the server
+	 * Use the fetch API over HTTP to hit mastery total endpoint on the server
 	 *
-	 * @returns Promise that resolves to number if successful; otherwise, Promise that resolves to 0
+	 * @returns Promise that resolves to json; otherwise, Promise that resolves to empty object
 	 */
-	 pingMasteryTotalEndpoint(summonerId: string): Promise<number> {
-		return fetch(`${this._apiUrl}/mastery/total/${summonerId}`, {
+	 pingMasteryTotalEndpoint(summonerId: string, withUser: boolean): Promise<any> {
+		return fetch(`${this._apiUrl}/mastery/total/${summonerId}?withUser=${withUser}`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,
 		})
-			.then((resp) => resp.text())
-			.then((str) => parseInt(str))
+			.then((resp) => resp.json())
+			.then((obj) => obj)
 			.catch((err) => {
 				this.handleError(err)
 
-				return Promise.resolve(0)
+				return Promise.resolve({})
 			})
 	}
 
