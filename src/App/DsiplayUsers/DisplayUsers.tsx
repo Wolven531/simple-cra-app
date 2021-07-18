@@ -1,9 +1,8 @@
-import { Container, makeStyles, Theme, Typography } from '@material-ui/core'
+import { Container, List, ListItem, makeStyles, Theme, Typography } from '@material-ui/core'
 import { useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../../GlobalContext'
 import { theme } from '../../theme'
 import { GetUsersEndpointResult } from '../../services/ApiService'
-import { FormatAlignJustify } from '@material-ui/icons'
 
 function DisplayUsers() {
 	const { api, setTitle } = useContext(GlobalContext) // for page title and API access
@@ -28,9 +27,7 @@ function DisplayUsers() {
 			display: 'flex',
 			justifyContent: 'space-between',
 			marginBottom: theme.spacing(3),
-		}),
-		resultTitle: (theme: Theme) => ({
-			whitespace: 'nowrap'
+			whiteSpace: 'nowrap'
 		}),
 	})
 	const classes = useStyles(theme)
@@ -62,8 +59,8 @@ function DisplayUsers() {
 			</Typography>
 
 			{users.map((user) => (
-                <Container className={classes.resultContainer} key={user.summonerId}>
-					<Container className={classes.resultRow}>
+                <List className={classes.resultContainer} key={user.summonerId}>
+					<ListItem className={classes.resultRow}>
 						<Typography align="left" color="primary" variant="h6">
 							Name:
 						</Typography>
@@ -75,9 +72,9 @@ function DisplayUsers() {
 						>
 							{user.name}
 						</Typography>
-					</Container>
-					<Container className={classes.resultRow}>
-						<Typography className={classes.resultTitle} align="left" color="primary" variant="h6">
+					</ListItem>
+					<ListItem className={classes.resultRow}>
+						<Typography align="left" color="primary" variant="h6">
 							Mastery Score:
 						</Typography>
 						<Typography
@@ -87,8 +84,8 @@ function DisplayUsers() {
 						>
 							{user.masteryTotal}
 						</Typography>
-					</Container>
-					<Container className={classes.resultRow}>
+					</ListItem>
+					<ListItem className={classes.resultRow}>
 						<Typography align="left" color="primary" variant="h6">
 							Last Updated:
 						</Typography>
@@ -99,8 +96,8 @@ function DisplayUsers() {
 						>
 							{user.lastUpdated}
 						</Typography>
-					</Container>
-				</Container>
+					</ListItem>
+				</List>
 			))}
 		</Container>
 	)
