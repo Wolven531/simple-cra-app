@@ -93,7 +93,7 @@ class ApiService {
 			.catch((err) => {
 				this.handleError(err)
 
-				return Promise.resolve({})
+				return Promise.resolve([])
 			})
 	}
 
