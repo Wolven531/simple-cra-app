@@ -5,7 +5,6 @@ import { useParams } from 'react-router-dom'
 import { GlobalContext } from '../GlobalContext'
 import { theme } from '../theme'
 
-interface DisplayTotalMasteryPageProps {}
 
 const useStyles = makeStyles({
 	resultRow: (theme: Theme) => ({
@@ -19,7 +18,7 @@ const useStyles = makeStyles({
 	}),
 })
 
-const DisplayTotalMasteryPage: FC<DisplayTotalMasteryPageProps> = ({}) => {
+const MasteryPage: FC = () => {
 	const { id } = useParams<{ id: string }>()
 	const { api, setTitle } = useContext(GlobalContext) // for page title and API access
 	const classes = useStyles(theme)
@@ -48,7 +47,7 @@ const DisplayTotalMasteryPage: FC<DisplayTotalMasteryPageProps> = ({}) => {
 
 	return (
 		// Display user icon, username, and total mastery
-		<Container className="user-data-container">
+		<Container className="mastery-page-container">
 			<Typography
 				align="center"
 				color="primary"
@@ -66,7 +65,6 @@ const DisplayTotalMasteryPage: FC<DisplayTotalMasteryPageProps> = ({}) => {
 				</Typography>
 			</Container>
 			<Container className={classes.resultRow}>
-				{/* Add link to DisplayTotalMastery */}
 				<Typography align="left" color="primary" variant="h6">
 					Name:
 				</Typography>
@@ -86,4 +84,4 @@ const DisplayTotalMasteryPage: FC<DisplayTotalMasteryPageProps> = ({}) => {
 	)
 }
 
-export { DisplayTotalMasteryPage }
+export { MasteryPage }
