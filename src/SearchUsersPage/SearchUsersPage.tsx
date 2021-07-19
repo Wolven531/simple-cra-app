@@ -2,6 +2,7 @@ import {
 	Button,
 	Container,
 	Grid,
+	Link,
 	makeStyles,
 	Theme,
 	Typography,
@@ -191,7 +192,9 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							color="secondary"
 							variant="h6"
 						>
-							{result.name}
+							<Link href={`/mastery/${result.id}`} rel="noopener noreferrer">
+								{result.name}
+							</Link>
 						</Typography>
 					</Container>
 					<Container className={classes.resultRow}>
