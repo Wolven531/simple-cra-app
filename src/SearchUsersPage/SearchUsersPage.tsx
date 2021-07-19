@@ -2,6 +2,7 @@ import {
 	Button,
 	Container,
 	Grid,
+	Link,
 	makeStyles,
 	Theme,
 	Typography,
@@ -46,6 +47,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		icon: '',
 		level: '',
 		name: '',
+		summonerId: '',
 	})
 	const [hasSearched, setHasSearched] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
@@ -71,13 +73,14 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		}
 
 		// !! must use keys as returned by server here, but can alias them as seen below
-		const { name, profileIconId, summonerLevel } = response
+		const { id, name, profileIconId, summonerLevel } = response
 
 		// TODO - can these updates be batched / performed as one?
 		setResult({
 			icon: profileIconId,
 			level: summonerLevel,
 			name,
+			summonerId: id,
 		})
 		setHasSearched(true)
 		setIsLoading(false)
@@ -168,7 +171,9 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							color="secondary"
 							variant="h6"
 						>
-							{result.name}
+							<Link href={`/mastery/${result.summonerId}`} rel="noopener noreferrer">
+								{result.name}
+							</Link>
 						</Typography>
 					</Container>
 					<Container className={classes.resultRow}>
