@@ -34,6 +34,22 @@ const useStyles = makeStyles({
 		justifyContent: 'space-between',
 		marginBottom: theme.spacing(3),
 	}),
+	addUserButtonContainer: (theme: Theme) => ({
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: theme.spacing(3),
+		
+	}),
+	addUserButton: (theme: Theme) => ({
+		background: theme.palette.primary.contrastText,
+		border: 'solid',
+		// Keep it or leave it, just Vinny playing with CSS
+		textShadow: '2px 2px 8px #00FF00',
+		boxShadow: '2px 2px 8px #00FF00',
+	}),
+	successContainer: (theme: Theme) => ({
+		marginLeft: theme.spacing(1),
+	}),
 })
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
@@ -46,11 +62,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		icon: '',
 		level: '',
 		name: '',
+		id: '',
 	})
 	const [hasSearched, setHasSearched] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [searchError, setSearchError] = useState<any>(null)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
+	const [addUserResult, setAddUserResult] = useState(false)
 
 	const fireUserSearch = async (searchKey: string): Promise<void> => {
 		setSearchError(null)
@@ -59,7 +77,6 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		const response = await context.api.pingUserSearchEndpoint(
 			searchKey,
 			(err: any) => {
-				// TODO - can these updates be batched / performed as one?
 				setSearchError(err)
 				setHasSearched(true)
 				setIsLoading(false)
@@ -70,14 +87,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 			return
 		}
 
-		// !! must use keys as returned by server here, but can alias them as seen below
-		const { name, profileIconId, summonerLevel } = response
+		const { id, name, profileIconId, summonerLevel } = response
 
-		// TODO - can these updates be batched / performed as one?
 		setResult({
 			icon: profileIconId,
 			level: summonerLevel,
 			name,
+			id,
 		})
 		setHasSearched(true)
 		setIsLoading(false)
@@ -86,6 +102,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	useEffect(() => {
 		context.setTitle('Search Users Page')
 	}, [context])
+
+	const addUserToServer = async (accountId: string): Promise<void> => {
+		setAddUserResult(await context.api.pingAddUserEndpoint(accountId))
+		// setTimeout(() => {
+		// 	setAddUserResult(false)
+		// }, 2000);
+	}
 
 	return (
 		<Container className="search-users-page">
@@ -182,6 +205,20 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						>
 							{result.level}
 						</Typography>
+					</Container>
+					<Container className={classes.addUserButtonContainer}>
+						<Button
+							color="primary"
+							className={classes.addUserButton}
+							onClick={() => {
+								addUserToServer(result.id)
+							}}
+						>
+							Add User to Server
+						</Button>
+						{addUserResult &&
+							<Typography className={classes.successContainer}>Success!</Typography>
+						}
 					</Container>
 				</Container>
 			)}

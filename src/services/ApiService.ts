@@ -114,6 +114,26 @@ class ApiService {
 			})
 	}
 
+	/**
+	 * Use the fetch API over HTTP to hit the update token endpoint
+	 *
+	 * @returns Promise that resolves to true if user was added; otherwise, Promise that resolves to false
+	 */
+	 pingAddUserEndpoint(accountId: string): Promise<boolean> {
+		return fetch(`${this._apiUrl}/user/add/${accountId}`, {
+			cache: NO_CACHE,
+			method: HTTP_POST,
+			headers: HEADERS_JSON_CONTENT,
+		})
+			.then((resp) => resp.text())
+			.then((text) => text === 'true')
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve(false)
+			})
+	}
+
 	private handleError(err: Error) {
 		console.error(err)
 		alert(`There was a problem -\n\n${err.message}`)
