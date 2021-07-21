@@ -144,8 +144,8 @@ class ApiService {
 			method: HTTP_POST,
 			headers: HEADERS_JSON_CONTENT,
 		})
-			.then((resp) => resp.text())
-			.then((text) => text === 'true')
+			.then((resp) => resp.json())
+			.then((users) => !!users)
 			.catch((err) => {
 				this.handleError(err)
 

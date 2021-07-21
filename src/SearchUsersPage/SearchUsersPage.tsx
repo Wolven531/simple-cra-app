@@ -2,6 +2,7 @@ import {
 	Button,
 	Container,
 	Grid,
+	Grow,
 	Link,
 	makeStyles,
 	Theme,
@@ -39,7 +40,6 @@ const useStyles = makeStyles({
 		display: 'flex',
 		justifyContent: 'center',
 		marginBottom: theme.spacing(3),
-		
 	}),
 	addUserButton: (theme: Theme) => ({
 		background: theme.palette.primary.contrastText,
@@ -49,7 +49,9 @@ const useStyles = makeStyles({
 		boxShadow: '2px 2px 8px #00FF00',
 	}),
 	successContainer: (theme: Theme) => ({
-		marginLeft: theme.spacing(1),
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: theme.spacing(3),
 	}),
 })
 
@@ -106,9 +108,9 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 
 	const addUserToServer = async (accountId: string): Promise<void> => {
 		setAddUserResult(await context.api.pingAddUserEndpoint(accountId))
-		// setTimeout(() => {
-		// 	setAddUserResult(false)
-		// }, 2000);
+		setTimeout(() => {
+			setAddUserResult(false)
+		}, 2000)
 	}
 
 	return (
@@ -192,7 +194,10 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							color="secondary"
 							variant="h6"
 						>
-							<Link href={`/mastery/${result.id}`} rel="noopener noreferrer">
+							<Link
+								href={`/mastery/${result.id}`}
+								rel="noopener noreferrer"
+							>
 								{result.name}
 							</Link>
 						</Typography>
@@ -209,7 +214,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							{result.level}
 						</Typography>
 					</Container>
-					<Container className={classes.addUserButtonContainer}>
+					<Container fixed className={classes.addUserButtonContainer}>
 						<Button
 							color="primary"
 							className={classes.addUserButton}
@@ -219,10 +224,19 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						>
 							Add User to Server
 						</Button>
-						{addUserResult &&
-							<Typography className={classes.successContainer}>Success!</Typography>
-						}
 					</Container>
+						{addUserResult && (
+							<Container className={classes.successContainer}>
+								<Grow
+									// direction="up"
+									in={addUserResult}
+									mountOnEnter
+									unmountOnExit
+								>
+									<Typography>Success!</Typography>
+								</Grow>
+							</Container>
+						)}
 				</Container>
 			)}
 			{isLoading && <LoadingModal />}
