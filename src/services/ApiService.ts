@@ -1,11 +1,16 @@
-import { HEADERS_JSON_CONTENT, HTTP_GET, HTTP_POST, NO_CACHE } from '../constants'
+import {
+	HEADERS_JSON_CONTENT,
+	HTTP_GET,
+	HTTP_POST,
+	NO_CACHE,
+} from '../constants'
 
 export interface GetUsersEndpointResult {
-    accountId: string;
-    lastUpdated: number;
-    masteryTotal: number;
-    name: string;
-    summonerId: string;
+	accountId: string
+	lastUpdated: number
+	masteryTotal: number
+	name: string
+	summonerId: string
 }
 /**
  * This service encapsulates API communication in a centralized location
@@ -58,7 +63,10 @@ class ApiService {
 	 * @param handleErr optional function that accepts an error as its only parameter; called when an error occurs
 	 * @returns Promise that resolves to user object if successful; otherwise, Promise that resolves to empty object
 	 */
-	 pingUserSearchEndpoint(searchKey: string, handleErr?: Function): Promise<any> {
+	pingUserSearchEndpoint(
+		searchKey: string,
+		handleErr?: Function
+	): Promise<any> {
 		return fetch(`${this._apiUrl}/user/search?searchKey=${searchKey}`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,
@@ -102,7 +110,7 @@ class ApiService {
 	 *
 	 * @returns Promise that resolves to true if token was valid; otherwise, Promise that resolves to false
 	 */
-	 pingTokenCheckEndpoint(): Promise<boolean> {
+	pingTokenCheckEndpoint(): Promise<boolean> {
 		return fetch(`${this._apiUrl}/config/check-token`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,
@@ -147,4 +155,3 @@ class ApiService {
 }
 
 export { ApiService }
-
