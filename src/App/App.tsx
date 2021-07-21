@@ -10,7 +10,7 @@ import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import './App.css'
-import { DisplayUsersPage } from './DsiplayUsersPage/DisplayUsersPage'
+import { DisplayUsersPage } from './DisplayUsersPage/DisplayUsersPage'
 
 function App() {
 	return (
