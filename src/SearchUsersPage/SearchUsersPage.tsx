@@ -2,6 +2,7 @@ import {
 	Button,
 	Container,
 	Grid,
+	Grow,
 	Link,
 	makeStyles,
 	Theme,
@@ -35,6 +36,23 @@ const useStyles = makeStyles({
 		justifyContent: 'space-between',
 		marginBottom: theme.spacing(3),
 	}),
+	addUserButtonContainer: (theme: Theme) => ({
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: theme.spacing(3),
+	}),
+	addUserButton: (theme: Theme) => ({
+		background: theme.palette.primary.contrastText,
+		border: 'solid',
+		// Keep it or leave it, just Vinny playing with CSS
+		textShadow: '2px 2px 8px #00FF00',
+		boxShadow: '2px 2px 8px #00FF00',
+	}),
+	successContainer: (theme: Theme) => ({
+		display: 'flex',
+		justifyContent: 'center',
+		marginBottom: theme.spacing(3),
+	}),
 })
 
 const SearchUsersPage: FC<SearchUsersPageProps> = ({
@@ -47,12 +65,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		icon: '',
 		level: '',
 		name: '',
-		summonerId: '',
+		id: '',
 	})
 	const [hasSearched, setHasSearched] = useState(false)
 	const [isLoading, setIsLoading] = useState(false)
 	const [searchError, setSearchError] = useState<any>(null)
 	const [searchValue, setSearchValue] = useState(initialSearchValue)
+	const [addUserResult, setAddUserResult] = useState(false)
 
 	const fireUserSearch = async (searchKey: string): Promise<void> => {
 		setSearchError(null)
@@ -61,7 +80,6 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 		const response = await context.api.pingUserSearchEndpoint(
 			searchKey,
 			(err: any) => {
-				// TODO - can these updates be batched / performed as one?
 				setSearchError(err)
 				setHasSearched(true)
 				setIsLoading(false)
@@ -72,15 +90,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 			return
 		}
 
-		// !! must use keys as returned by server here, but can alias them as seen below
 		const { id, name, profileIconId, summonerLevel } = response
 
-		// TODO - can these updates be batched / performed as one?
 		setResult({
 			icon: profileIconId,
 			level: summonerLevel,
 			name,
-			summonerId: id,
+			id,
 		})
 		setHasSearched(true)
 		setIsLoading(false)
@@ -89,6 +105,13 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 	useEffect(() => {
 		context.setTitle('Search Users Page')
 	}, [context])
+
+	const addUserToServer = async (accountId: string): Promise<void> => {
+		setAddUserResult(await context.api.pingAddUserEndpoint(accountId))
+		setTimeout(() => {
+			setAddUserResult(false)
+		}, 2000)
+	}
 
 	return (
 		<Container className="search-users-page">
@@ -171,7 +194,10 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							color="secondary"
 							variant="h6"
 						>
-							<Link href={`/mastery/${result.summonerId}`} rel="noopener noreferrer">
+							<Link
+								href={`/mastery/${result.id}`}
+								rel="noopener noreferrer"
+							>
 								{result.name}
 							</Link>
 						</Typography>
@@ -188,6 +214,29 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							{result.level}
 						</Typography>
 					</Container>
+					<Container fixed className={classes.addUserButtonContainer}>
+						<Button
+							color="primary"
+							className={classes.addUserButton}
+							onClick={() => {
+								addUserToServer(result.id)
+							}}
+						>
+							Add User to Server
+						</Button>
+					</Container>
+						{addUserResult && (
+							<Container className={classes.successContainer}>
+								<Grow
+									// direction="up"
+									in={addUserResult}
+									mountOnEnter
+									unmountOnExit
+								>
+									<Typography>Success!</Typography>
+								</Grow>
+							</Container>
+						)}
 				</Container>
 			)}
 			{isLoading && <LoadingModal />}
