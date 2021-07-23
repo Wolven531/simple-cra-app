@@ -87,6 +87,25 @@ class ApiService {
 	}
 
 	/**
+	 * Use the fetch API over HTTP to hit mastery total endpoint on the server
+	 *
+	 * @returns Promise that resolves to json; otherwise, Promise that resolves to empty object
+	 */
+	 pingMasteryTotalEndpoint(summonerId: string, withUser: boolean): Promise<any> {
+		return fetch(`${this._apiUrl}/mastery/total/${summonerId}?withUser=${withUser}`, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((obj) => obj)
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve({})
+			})
+	}
+
+	/**
 	 * Use the fetch API over HTTP to hit the check token endpoint on the server
 	 *
 	 * @returns Promise that resolves user object if successful; otherwise, Promise that resolves to empty object
