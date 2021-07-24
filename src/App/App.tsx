@@ -30,10 +30,10 @@ const App: FC = () => {
 						<Route path="/icons">
 							<IconDemo />
 						</Route>
-						<Route path="/search-users" exact>
+						<Route path="/search" exact>
 							<SearchUsersPage />
 						</Route>
-						<Route path="/display-users" exact>
+						<Route path="/users" exact>
 							<DisplayUsersPage />
 						</Route>
 						<Route path="/mastery/:id" exact>

@@ -117,7 +117,7 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/search-users"
+							href="/search"
 							rel="noopener noreferrer"
 							role="link"
 						>
@@ -130,7 +130,7 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/display-users"
+							href="/users"
 							rel="noopener noreferrer"
 							role="link"
 						>
