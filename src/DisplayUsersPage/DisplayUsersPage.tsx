@@ -10,6 +10,7 @@ import { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
 import { GetUsersEndpointResult } from '../services/ApiService'
 import { theme } from '../theme'
+import './DisplayUsersPage.css'
 
 const useStyles = makeStyles({
 	errorContainer: (theme: Theme) => ({
