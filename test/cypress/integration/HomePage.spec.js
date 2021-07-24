@@ -35,7 +35,7 @@ describe('Home Page', () => {
 				.find('a')
 				.should('have.attr', 'href')
 				.and('contain', '/search')
-			cy.contains('li', 'Display Users')
+			cy.contains('li', 'All Users')
 				.find('a')
 				.should('have.attr', 'href')
 				.and('contain', '/users')
