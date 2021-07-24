@@ -18,21 +18,22 @@ const useStyles = makeStyles({
 		marginTop: theme.spacing(3),
 	}),
 	resultContainer: (theme: Theme) => ({
-		display: 'flex',
-		flexDirection: 'row',
-		justifyContent: 'center',
 		marginTop: theme.spacing(3),
 	}),
 	resultRow: (theme: Theme) => ({
-		alignSelf: 'stretch',
 		border: '1px solid',
 		borderCollapse: 'collapse',
 		borderColor: theme.palette.primary.main,
 		display: 'flex',
 		justifyContent: 'space-between',
-		marginBottom: theme.spacing(3),
-		whiteSpace: 'nowrap',
+		// marginBottom: theme.spacing(3),
+		// whiteSpace: 'nowrap',
 	}),
+})
+
+const dateFormatMed = new Intl.DateTimeFormat('en-US', {
+	dateStyle: 'medium',
+	timeStyle: 'medium',
 })
 
 const DisplayUsersPage: FC = () => {
@@ -121,7 +122,7 @@ const DisplayUsersPage: FC = () => {
 								color="secondary"
 								variant="h6"
 							>
-								{lastUpdated}
+								{dateFormatMed.format(lastUpdated)}
 							</Typography>
 						</ListItem>
 					</List>
