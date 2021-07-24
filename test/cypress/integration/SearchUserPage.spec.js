@@ -1,6 +1,6 @@
 describe('Search User Page', () => {
 	beforeEach(() => {
-		cy.visit('/search-users')
+		cy.visit('/search')
 		cy.injectAxe()
 	})
 

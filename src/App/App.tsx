@@ -1,6 +1,8 @@
 import { Container } from '@material-ui/core'
+import { FC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
+import { DisplayUsersPage } from '../DisplayUsersPage/DisplayUsersPage'
 import { Footer } from '../Footer/Footer'
 import { GlobalContextProvider } from '../GlobalContext'
 import { HomePage } from '../HomePage/HomePage'
@@ -11,7 +13,7 @@ import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
 import './App.css'
 
-function App() {
+const App: FC = () => {
 	return (
 		<GlobalContextProvider>
 			<Nav />
@@ -28,8 +30,11 @@ function App() {
 						<Route path="/icons">
 							<IconDemo />
 						</Route>
-						<Route path="/search-users" exact>
+						<Route path="/search" exact>
 							<SearchUsersPage />
+						</Route>
+						<Route path="/users" exact>
+							<DisplayUsersPage />
 						</Route>
 						<Route path="/mastery/:id" exact>
 							<MasteryPage />
@@ -45,4 +50,4 @@ function App() {
 	)
 }
 
-export default App
+export { App }

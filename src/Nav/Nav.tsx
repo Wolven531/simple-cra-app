@@ -117,11 +117,24 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/search-users"
+							href="/search"
 							rel="noopener noreferrer"
 							role="link"
 						>
 							Search Users
+						</Link>
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link
+							href="/users"
+							rel="noopener noreferrer"
+							role="link"
+						>
+							All Users
 						</Link>
 					</MenuItem>
 				</Menu>

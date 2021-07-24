@@ -41,12 +41,13 @@ describe('Nav component', () => {
 	// })
 
 	describe('click to open menu', () => {
-		const expectedLinkRoutes = ['/', '/config', '/icons', '/search-users']
+		const expectedLinkRoutes = ['/', '/config', '/icons', '/search', '/users']
 		const expectedLinkTexts = [
 			'Home',
 			'Config',
 			'Icon Demo',
 			'Search Users',
+			'All Users',
 		]
 
 		beforeEach(() => {
@@ -122,7 +123,7 @@ describe('Nav component', () => {
 		// 	})
 
 		// 	it('navigates to Search Users page route', () => {
-		// 		expect(history.location.pathname).toEqual('/search-users')
+		// 		expect(history.location.pathname).toEqual('/search')
 		// 	})
 		// })
 	})

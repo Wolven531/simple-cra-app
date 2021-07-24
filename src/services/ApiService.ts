@@ -1,5 +1,17 @@
-import { HEADERS_JSON_CONTENT, HTTP_GET, HTTP_POST, NO_CACHE } from '../constants'
+import {
+	HEADERS_JSON_CONTENT,
+	HTTP_GET,
+	HTTP_POST,
+	NO_CACHE,
+} from '../constants'
 
+export interface GetUsersEndpointResult {
+	accountId: string
+	lastUpdated: number
+	masteryTotal: number
+	name: string
+	summonerId: string
+}
 /**
  * This service encapsulates API communication in a centralized location
  */
@@ -51,7 +63,10 @@ class ApiService {
 	 * @param handleErr optional function that accepts an error as its only parameter; called when an error occurs
 	 * @returns Promise that resolves to user object if successful; otherwise, Promise that resolves to empty object
 	 */
-	 pingUserSearchEndpoint(searchKey: string, handleErr?: Function): Promise<any> {
+	pingUserSearchEndpoint(
+		searchKey: string,
+		handleErr?: Function
+	): Promise<any> {
 		return fetch(`${this._apiUrl}/user/search?searchKey=${searchKey}`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,
@@ -87,6 +102,25 @@ class ApiService {
 				this.handleError(err)
 
 				return Promise.resolve({})
+			})
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the check token endpoint on the server
+	 *
+	 * @returns Promise that resolves user object if successful; otherwise, Promise that resolves to empty object
+	 */
+	pingGetUsersEndpoint(): Promise<GetUsersEndpointResult[]> {
+		return fetch(`${this._apiUrl}/user`, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((obj) => obj)
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve([])
 			})
 	}
 
@@ -160,4 +194,3 @@ class ApiService {
 }
 
 export { ApiService }
-
