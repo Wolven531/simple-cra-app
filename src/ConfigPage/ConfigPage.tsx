@@ -76,7 +76,7 @@ const ConfigPage: FC<ConfigPageProps> = ({
 					onClick={() => {
 						fireHealthCheck()
 					}}
-					variant="contained"
+					variant="outlined"
 				>
 					Server Up?
 				</Button>
@@ -86,7 +86,7 @@ const ConfigPage: FC<ConfigPageProps> = ({
 					onClick={() => {
 						fireTokenCheck()
 					}}
-					variant="contained"
+					variant="outlined"
 				>
 					Token valid?
 				</Button>
@@ -134,7 +134,7 @@ const ConfigPage: FC<ConfigPageProps> = ({
 							onClick={() => {
 								fireTokenUpdate()
 							}}
-							variant="contained"
+							variant="outlined"
 						>
 							Update Token
 						</Button>

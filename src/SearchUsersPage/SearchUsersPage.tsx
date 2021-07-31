@@ -41,13 +41,6 @@ const useStyles = makeStyles({
 		justifyContent: 'center',
 		marginBottom: theme.spacing(3),
 	}),
-	addUserButton: (theme: Theme) => ({
-		background: theme.palette.primary.contrastText,
-		border: 'solid',
-		// Keep it or leave it, just Vinny playing with CSS
-		textShadow: '2px 2px 8px #00FF00',
-		boxShadow: '2px 2px 8px #00FF00',
-	}),
 	successContainer: (theme: Theme) => ({
 		display: 'flex',
 		justifyContent: 'center',
@@ -151,7 +144,7 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 						onClick={() => {
 							fireUserSearch(searchValue)
 						}}
-						variant="contained"
+						variant="outlined"
 					>
 						Search
 					</Button>
@@ -217,10 +210,10 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 					<Container fixed className={classes.addUserButtonContainer}>
 						<Button
 							color="primary"
-							className={classes.addUserButton}
 							onClick={() => {
 								addUserToServer(result.id)
 							}}
+							variant="outlined"
 						>
 							Add User to Server
 						</Button>

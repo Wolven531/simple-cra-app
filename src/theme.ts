@@ -28,8 +28,15 @@ const theme = createMuiTheme({
 		body2: {
 			color: grey.A400,
 		},
+		button: {
+			border: '1px solid',
+			textShadow: '2px 2px 8px #00FF00',
+			boxShadow: '2px 2px 8px #00FF00',
+		},
 	},
 })
+
+theme.typography.button.background = theme.palette.primary.contrastText
 
 export { theme }
 
