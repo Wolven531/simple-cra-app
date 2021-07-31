@@ -16,9 +16,9 @@ import './App.css'
 const App: FC = () => {
 	return (
 		<GlobalContextProvider>
-			<Nav />
-			<Container maxWidth="sm" className="app">
-				<BrowserRouter>
+			<BrowserRouter>
+				<Nav />
+				<Container maxWidth="sm" className="app">
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>
@@ -43,9 +43,9 @@ const App: FC = () => {
 							<PageNotFoundPage />
 						</Route>
 					</Switch>
-				</BrowserRouter>
-				<Footer />
-			</Container>
+					<Footer />
+				</Container>
+			</BrowserRouter>
 		</GlobalContextProvider>
 	)
 }

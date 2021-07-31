@@ -12,6 +12,7 @@ import React, { FC, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
 import { LoadingModal } from '../LoadingModal/LoadingModal'
 import { theme } from '../theme'
+import { Link as RouterLink } from 'react-router-dom'
 import './SearchUsersPage.css'
 
 interface SearchUsersPageProps {
@@ -188,7 +189,8 @@ const SearchUsersPage: FC<SearchUsersPageProps> = ({
 							variant="h6"
 						>
 							<Link
-								href={`/mastery/${result.id}`}
+								component={RouterLink}
+								to={`/mastery/${result.id}`}
 								rel="noopener noreferrer"
 							>
 								{result.name}

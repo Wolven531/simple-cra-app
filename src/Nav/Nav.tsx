@@ -10,6 +10,7 @@ import {
 } from '@material-ui/core'
 import MenuIcon from '@material-ui/icons/Menu'
 import React, { FC, MouseEvent, useContext, useState } from 'react'
+import { Link as RouterLink } from 'react-router-dom'
 import { GlobalContext } from '../GlobalContext'
 
 const useStyles = makeStyles((theme) => ({
@@ -81,7 +82,12 @@ const Nav: FC = () => {
 							handleClose()
 						}}
 					>
-						<Link href="/" rel="noopener noreferrer" role="link">
+						<Link
+							component={RouterLink}
+							to="/"
+							rel="noopener noreferrer"
+							role="link"
+						>
 							Home
 						</Link>
 					</MenuItem>
@@ -91,7 +97,8 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/config"
+							component={RouterLink}
+							to="/config"
 							rel="noopener noreferrer"
 							role="link"
 						>
@@ -104,7 +111,8 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/icons"
+							component={RouterLink}
+							to="/icons"
 							rel="noopener noreferrer"
 							role="link"
 						>
@@ -117,7 +125,8 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/search"
+							component={RouterLink}
+							to="/search"
 							rel="noopener noreferrer"
 							role="link"
 						>
@@ -130,7 +139,8 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/users"
+							component={RouterLink}
+							to="/users"
 							rel="noopener noreferrer"
 							role="link"
 						>
