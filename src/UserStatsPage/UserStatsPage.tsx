@@ -23,7 +23,7 @@ const useStyles = makeStyles({
 	}),
 })
 
-const UserStats: FC = () => {
+const UserStatsPage: FC = () => {
 	const { id: accountId, games } = useParams<{ id: string; games: string }>() // Grab account id from url
 	const { api, setTitle } = useContext(GlobalContext) // Access global api for setting page title
 	const classes = useStyles(theme) // Gets theme for the site
@@ -152,4 +152,4 @@ const UserStats: FC = () => {
 	)
 }
 
-export { UserStats }
+export { UserStatsPage }

@@ -11,7 +11,7 @@ import { MasteryPage } from '../MasteryPage/MasteryPage'
 import { Nav } from '../Nav/Nav'
 import { PageNotFoundPage } from '../PageNotFoundPage/PageNotFoundPage'
 import { SearchUsersPage } from '../SearchUsersPage/SearchUsersPage'
-import { UserStats } from '../UserStats/UserStats'
+import { UserStatsPage } from '../UserStatsPage/UserStatsPage'
 import './App.css'
 
 const App: FC = () => {
@@ -41,7 +41,7 @@ const App: FC = () => {
 							<MasteryPage />
 						</Route>
 						<Route path="/stats/summary/:id/:games" exact>
-							<UserStats />
+							<UserStatsPage />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />
