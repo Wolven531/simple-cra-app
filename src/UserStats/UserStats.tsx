@@ -142,7 +142,7 @@ const UserStats: FC = () => {
 								<TableCell component="th" scope="row">
 									{key}
 								</TableCell>
-								<TableCell align="right">{value}</TableCell>
+								<TableCell align="right">{value.toFixed(2)}</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
