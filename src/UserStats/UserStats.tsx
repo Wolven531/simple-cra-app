@@ -11,7 +11,6 @@ import {
 	TableHead,
 	TableRow,
 } from '@material-ui/core'
-import { count } from 'console'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GlobalContext } from '../GlobalContext'
@@ -25,7 +24,7 @@ const useStyles = makeStyles({
 })
 
 const UserStats: FC = () => {
-	const { accountId: id, games } = useParams<{ accountId: string; games: string }>() // Grab account id from url
+	const { id: accountId, games } = useParams<{ id: string; games: string }>() // Grab account id from url
 	const { api, setTitle } = useContext(GlobalContext) // Access global api for setting page title
 	const classes = useStyles(theme) // Gets theme for the site
 
@@ -55,7 +54,7 @@ const UserStats: FC = () => {
 	// Ping API for requested number of games and set stats
 	const fireGetStats = async (): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
-			id,
+			accountId,
 			numberOfGames.count
 		)
 		setResult({
