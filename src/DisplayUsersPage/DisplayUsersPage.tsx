@@ -1,5 +1,6 @@
 import {
 	Container,
+	Link,
 	List,
 	ListItem,
 	makeStyles,
@@ -59,7 +60,7 @@ const DisplayUsersPage: FC = () => {
 	}, [fireGetUsers, setTitle])
 
 	return (
-		<Container className="user-data-container">
+		<Container>
 			<Typography
 				align="center"
 				color="primary"
@@ -75,7 +76,7 @@ const DisplayUsersPage: FC = () => {
 				</Typography>
 			)}
 			{users.length > 0 &&
-				users.map(({ lastUpdated, masteryTotal, name, summonerId }) => (
+				users.map(({accountId, lastUpdated, masteryTotal, name, summonerId }) => (
 					<List className={classes.resultContainer} key={summonerId}>
 						<ListItem className={classes.resultRow}>
 							<Typography
@@ -86,13 +87,18 @@ const DisplayUsersPage: FC = () => {
 								Name
 							</Typography>
 							{/* // TODO - add link to DisplayUserStats */}
-							<Typography
-								align="right"
-								color="secondary"
-								variant="h6"
+							<Link
+								href={`/stats/summary/${accountId}/5`}
+								rel="noopener noreferrer"
 							>
-								{name}
-							</Typography>
+								<Typography
+									align="right"
+									color="secondary"
+									variant="h6"
+								>
+									{name}
+								</Typography>
+							</Link>
 						</ListItem>
 						<ListItem className={classes.resultRow}>
 							<Typography

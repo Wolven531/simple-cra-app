@@ -12,6 +12,7 @@ export interface GetUsersEndpointResult {
 	name: string
 	summonerId: string
 }
+
 /**
  * This service encapsulates API communication in a centralized location
  */
@@ -184,6 +185,25 @@ class ApiService {
 				this.handleError(err)
 
 				return Promise.resolve(false)
+			})
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the get user stats endpoint
+	 *
+	 * @returns Promise that resolves stats object if successful; otherwise, Promise that resolves to empty object
+	 */
+	 pingSummonerStatsEndpoint(accountId: string, numberOfGames: number): Promise<any> {
+		return fetch(`${this._apiUrl}/stats/summary/?accountId=${accountId}&getLastX=${numberOfGames}`, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((obj) => obj)
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve({})
 			})
 	}
 
