@@ -189,7 +189,7 @@ class ApiService {
 	}
 
 	/**
-	 * Use the fetch API over HTTP to hit the update token endpoint
+	 * Use the fetch API over HTTP to hit the get user stats endpoint
 	 *
 	 * @returns Promise that resolves stats object if successful; otherwise, Promise that resolves to empty object
 	 */
