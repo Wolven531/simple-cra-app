@@ -10,6 +10,7 @@ import {
 	TableCell,
 	TableHead,
 	TableRow,
+	Typography,
 } from '@material-ui/core'
 import React, { FC, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
@@ -19,7 +20,8 @@ import { theme } from '../theme'
 const useStyles = makeStyles({
 	searchContainer: () => ({
 		display: 'flex',
-		justifyContent: 'center',
+		justifyContent: 'space-between',
+		alignItems: 'center',
 	}),
 })
 
@@ -95,28 +97,17 @@ const UserStatsPage: FC = () => {
 		<Container>
 			{/* Search Section */}
 			<Container className={classes.searchContainer}>
-				Games:
-				<Select onChange={handleChange} value={numberOfGames.count}>
-					<MenuItem value={1}>1</MenuItem>
-					<MenuItem value={2}>2</MenuItem>
-					<MenuItem value={3}>3</MenuItem>
-					<MenuItem value={4}>4</MenuItem>
-					<MenuItem value={5}>5</MenuItem>
-					<MenuItem value={6}>6</MenuItem>
-					<MenuItem value={7}>7</MenuItem>
-					<MenuItem value={8}>8</MenuItem>
-					<MenuItem value={9}>9</MenuItem>
-					<MenuItem value={10}>10</MenuItem>
-					<MenuItem value={11}>11</MenuItem>
-					<MenuItem value={12}>12</MenuItem>
-					<MenuItem value={13}>13</MenuItem>
-					<MenuItem value={14}>14</MenuItem>
-					<MenuItem value={15}>15</MenuItem>
-					<MenuItem value={16}>16</MenuItem>
-					<MenuItem value={17}>17</MenuItem>
-					<MenuItem value={18}>18</MenuItem>
-					<MenuItem value={19}>19</MenuItem>
-				</Select>
+				<Container>
+					<Typography>Games:</Typography>
+					<Select onChange={handleChange} value={numberOfGames.count}>
+						{[
+							1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
+							16, 17, 18, 19,
+						].map((num) => (
+							<MenuItem value={num}>{num}</MenuItem>
+						))}
+					</Select>
+				</Container>
 				<Button onClick={fireGetStats}>Search</Button>
 			</Container>
 			{/* Display Section */}
@@ -142,7 +133,9 @@ const UserStatsPage: FC = () => {
 								<TableCell component="th" scope="row">
 									{key}
 								</TableCell>
-								<TableCell align="right">{value.toFixed(2)}</TableCell>
+								<TableCell align="right">
+									{value.toFixed(2)}
+								</TableCell>
 							</TableRow>
 						))}
 					</TableBody>
