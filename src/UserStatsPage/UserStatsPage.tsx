@@ -23,6 +23,10 @@ const useStyles = makeStyles({
 		justifyContent: 'space-between',
 		alignItems: 'center',
 	}),
+	searchContainerSub: () => ({
+		display: 'flex',
+		alignItems: 'center',
+	}),
 })
 
 const UserStatsPage: FC = () => {
@@ -98,17 +102,24 @@ const UserStatsPage: FC = () => {
 			{/* Search Section */}
 			<Container className={classes.searchContainer}>
 				<Container>
-					<Typography>Games:</Typography>
-					<Select onChange={handleChange} value={numberOfGames.count}>
-						{[
-							1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15,
-							16, 17, 18, 19,
-						].map((num) => (
-							<MenuItem value={num}>{num}</MenuItem>
-						))}
-					</Select>
+					<Container className={classes.searchContainerSub}>
+						<Typography>Games:</Typography>
+						<Select
+							onChange={handleChange}
+							value={numberOfGames.count}
+						>
+							{[
+								1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+								15, 16, 17, 18, 19,
+							].map((num) => (
+								<MenuItem value={num}>{num}</MenuItem>
+							))}
+						</Select>
+					</Container>
 				</Container>
-				<Button onClick={fireGetStats}>Search</Button>
+				<Button onClick={fireGetStats} variant="outlined">
+					Search
+				</Button>
 			</Container>
 			{/* Display Section */}
 			<Container>
@@ -128,7 +139,7 @@ const UserStatsPage: FC = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{Object.entries(result).map(([key, value]) => (
+						{/* {Object.entries(result).map(([key, value]) => (
 							<TableRow key={key}>
 								<TableCell component="th" scope="row">
 									{key}
@@ -137,7 +148,133 @@ const UserStatsPage: FC = () => {
 									{value.toFixed(2)}
 								</TableCell>
 							</TableRow>
-						))}
+						))} */}
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.killsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.killsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.deathsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.deathsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.assistsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.assistsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>KDA</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.kDA.toFixed(3)}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Average</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.goldEarnedAvg.toFixed(0)}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Total</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.goldEarnedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.timePlayedAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.timePlayedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Game Count</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.gamesCount}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Wins</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.totalWins}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Losses</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.totalLosses}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Win Percentage</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.winPercentage}%</Typography>
+							</TableCell>
+						</TableRow>
 					</TableBody>
 				</Table>
 			</Container>
