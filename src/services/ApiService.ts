@@ -92,11 +92,17 @@ class ApiService {
 	 *
 	 * @returns Promise that resolves to json; otherwise, Promise that resolves to empty object
 	 */
-	 pingMasteryTotalEndpoint(summonerId: string, withUser: boolean): Promise<any> {
-		return fetch(`${this._apiUrl}/mastery/total/${summonerId}?withUser=${withUser}`, {
-			cache: NO_CACHE,
-			method: HTTP_GET,
-		})
+	pingMasteryTotalEndpoint(
+		summonerId: string,
+		withUser: boolean
+	): Promise<any> {
+		return fetch(
+			`${this._apiUrl}/mastery/total/${summonerId}?withUser=${withUser}`,
+			{
+				cache: NO_CACHE,
+				method: HTTP_GET,
+			}
+		)
 			.then((resp) => resp.json())
 			.then((obj) => obj)
 			.catch((err) => {
@@ -173,7 +179,7 @@ class ApiService {
 	 *
 	 * @returns Promise that resolves to true if user was added; otherwise, Promise that resolves to false
 	 */
-	 pingAddUserEndpoint(accountId: string): Promise<boolean> {
+	pingAddUserEndpoint(accountId: string): Promise<boolean> {
 		return fetch(`${this._apiUrl}/user/add/${accountId}`, {
 			cache: NO_CACHE,
 			method: HTTP_POST,
@@ -193,11 +199,17 @@ class ApiService {
 	 *
 	 * @returns Promise that resolves stats object if successful; otherwise, Promise that resolves to empty object
 	 */
-	 pingSummonerStatsEndpoint(accountId: string, numberOfGames: number): Promise<any> {
-		return fetch(`${this._apiUrl}/stats/summary/?accountId=${accountId}&getLastX=${numberOfGames}`, {
-			cache: NO_CACHE,
-			method: HTTP_GET,
-		})
+	pingSummonerStatsEndpoint(
+		accountId: string,
+		numberOfGames: number
+	): Promise<any> {
+		return fetch(
+			`${this._apiUrl}/stats/summary/?accountId=${accountId}&getLastX=${numberOfGames}`,
+			{
+				cache: NO_CACHE,
+				method: HTTP_GET,
+			}
+		)
 			.then((resp) => resp.json())
 			.then((obj) => obj)
 			.catch((err) => {
