@@ -137,6 +137,19 @@ const Nav: FC = () => {
 							All Users
 						</Link>
 					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link
+							href="/compare"
+							rel="noopener noreferrer"
+							role="link"
+						>
+							Compare Users
+						</Link>
+					</MenuItem>
 				</Menu>
 				<Typography
 					aria-roledescription="title of page"
