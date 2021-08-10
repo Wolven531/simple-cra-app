@@ -1,9 +1,15 @@
 import {
+	Box,
 	Button,
 	Container,
 	makeStyles,
 	MenuItem,
 	Select,
+	Table,
+	TableBody,
+	TableCell,
+	TableHead,
+	TableRow,
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
@@ -12,6 +18,7 @@ import { GetUsersEndpointResult } from '../services/ApiService'
 import { theme } from '../theme'
 
 const useStyles = makeStyles({
+	displayContainer: () => ({}),
 	searchContainer: () => ({
 		display: 'flex',
 		justifyContent: 'space-between',
@@ -43,7 +50,7 @@ const ComparePage: FC = () => {
 		count: 1,
 	})
 	// Const of stats
-	const [result, setResult] = useState({
+	const [userAStats, setUserAStats] = useState({
 		assistsAvg: 0,
 		assistsTotal: 0,
 		deathsAvg: 0,
@@ -69,10 +76,11 @@ const ComparePage: FC = () => {
 	// API call to get stats for a user
 	const fireGetStats = async (accountId: string): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
+			// Currently sending summonerId not accountId, need to fix
 			accountId,
 			numberOfGames.count
 		)
-		setResult({
+		setUserAStats({
 			assistsAvg: statsResult.assistsAvg,
 			assistsTotal: statsResult.assistsTotal,
 			deathsAvg: statsResult.deathsAvg,
@@ -91,7 +99,9 @@ const ComparePage: FC = () => {
 		})
 	}
 	// Call fireGetStats for users A and B
-	const compareUsers = () => {}
+	const compareUsers = async () => {
+		fireGetStats(userA.id)
+	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
 		setTitle(`Comparison`)
@@ -109,8 +119,11 @@ const ComparePage: FC = () => {
 	const userAHandleChange = (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
-		setNumberOfGames({
-			count: event.target.value as number,
+		setUserA({
+			id: event.target.value as string,
+			masteryTotal: '0',
+			name: '0',
+			summonerLevel: 0,
 		})
 	}
 
@@ -124,9 +137,9 @@ const ComparePage: FC = () => {
 
 	return (
 		// Search Section: Layout; 2 Selects for user lists, 1 Select for # of games
-		<Container className={classes.searchContainer}>
+		<Container className={classes.displayContainer}>
 			{/* Search Section */}
-			<Container>
+			<Container className={classes.searchContainer}>
 				<Typography>Games:</Typography>
 				<Select
 					onChange={gamesHandleChange}
@@ -164,8 +177,167 @@ const ComparePage: FC = () => {
 						</Select>
 					</>
 				)}
+				<Button onClick={compareUsers}>Search</Button>
 			</Container>
-			<Button onClick={compareUsers}>Search</Button>
+			{/* Comparison display section */}
+			<Container>
+				<Table>
+					<TableHead>
+						<TableRow>
+							<TableCell>
+								<Box fontWeight="bold">
+									<u>Stat</u>
+								</Box>
+							</TableCell>
+							<TableCell align="right">
+								<Box fontWeight="bold">
+									<u>Score</u>
+								</Box>
+							</TableCell>
+						</TableRow>
+					</TableHead>
+					<TableBody>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.killsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.killsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.deathsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.deathsTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.assistsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.assistsTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>KDA</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.kDA.toFixed(3)}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Average</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.goldEarnedAvg.toFixed(0)}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Total</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.goldEarnedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.timePlayedAvg}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.timePlayedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Game Count</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.gamesCount}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Wins</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{userAStats.totalWins}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Losses</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.totalLosses}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Win Percentage</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{userAStats.winPercentage}%
+								</Typography>
+							</TableCell>
+						</TableRow>
+					</TableBody>
+				</Table>
+			</Container>
 		</Container>
 	)
 }
