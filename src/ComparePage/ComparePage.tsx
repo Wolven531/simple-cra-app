@@ -34,14 +34,16 @@ const ComparePage: FC = () => {
 	const [users, setUsers] = useState<GetUsersEndpointResult[]>([])
 	// Users we are comparing
 	const [userA, setUserA] = useState({
+		accId: '0',
 		id: '0',
-		masteryTotal: '0',
+		//masteryTotal: '0',
 		name: '0',
 		summonerLevel: 0,
 	})
 	const [userB, setUserB] = useState({
+		accId: '0',
 		id: '0',
-		masteryTotal: '0',
+		//masteryTotal: '0',
 		name: '0',
 		summonerLevel: 0,
 	})
@@ -100,7 +102,7 @@ const ComparePage: FC = () => {
 	}
 	// Call fireGetStats for users A and B
 	const compareUsers = async () => {
-		fireGetStats(userA.id)
+		fireGetStats(userA.accId)
 	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
@@ -116,22 +118,33 @@ const ComparePage: FC = () => {
 		})
 	}
 
-	const userAHandleChange = (
+	const userAHandleChange = async (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
+		const userAResponse = await api.pingUserSearchEndpoint(
+			event.target.value as string
+		)
 		setUserA({
-			id: event.target.value as string,
-			masteryTotal: '0',
-			name: '0',
-			summonerLevel: 0,
+			accId: userAResponse.accountId,
+			id: userAResponse.id,
+			//masteryTotal: '0',
+			name: userAResponse.name,
+			summonerLevel: userAResponse.summonerLevel,
 		})
 	}
 
-	const userBHandleChange = (
+	const userBHandleChange = async (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
-		setNumberOfGames({
-			count: event.target.value as number,
+		const userBResponse = await api.pingUserSearchEndpoint(
+			event.target.value as string
+		)
+		setUserA({
+			accId: userBResponse.accountId,
+			id: userBResponse.id,
+			//masteryTotal: '0',
+			name: userBResponse.name,
+			summonerLevel: userBResponse.summonerLevel,
 		})
 	}
 
