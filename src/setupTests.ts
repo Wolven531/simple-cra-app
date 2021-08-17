@@ -16,6 +16,6 @@ const mockConsoleWarn = jest.spyOn(window.console, 'warn').mockImplementation(je
 afterAll(() => {
 	jest.spyOn(window.console, 'log').mockRestore()
 
-	console.log(`console.log called ${mockConsoleLog.mock.calls.length} times`)
-	console.log(`window.alert called ${mockAlert.mock.calls.length} times`)
+	// console.log(`console.log called ${mockConsoleLog.mock.calls.length} times`)
+	// console.log(`window.alert called ${mockAlert.mock.calls.length} times`)
 })
