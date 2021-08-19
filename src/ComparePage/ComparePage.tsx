@@ -33,19 +33,19 @@ const ComparePage: FC = () => {
 	// List of users on server
 	const [users, setUsers] = useState<GetUsersEndpointResult[]>([])
 	// Users we are comparing
-	const [userA, setUserA] = useState({
-		accId: '0',
-		id: '0',
-		//masteryTotal: '0',
+	const [userA, setUserA] = useState<GetUsersEndpointResult>({
+		accountId: '0',
+		lastUpdated: 0,
+		masteryTotal: 0,
 		name: '0',
-		summonerLevel: 0,
+		summonerId: '0',
 	})
 	const [userB, setUserB] = useState({
-		accId: '0',
-		id: '0',
-		//masteryTotal: '0',
+		accountId: '0',
+		lastUpdated: 0,
+		masteryTotal: 0,
 		name: '0',
-		summonerLevel: 0,
+		summonerId: '0',
 	})
 	// Const with setter for how many games stats to request from API
 	const [numberOfGames, setNumberOfGames] = useState({
@@ -72,7 +72,7 @@ const ComparePage: FC = () => {
 	// API call to get list of users
 	const fireGetUsers = useCallback(async () => {
 		const userList = await api.pingGetUsersEndpoint()
-
+		console.log('userlist ' + userList)
 		setUsers(userList)
 	}, [api])
 	// API call to get stats for a user
@@ -102,12 +102,16 @@ const ComparePage: FC = () => {
 	}
 	// Call fireGetStats for users A and B
 	const compareUsers = async () => {
-		fireGetStats(userA.accId)
+		fireGetStats(userA.accountId)
 	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
 		setTitle(`Comparison`)
 		fireGetUsers()
+		console.log('here   ' + users[0])
+		// EUREKA! This set is being called before set users happens
+		setUserA(users[0])
+		setUserB(users[0])
 	}, [])
 
 	const gamesHandleChange = (
@@ -124,13 +128,9 @@ const ComparePage: FC = () => {
 		const userAResponse = await api.pingUserSearchEndpoint(
 			event.target.value as string
 		)
-		setUserA({
-			accId: userAResponse.accountId,
-			id: userAResponse.id,
-			//masteryTotal: '0',
-			name: userAResponse.name,
-			summonerLevel: userAResponse.summonerLevel,
-		})
+		// setUserA({
+
+		// })
 	}
 
 	const userBHandleChange = async (
@@ -139,13 +139,9 @@ const ComparePage: FC = () => {
 		const userBResponse = await api.pingUserSearchEndpoint(
 			event.target.value as string
 		)
-		setUserA({
-			accId: userBResponse.accountId,
-			id: userBResponse.id,
-			//masteryTotal: '0',
-			name: userBResponse.name,
-			summonerLevel: userBResponse.summonerLevel,
-		})
+		// setUserA({
+
+		// })
 	}
 
 	return (
@@ -174,7 +170,7 @@ const ComparePage: FC = () => {
 					<>
 						<Select
 							onChange={userAHandleChange}
-							value={users[0].summonerId}
+							value={userA.summonerId}
 						>
 							{users.map(({ name, summonerId }) => (
 								<MenuItem value={summonerId}>{name}</MenuItem>
@@ -182,7 +178,7 @@ const ComparePage: FC = () => {
 						</Select>
 						<Select
 							onChange={userBHandleChange}
-							value={users[0].summonerId}
+							value={userB.summonerId}
 						>
 							{users.map(({ name, summonerId }) => (
 								<MenuItem value={summonerId}>{name}</MenuItem>
