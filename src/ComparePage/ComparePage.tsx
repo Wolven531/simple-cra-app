@@ -1,24 +1,23 @@
 import {
-	Box,
 	Button,
 	Container,
 	makeStyles,
 	MenuItem,
 	Select,
-	Table,
-	TableBody,
-	TableCell,
-	TableHead,
-	TableRow,
 	Typography,
 } from '@material-ui/core'
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
 import { GetUsersEndpointResult } from '../services/ApiService'
+import StatsDisplay from '../StatsDisplay/StatsDisplay'
 import { theme } from '../theme'
 
 const useStyles = makeStyles({
-	displayContainer: () => ({}),
+	displayContainer: () => ({
+		display: 'flex',
+		flexDirection: 'row',
+		justifyContent: 'space-between',
+	}),
 	searchContainer: () => ({
 		display: 'flex',
 		justifyContent: 'space-between',
@@ -51,58 +50,66 @@ const ComparePage: FC = () => {
 	const [numberOfGames, setNumberOfGames] = useState({
 		count: 1,
 	})
-	// Const of stats
-	const [userAStats, setUserAStats] = useState({
-		assistsAvg: 0,
-		assistsTotal: 0,
-		deathsAvg: 0,
-		deathsTotal: 0,
-		gamesCount: 0,
-		goldEarnedAvg: 0,
-		goldEarnedTotal: 0,
-		kDA: 0,
-		killsAvg: 0,
-		killsTotal: 0,
-		timePlayedAvg: 0,
-		timePlayedTotal: 0,
-		totalLosses: 0,
-		totalWins: 0,
-		winPercentage: 0,
-	})
+	// Const of A stats
+	const [userAStats, setUserAStats] = useState<any>()
+	// Const of B stats
+	const [userBStats, setUserBStats] = useState<any>()
 	// API call to get list of users
 	const fireGetUsers = useCallback(async () => {
 		const userList = await api.pingGetUsersEndpoint()
 		console.log('userlist ' + userList)
 		setUsers(userList)
+		setUserA(userList[0])
+		setUserB(userList[0])
 	}, [api])
 	// API call to get stats for a user
 	const fireGetStats = async (accountId: string): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
-			// Currently sending summonerId not accountId, need to fix
 			accountId,
 			numberOfGames.count
 		)
-		setUserAStats({
-			assistsAvg: statsResult.assistsAvg,
-			assistsTotal: statsResult.assistsTotal,
-			deathsAvg: statsResult.deathsAvg,
-			deathsTotal: statsResult.deathsTotal,
-			gamesCount: statsResult.gamesCount,
-			goldEarnedAvg: statsResult.goldEarnedAvg,
-			goldEarnedTotal: statsResult.goldEarnedTotal,
-			kDA: statsResult.kDA,
-			killsAvg: statsResult.killsAvg,
-			killsTotal: statsResult.killsTotal,
-			timePlayedAvg: statsResult.timePlayedAvg,
-			timePlayedTotal: statsResult.timePlayedTotal,
-			totalLosses: statsResult.totalLosses,
-			totalWins: statsResult.totalWins,
-			winPercentage: statsResult.winPercentage,
-		})
+		if (accountId == userA.accountId)
+			setUserAStats({
+				assistsAvg: statsResult.assistsAvg,
+				assistsTotal: statsResult.assistsTotal,
+				deathsAvg: statsResult.deathsAvg,
+				deathsTotal: statsResult.deathsTotal,
+				gamesCount: statsResult.gamesCount,
+				goldEarnedAvg: statsResult.goldEarnedAvg,
+				goldEarnedTotal: statsResult.goldEarnedTotal,
+				kDA: statsResult.kDA,
+				killsAvg: statsResult.killsAvg,
+				killsTotal: statsResult.killsTotal,
+				timePlayedAvg: statsResult.timePlayedAvg,
+				timePlayedTotal: statsResult.timePlayedTotal,
+				totalLosses: statsResult.totalLosses,
+				totalWins: statsResult.totalWins,
+				winPercentage: statsResult.winPercentage,
+			})
+		else if (accountId == userB.accountId) {
+			setUserBStats({
+				assistsAvg: statsResult.assistsAvg,
+				assistsTotal: statsResult.assistsTotal,
+				deathsAvg: statsResult.deathsAvg,
+				deathsTotal: statsResult.deathsTotal,
+				gamesCount: statsResult.gamesCount,
+				goldEarnedAvg: statsResult.goldEarnedAvg,
+				goldEarnedTotal: statsResult.goldEarnedTotal,
+				kDA: statsResult.kDA,
+				killsAvg: statsResult.killsAvg,
+				killsTotal: statsResult.killsTotal,
+				timePlayedAvg: statsResult.timePlayedAvg,
+				timePlayedTotal: statsResult.timePlayedTotal,
+				totalLosses: statsResult.totalLosses,
+				totalWins: statsResult.totalWins,
+				winPercentage: statsResult.winPercentage,
+			})
+		}
 	}
 	// Call fireGetStats for users A and B
-	const compareUsers = async () => {
+	const compareUsers = () => {
 		fireGetStats(userA.accountId)
+		fireGetStats(userB.accountId)
 	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
@@ -110,8 +117,6 @@ const ComparePage: FC = () => {
 		fireGetUsers()
 		console.log('here   ' + users[0])
 		// EUREKA! This set is being called before set users happens
-		setUserA(users[0])
-		setUserB(users[0])
 	}, [])
 
 	const gamesHandleChange = (
@@ -125,28 +130,26 @@ const ComparePage: FC = () => {
 	const userAHandleChange = async (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
-		const userAResponse = await api.pingUserSearchEndpoint(
-			event.target.value as string
-		)
-		// setUserA({
+		const u = users.find((user) => {
+			return user.accountId == event.target.value
+		})
 
-		// })
+		if (u) setUserA(u)
 	}
 
 	const userBHandleChange = async (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
-		const userBResponse = await api.pingUserSearchEndpoint(
-			event.target.value as string
-		)
-		// setUserA({
+		const u = users.find((user) => {
+			return user.accountId == event.target.value
+		})
 
-		// })
+		if (u) setUserB(u)
 	}
 
 	return (
 		// Search Section: Layout; 2 Selects for user lists, 1 Select for # of games
-		<Container className={classes.displayContainer}>
+		<Container>
 			{/* Search Section */}
 			<Container className={classes.searchContainer}>
 				<Typography>Games:</Typography>
@@ -166,22 +169,22 @@ const ComparePage: FC = () => {
 						No users
 					</Typography>
 				)}
-				{users.length > 0 && (
+				{users.length > 0 && userA && userB && (
 					<>
 						<Select
 							onChange={userAHandleChange}
-							value={userA.summonerId}
+							value={userA.accountId}
 						>
-							{users.map(({ name, summonerId }) => (
-								<MenuItem value={summonerId}>{name}</MenuItem>
+							{users.map(({ name, accountId }) => (
+								<MenuItem value={accountId}>{name}</MenuItem>
 							))}
 						</Select>
 						<Select
 							onChange={userBHandleChange}
-							value={userB.summonerId}
+							value={userB.accountId}
 						>
-							{users.map(({ name, summonerId }) => (
-								<MenuItem value={summonerId}>{name}</MenuItem>
+							{users.map(({ name, accountId }) => (
+								<MenuItem value={accountId}>{name}</MenuItem>
 							))}
 						</Select>
 					</>
@@ -189,163 +192,9 @@ const ComparePage: FC = () => {
 				<Button onClick={compareUsers}>Search</Button>
 			</Container>
 			{/* Comparison display section */}
-			<Container>
-				<Table>
-					<TableHead>
-						<TableRow>
-							<TableCell>
-								<Box fontWeight="bold">
-									<u>Stat</u>
-								</Box>
-							</TableCell>
-							<TableCell align="right">
-								<Box fontWeight="bold">
-									<u>Score</u>
-								</Box>
-							</TableCell>
-						</TableRow>
-					</TableHead>
-					<TableBody>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Average Kills</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.killsAvg}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Total Kills</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.killsTotal}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Average Deaths</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.deathsAvg}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Total Deaths</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.deathsTotal}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Average Assists</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.assistsAvg}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Total Assists</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.assistsTotal}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>KDA</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.kDA.toFixed(3)}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Gold Earned Average</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.goldEarnedAvg.toFixed(0)}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Gold Earned Total</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.goldEarnedTotal}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Average Time Played</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.timePlayedAvg}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Total Time Played</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.timePlayedTotal}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Game Count</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.gamesCount}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Wins</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>{userAStats.totalWins}</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Losses</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.totalLosses}
-								</Typography>
-							</TableCell>
-						</TableRow>
-						<TableRow>
-							<TableCell component="th" scope="row">
-								<Typography>Win Percentage</Typography>
-							</TableCell>
-							<TableCell align="right">
-								<Typography>
-									{userAStats.winPercentage}%
-								</Typography>
-							</TableCell>
-						</TableRow>
-					</TableBody>
-				</Table>
+			<Container className={classes.displayContainer}>
+				{userAStats && <StatsDisplay userStats={userAStats} />}
+				{userBStats && <StatsDisplay userStats={userBStats} />}
 			</Container>
 		</Container>
 	)
