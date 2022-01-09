@@ -1,6 +1,6 @@
 export interface IUser {
 	accountId: string
-	lastUpdated: number
+	lastUpdated: string
 	masteryTotal: number
 	name: string
 	summonerId: string
