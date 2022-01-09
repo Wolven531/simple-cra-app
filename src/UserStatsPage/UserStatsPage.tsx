@@ -12,7 +12,7 @@ import {
 	TableRow,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GlobalContext } from '../GlobalContext'
 import { theme } from '../theme'
@@ -54,7 +54,7 @@ const UserStatsPage: FC = () => {
 	})
 
 	// Ping API for requested number of games and set stats
-	const fireGetStats = async (): Promise<any> => {
+	const fireGetStats = useCallback(async (): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
 			accountId,
 			numberOfGames.count
@@ -76,14 +76,14 @@ const UserStatsPage: FC = () => {
 			totalWins: statsResult.totalWins,
 			winPercentage: statsResult.winPercentage,
 		})
-	}
+	}, [accountId, api, numberOfGames])
 
 	useEffect(() => {
 		// I would like to dynamically change title ex"Zorven's last 10 games stats"
 		// Thoughts: ping API(/user/get/{summonerId}) using id
 		setTitle(`User Stats`) // Set page title
 		fireGetStats() // Fires default search on page load
-	}, [])
+	}, [fireGetStats, setTitle])
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
 		setNumberOfGames({
@@ -128,16 +128,132 @@ const UserStatsPage: FC = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{Object.entries(result).map(([key, value]) => (
-							<TableRow key={key}>
-								<TableCell component="th" scope="row">
-									{key}
-								</TableCell>
-								<TableCell align="right">
-									{value.toFixed(2)}
-								</TableCell>
-							</TableRow>
-						))}
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.killsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Kills</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.killsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.deathsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Deaths</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.deathsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.assistsAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Assists</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.assistsTotal}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>KDA</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.kDA.toFixed(3)}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Average</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.goldEarnedAvg.toFixed(0)}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Gold Earned Total</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.goldEarnedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Average Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.timePlayedAvg}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Total Time Played</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>
+									{result.timePlayedTotal}
+								</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Game Count</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.gamesCount}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Wins</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.totalWins}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Losses</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.totalLosses}</Typography>
+							</TableCell>
+						</TableRow>
+						<TableRow>
+							<TableCell component="th" scope="row">
+								<Typography>Win Percentage</Typography>
+							</TableCell>
+							<TableCell align="right">
+								<Typography>{result.winPercentage}%</Typography>
+							</TableCell>
+						</TableRow>
 					</TableBody>
 				</Table>
 			</Container>

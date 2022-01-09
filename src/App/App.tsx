@@ -1,6 +1,7 @@
 import { Container } from '@material-ui/core'
 import { FC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { ComparePage } from '../ComparePage/ComparePage'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { DisplayUsersPage } from '../DisplayUsersPage/DisplayUsersPage'
 import { Footer } from '../Footer/Footer'
@@ -42,6 +43,9 @@ const App: FC = () => {
 						</Route>
 						<Route path="/stats/summary/:id/:games" exact>
 							<UserStatsPage />
+						</Route>
+						<Route path="/compare" exact>
+							<ComparePage />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />

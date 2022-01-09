@@ -41,13 +41,21 @@ describe('Nav component', () => {
 	// })
 
 	describe('click to open menu', () => {
-		const expectedLinkRoutes = ['/', '/config', '/icons', '/search', '/users']
+		const expectedLinkRoutes = [
+			'/',
+			'/config',
+			'/icons',
+			'/search',
+			'/users',
+			'/compare',
+		]
 		const expectedLinkTexts = [
 			'Home',
 			'Config',
 			'Icon Demo',
 			'Search Users',
 			'All Users',
+			'Compare Users',
 		]
 
 		beforeEach(() => {
