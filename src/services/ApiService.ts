@@ -4,15 +4,7 @@ import {
 	HTTP_POST,
 	NO_CACHE,
 } from '../constants'
-import { IUserStats } from '../types/IUserStats'
-
-export interface GetUsersEndpointResult {
-	accountId: string
-	lastUpdated: number
-	masteryTotal: number
-	name: string
-	summonerId: string
-}
+import { IUser, IUserStats } from '../types'
 
 /**
  * This service encapsulates API communication in a centralized location
@@ -118,7 +110,7 @@ class ApiService {
 	 *
 	 * @returns Promise that resolves user object if successful; otherwise, Promise that resolves to empty object
 	 */
-	pingGetUsersEndpoint(): Promise<GetUsersEndpointResult[]> {
+	pingGetUsersEndpoint(): Promise<IUser[]> {
 		return fetch(`${this._apiUrl}/user`, {
 			cache: NO_CACHE,
 			method: HTTP_GET,

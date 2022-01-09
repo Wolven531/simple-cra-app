@@ -8,7 +8,7 @@ import {
 } from '@material-ui/core'
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
-import { GetUsersEndpointResult } from '../services/ApiService'
+import { IUser } from '../types'
 import StatsDisplay from '../StatsDisplay/StatsDisplay'
 import { theme } from '../theme'
 
@@ -30,10 +30,10 @@ const ComparePage: FC = () => {
 
 	const classes = useStyles(theme)
 	// List of users on server
-	const [users, setUsers] = useState<GetUsersEndpointResult[]>([])
+	const [users, setUsers] = useState<IUser[]>([])
 	// Users we are comparing
-	const [userA, setUserA] = useState<GetUsersEndpointResult>()
-	const [userB, setUserB] = useState<GetUsersEndpointResult>()
+	const [userA, setUserA] = useState<IUser>()
+	const [userB, setUserB] = useState<IUser>()
 	// Const with setter for how many games stats to request from API
 	const [numberOfGames, setNumberOfGames] = useState({
 		count: 1,

@@ -9,7 +9,7 @@ import {
 } from '@material-ui/core'
 import { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { GlobalContext } from '../GlobalContext'
-import { GetUsersEndpointResult } from '../services/ApiService'
+import { IUser } from '../types'
 import { theme } from '../theme'
 import './DisplayUsersPage.css'
 
@@ -43,7 +43,7 @@ const DisplayUsersPage: FC = () => {
 
 	const classes = useStyles(theme)
 
-	const [users, setUsers] = useState<GetUsersEndpointResult[]>([])
+	const [users, setUsers] = useState<IUser[]>([])
 
 	// must utilize useCallback, to get version of fireGetUsers() that only updates on new inputs;
 	// to be passed as a dependency to useEffect(), so it can be called within
@@ -76,64 +76,75 @@ const DisplayUsersPage: FC = () => {
 				</Typography>
 			)}
 			{users.length > 0 &&
-				users.map(({accountId, lastUpdated, masteryTotal, name, summonerId }) => (
-					<List className={classes.resultContainer} key={summonerId}>
-						<ListItem className={classes.resultRow}>
-							<Typography
-								align="left"
-								color="primary"
-								variant="h6"
-							>
-								Name
-							</Typography>
-							{/* // TODO - add link to DisplayUserStats */}
-							<Link
-								href={`/stats/summary/${accountId}/5`}
-								rel="noopener noreferrer"
-							>
+				users.map(
+					({
+						accountId,
+						lastUpdated,
+						masteryTotal,
+						name,
+						summonerId,
+					}) => (
+						<List
+							className={classes.resultContainer}
+							key={summonerId}
+						>
+							<ListItem className={classes.resultRow}>
+								<Typography
+									align="left"
+									color="primary"
+									variant="h6"
+								>
+									Name
+								</Typography>
+								{/* // TODO - add link to DisplayUserStats */}
+								<Link
+									href={`/stats/summary/${accountId}/5`}
+									rel="noopener noreferrer"
+								>
+									<Typography
+										align="right"
+										color="secondary"
+										variant="h6"
+									>
+										{name}
+									</Typography>
+								</Link>
+							</ListItem>
+							<ListItem className={classes.resultRow}>
+								<Typography
+									align="left"
+									color="primary"
+									variant="h6"
+								>
+									Mastery Score
+								</Typography>
 								<Typography
 									align="right"
 									color="secondary"
 									variant="h6"
 								>
-									{name}
+									{masteryTotal}
 								</Typography>
-							</Link>
-						</ListItem>
-						<ListItem className={classes.resultRow}>
-							<Typography
-								align="left"
-								color="primary"
-								variant="h6"
-							>
-								Mastery Score
-							</Typography>
-							<Typography
-								align="right"
-								color="secondary"
-								variant="h6"
-							>
-								{masteryTotal}
-							</Typography>
-						</ListItem>
-						<ListItem className={classes.resultRow}>
-							<Typography
-								align="left"
-								color="primary"
-								variant="h6"
-							>
-								Last Updated
-							</Typography>
-							<Typography
-								align="right"
-								color="secondary"
-								variant="h6"
-							>
-								{dateFormatMed.format(lastUpdated)}
-							</Typography>
-						</ListItem>
-					</List>
-				))}
+							</ListItem>
+							<ListItem className={classes.resultRow}>
+								<Typography
+									align="left"
+									color="primary"
+									variant="h6"
+								>
+									Last Updated
+								</Typography>
+								<Typography
+									align="right"
+									color="secondary"
+									variant="h6"
+								>
+									{dateFormatMed.format(lastUpdated)}
+								</Typography>
+							</ListItem>
+						</List>
+					)
+				)}
 		</Container>
 	)
 }
