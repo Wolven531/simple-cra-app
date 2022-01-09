@@ -1,5 +1,6 @@
 import { render, RenderResult } from '@testing-library/react'
 import { FC, useContext } from 'react'
+import { BrowserRouter } from 'react-router-dom'
 import { GlobalContext } from './src/GlobalContext'
 import { ApiService } from './src/services/ApiService'
 
@@ -35,7 +36,11 @@ const renderCompWithMockedContext = (
 	}
 
 	// render the context-enabled wrapper
-	return render(<MockedContextProvider />)
+	return render(
+		<BrowserRouter>
+			<MockedContextProvider />
+		</BrowserRouter>
+	)
 }
 
 /**
@@ -71,7 +76,11 @@ const renderElemWithMockedContext = (
 	}
 
 	// render the context-enabled wrapper
-	return render(<MockedContextProvider />)
+	return render(
+		<BrowserRouter>
+			<MockedContextProvider />
+		</BrowserRouter>
+	)
 }
 
 export { renderCompWithMockedContext, renderElemWithMockedContext }
