@@ -32,20 +32,8 @@ const ComparePage: FC = () => {
 	// List of users on server
 	const [users, setUsers] = useState<GetUsersEndpointResult[]>([])
 	// Users we are comparing
-	const [userA, setUserA] = useState<GetUsersEndpointResult>({
-		accountId: '0',
-		lastUpdated: 0,
-		masteryTotal: 0,
-		name: '0',
-		summonerId: '0',
-	})
-	const [userB, setUserB] = useState({
-		accountId: '0',
-		lastUpdated: 0,
-		masteryTotal: 0,
-		name: '0',
-		summonerId: '0',
-	})
+	const [userA, setUserA] = useState<GetUsersEndpointResult>()
+	const [userB, setUserB] = useState<GetUsersEndpointResult>()
 	// Const with setter for how many games stats to request from API
 	const [numberOfGames, setNumberOfGames] = useState({
 		count: 1,
@@ -57,7 +45,6 @@ const ComparePage: FC = () => {
 	// API call to get list of users
 	const fireGetUsers = useCallback(async () => {
 		const userList = await api.pingGetUsersEndpoint()
-		console.log('userlist ' + userList)
 		setUsers(userList)
 		setUserA(userList[0])
 		setUserB(userList[0])
@@ -68,56 +55,39 @@ const ComparePage: FC = () => {
 			accountId,
 			numberOfGames.count
 		)
-		if (accountId == userA.accountId)
-			setUserAStats({
-				assistsAvg: statsResult.assistsAvg,
-				assistsTotal: statsResult.assistsTotal,
-				deathsAvg: statsResult.deathsAvg,
-				deathsTotal: statsResult.deathsTotal,
-				gamesCount: statsResult.gamesCount,
-				goldEarnedAvg: statsResult.goldEarnedAvg,
-				goldEarnedTotal: statsResult.goldEarnedTotal,
-				kDA: statsResult.kDA,
-				killsAvg: statsResult.killsAvg,
-				killsTotal: statsResult.killsTotal,
-				timePlayedAvg: statsResult.timePlayedAvg,
-				timePlayedTotal: statsResult.timePlayedTotal,
-				totalLosses: statsResult.totalLosses,
-				totalWins: statsResult.totalWins,
-				winPercentage: statsResult.winPercentage,
-			})
-		else if (accountId == userB.accountId) {
-			setUserBStats({
-				assistsAvg: statsResult.assistsAvg,
-				assistsTotal: statsResult.assistsTotal,
-				deathsAvg: statsResult.deathsAvg,
-				deathsTotal: statsResult.deathsTotal,
-				gamesCount: statsResult.gamesCount,
-				goldEarnedAvg: statsResult.goldEarnedAvg,
-				goldEarnedTotal: statsResult.goldEarnedTotal,
-				kDA: statsResult.kDA,
-				killsAvg: statsResult.killsAvg,
-				killsTotal: statsResult.killsTotal,
-				timePlayedAvg: statsResult.timePlayedAvg,
-				timePlayedTotal: statsResult.timePlayedTotal,
-				totalLosses: statsResult.totalLosses,
-				totalWins: statsResult.totalWins,
-				winPercentage: statsResult.winPercentage,
-			})
+		const result = {
+			assistsAvg: statsResult.assistsAvg,
+			assistsTotal: statsResult.assistsTotal,
+			deathsAvg: statsResult.deathsAvg,
+			deathsTotal: statsResult.deathsTotal,
+			gamesCount: statsResult.gamesCount,
+			goldEarnedAvg: statsResult.goldEarnedAvg,
+			goldEarnedTotal: statsResult.goldEarnedTotal,
+			kDA: statsResult.kDA,
+			killsAvg: statsResult.killsAvg,
+			killsTotal: statsResult.killsTotal,
+			timePlayedAvg: statsResult.timePlayedAvg,
+			timePlayedTotal: statsResult.timePlayedTotal,
+			totalLosses: statsResult.totalLosses,
+			totalWins: statsResult.totalWins,
+			winPercentage: statsResult.winPercentage,
+		}
+		if (accountId === userA?.accountId) {
+			setUserAStats(result)
+		} else if (accountId === userB?.accountId) {
+			setUserBStats(result)
 		}
 	}
 	// Call fireGetStats for users A and B
-	const compareUsers = () => {
-		fireGetStats(userA.accountId)
-		fireGetStats(userB.accountId)
+	const compareUsers = async () => {
+		await fireGetStats(userA?.accountId || '')
+		await fireGetStats(userB?.accountId || '')
 	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
 		setTitle(`Comparison`)
 		fireGetUsers()
-		console.log('here   ' + users[0])
-		// EUREKA! This set is being called before set users happens
-	}, [])
+	}, [fireGetUsers, setTitle])
 
 	const gamesHandleChange = (
 		event: React.ChangeEvent<{ value: unknown }>
@@ -131,20 +101,24 @@ const ComparePage: FC = () => {
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
 		const u = users.find((user) => {
-			return user.accountId == event.target.value
+			return user.accountId === event.target.value
 		})
 
-		if (u) setUserA(u)
+		if (u) {
+			setUserA(u)
+		}
 	}
 
 	const userBHandleChange = async (
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
 		const u = users.find((user) => {
-			return user.accountId == event.target.value
+			return user.accountId === event.target.value
 		})
 
-		if (u) setUserB(u)
+		if (u) {
+			setUserB(u)
+		}
 	}
 
 	return (
@@ -161,7 +135,9 @@ const ComparePage: FC = () => {
 						1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16,
 						17, 18, 19,
 					].map((num) => (
-						<MenuItem value={num}>{num}</MenuItem>
+						<MenuItem key={num} value={num}>
+							{num}
+						</MenuItem>
 					))}
 				</Select>
 				{users.length <= 0 && (
@@ -176,7 +152,9 @@ const ComparePage: FC = () => {
 							value={userA.accountId}
 						>
 							{users.map(({ name, accountId }) => (
-								<MenuItem value={accountId}>{name}</MenuItem>
+								<MenuItem key={accountId} value={accountId}>
+									{name}
+								</MenuItem>
 							))}
 						</Select>
 						<Select
@@ -184,7 +162,9 @@ const ComparePage: FC = () => {
 							value={userB.accountId}
 						>
 							{users.map(({ name, accountId }) => (
-								<MenuItem value={accountId}>{name}</MenuItem>
+								<MenuItem key={accountId} value={accountId}>
+									{name}
+								</MenuItem>
 							))}
 						</Select>
 					</>

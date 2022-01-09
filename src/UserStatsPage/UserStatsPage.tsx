@@ -12,7 +12,7 @@ import {
 	TableRow,
 	Typography,
 } from '@material-ui/core'
-import React, { FC, useContext, useEffect, useState } from 'react'
+import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { GlobalContext } from '../GlobalContext'
 import { theme } from '../theme'
@@ -54,7 +54,7 @@ const UserStatsPage: FC = () => {
 	})
 
 	// Ping API for requested number of games and set stats
-	const fireGetStats = async (): Promise<any> => {
+	const fireGetStats = useCallback(async (): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
 			accountId,
 			numberOfGames.count
@@ -76,14 +76,14 @@ const UserStatsPage: FC = () => {
 			totalWins: statsResult.totalWins,
 			winPercentage: statsResult.winPercentage,
 		})
-	}
+	}, [accountId, api, numberOfGames])
 
 	useEffect(() => {
 		// I would like to dynamically change title ex"Zorven's last 10 games stats"
 		// Thoughts: ping API(/user/get/{summonerId}) using id
 		setTitle(`User Stats`) // Set page title
 		fireGetStats() // Fires default search on page load
-	}, [])
+	}, [fireGetStats, setTitle])
 
 	const handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
 		setNumberOfGames({
@@ -128,18 +128,6 @@ const UserStatsPage: FC = () => {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						{/* {Object.entries(result).map(([key, value]) => (
-							<TableRow key={key}>
-								<TableCell component="th" scope="row">
-									{key}
-								</TableCell>
-								<TableCell align="right">
-									{value.toFixed(2)}
-								</TableCell>
-							</TableRow>
-						))}
-					</TableBody>
-				</Table> */}
 						<TableRow>
 							<TableCell component="th" scope="row">
 								<Typography>Average Kills</Typography>

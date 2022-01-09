@@ -9,44 +9,31 @@ import {
 	Typography,
 } from '@material-ui/core'
 import React, { FC } from 'react'
+import { IUserStats } from '../types/IUserStats'
 
-interface UserStats {
-	assistsAvg: number
-	assistsTotal: number
-	deathsAvg: number
-	deathsTotal: number
-	gamesCount: number
-	goldEarnedAvg: number
-	goldEarnedTotal: number
-	kDA: number
-	killsAvg: number
-	killsTotal: number
-	timePlayedAvg: number
-	timePlayedTotal: number
-	totalLosses: number
-	totalWins: number
-	winPercentage: number
+interface StatsDisplayProps {
+	userStats: IUserStats
 }
-
-interface UserStatsProps {
-	userStats: UserStats
-}
-const StatsDisplay: FC<UserStatsProps> = (props) => {
-	const { userStats } = props
-
+const StatsDisplay: FC<StatsDisplayProps> = ({ userStats }) => {
 	return (
 		<Container>
 			<Table>
 				<TableHead>
 					<TableRow>
 						<TableCell>
-							<Box fontWeight="bold">
-								<u>Stat</u>
+							<Box
+								fontWeight="bold"
+								style={{ textDecoration: 'underline' }}
+							>
+								Stats
 							</Box>
 						</TableCell>
 						<TableCell align="right">
-							<Box fontWeight="bold">
-								<u>Score</u>
+							<Box
+								fontWeight="bold"
+								style={{ textDecoration: 'underline' }}
+							>
+								Score
 							</Box>
 						</TableCell>
 					</TableRow>

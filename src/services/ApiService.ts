@@ -4,6 +4,7 @@ import {
 	HTTP_POST,
 	NO_CACHE,
 } from '../constants'
+import { IUserStats } from '../types/IUserStats'
 
 export interface GetUsersEndpointResult {
 	accountId: string
@@ -202,7 +203,7 @@ class ApiService {
 	pingSummonerStatsEndpoint(
 		accountId: string,
 		numberOfGames: number
-	): Promise<any> {
+	): Promise<IUserStats> {
 		return fetch(
 			`${this._apiUrl}/stats/summary/?accountId=${accountId}&getLastX=${numberOfGames}`,
 			{
