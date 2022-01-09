@@ -139,7 +139,9 @@ const DisplayUsersPage: FC = () => {
 									color="secondary"
 									variant="h6"
 								>
-									{dateFormatMed.format(lastUpdated)}
+									{dateFormatMed.format(
+										Date.parse(lastUpdated)
+									)}
 								</Typography>
 							</ListItem>
 						</List>

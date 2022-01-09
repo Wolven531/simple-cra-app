@@ -18,6 +18,7 @@ describe('DisplayUsersPage component', () => {
 				name: fakeUsername,
 				profileIconId: fakeIconId,
 				summonerLevel: fakeLevel,
+				lastUpdated: new Date(1, 1, 2022),
 			},
 		])
 
