@@ -212,6 +212,51 @@ class ApiService {
 			})
 	}
 
+	/**
+	 * Use the fetch API over HTTP to hit the get user stats endpoint
+	 *
+	 * @returns Promise that resolves latest version string; otherwise, Promise that resolves to empty string
+	 */
+	getLatestDragonVersion(): Promise<string> {
+		let versionUrl = 'https://ddragon.leagueoflegends.com/api/versions.json'
+		return fetch(versionUrl, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((allVersions) => allVersions[0])
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve('')
+			})
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the get user stats endpoint
+	 *
+	 * @returns Promise that resolves all champs objects; otherwise, Promise that resolves to empty array
+	 */
+	async getAllChamps(): Promise<any[]> {
+		let version = await this.getLatestDragonVersion()
+		let versionUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion.json`
+		return fetch(versionUrl, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((allChamps) => {
+				return Object.keys(allChamps.data).map((champName) => {
+					return allChamps.data[champName]
+				})
+			})
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve([])
+			})
+	}
+
 	private handleError(err: Error) {
 		console.error(err)
 		alert(`There was a problem -\n\n${err.message}`)
