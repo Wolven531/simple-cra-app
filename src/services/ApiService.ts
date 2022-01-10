@@ -193,11 +193,11 @@ class ApiService {
 	 * @returns Promise that resolves stats object if successful; otherwise, Promise that resolves to empty object
 	 */
 	pingSummonerStatsEndpoint(
-		accountId: string,
+		puuid: string,
 		numberOfGames: number
 	): Promise<IUserStats> {
 		return fetch(
-			`${this._apiUrl}/stats/summary/?accountId=${accountId}&getLastX=${numberOfGames}`,
+			`${this._apiUrl}/stats/summary/?puuid=${puuid}&getLastX=${numberOfGames}`,
 			{
 				cache: NO_CACHE,
 				method: HTTP_GET,

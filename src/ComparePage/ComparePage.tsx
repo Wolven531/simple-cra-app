@@ -50,9 +50,9 @@ const ComparePage: FC = () => {
 		setUserB(userList[0])
 	}, [api])
 	// API call to get stats for a user
-	const fireGetStats = async (accountId: string): Promise<any> => {
+	const fireGetStats = async (puuid: string): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
-			accountId,
+			puuid,
 			numberOfGames.count
 		)
 		const result = {
@@ -72,16 +72,16 @@ const ComparePage: FC = () => {
 			totalWins: statsResult.totalWins,
 			winPercentage: statsResult.winPercentage,
 		}
-		if (accountId === userA?.accountId) {
+		if (puuid === userA?.puuid) {
 			setUserAStats(result)
-		} else if (accountId === userB?.accountId) {
+		} else if (puuid === userB?.puuid) {
 			setUserBStats(result)
 		}
 	}
 	// Call fireGetStats for users A and B
 	const compareUsers = async () => {
-		await fireGetStats(userA?.accountId || '')
-		await fireGetStats(userB?.accountId || '')
+		await fireGetStats(userA?.puuid || '')
+		await fireGetStats(userB?.puuid || '')
 	}
 	// Set page name, onload call fireGetUsers
 	useEffect(() => {
@@ -101,7 +101,7 @@ const ComparePage: FC = () => {
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
 		const u = users.find((user) => {
-			return user.accountId === event.target.value
+			return user.puuid === event.target.value
 		})
 
 		if (u) {
@@ -113,7 +113,7 @@ const ComparePage: FC = () => {
 		event: React.ChangeEvent<{ value: unknown }>
 	) => {
 		const u = users.find((user) => {
-			return user.accountId === event.target.value
+			return user.puuid === event.target.value
 		})
 
 		if (u) {
@@ -149,20 +149,20 @@ const ComparePage: FC = () => {
 					<>
 						<Select
 							onChange={userAHandleChange}
-							value={userA.accountId}
+							value={userA.puuid}
 						>
-							{users.map(({ name, accountId }) => (
-								<MenuItem key={accountId} value={accountId}>
+							{users.map(({ name, puuid }) => (
+								<MenuItem key={puuid} value={puuid}>
 									{name}
 								</MenuItem>
 							))}
 						</Select>
 						<Select
 							onChange={userBHandleChange}
-							value={userB.accountId}
+							value={userB.puuid}
 						>
-							{users.map(({ name, accountId }) => (
-								<MenuItem key={accountId} value={accountId}>
+							{users.map(({ name, puuid }) => (
+								<MenuItem key={puuid} value={puuid}>
 									{name}
 								</MenuItem>
 							))}
