@@ -26,7 +26,7 @@ const useStyles = makeStyles({
 })
 
 const UserStatsPage: FC = () => {
-	const { id: accountId, games } = useParams<{ id: string; games: string }>() // Grab account id from url
+	const { id: puuid, games } = useParams<{ id: string; games: string }>() // Grab account id from url
 	const { api, setTitle } = useContext(GlobalContext) // Access global api for setting page title
 	const classes = useStyles(theme) // Gets theme for the site
 
@@ -56,7 +56,7 @@ const UserStatsPage: FC = () => {
 	// Ping API for requested number of games and set stats
 	const fireGetStats = useCallback(async (): Promise<any> => {
 		const statsResult = await api.pingSummonerStatsEndpoint(
-			accountId,
+			puuid,
 			numberOfGames.count
 		)
 		setResult({
@@ -76,7 +76,7 @@ const UserStatsPage: FC = () => {
 			totalWins: statsResult.totalWins,
 			winPercentage: statsResult.winPercentage,
 		})
-	}, [accountId, api, numberOfGames])
+	}, [puuid, api, numberOfGames])
 
 	useEffect(() => {
 		// I would like to dynamically change title ex"Zorven's last 10 games stats"

@@ -78,7 +78,7 @@ const DisplayUsersPage: FC = () => {
 			{users.length > 0 &&
 				users.map(
 					({
-						accountId,
+						puuid,
 						lastUpdated,
 						masteryTotal,
 						name,
@@ -98,7 +98,7 @@ const DisplayUsersPage: FC = () => {
 								</Typography>
 								{/* // TODO - add link to DisplayUserStats */}
 								<Link
-									href={`/stats/summary/${accountId}/5`}
+									href={`/stats/summary/${puuid}/5`}
 									rel="noopener noreferrer"
 								>
 									<Typography
