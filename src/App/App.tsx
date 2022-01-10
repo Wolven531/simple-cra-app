@@ -3,6 +3,7 @@ import { FC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import { ComparePage } from '../ComparePage/ComparePage'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
+import { DisplayChampsPage } from '../DisplayChampsPage/DisplayChampsPage'
 import { DisplayUsersPage } from '../DisplayUsersPage/DisplayUsersPage'
 import { Footer } from '../Footer/Footer'
 import { GlobalContextProvider } from '../GlobalContext'
@@ -20,7 +21,7 @@ const App: FC = () => {
 		<GlobalContextProvider>
 			<BrowserRouter>
 				<Nav />
-				<Container maxWidth="sm" className="app">
+				<Container maxWidth="lg" className="app">
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>
@@ -46,6 +47,9 @@ const App: FC = () => {
 						</Route>
 						<Route path="/compare" exact>
 							<ComparePage />
+						</Route>
+						<Route path="/champs" exact>
+							<DisplayChampsPage />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />

@@ -153,11 +153,26 @@ const Nav: FC = () => {
 						}}
 					>
 						<Link
-							href="/compare"
+							component={RouterLink}
+							to="/compare"
 							rel="noopener noreferrer"
 							role="link"
 						>
 							Compare Users
+						</Link>
+					</MenuItem>
+					<MenuItem
+						onClick={() => {
+							handleClose()
+						}}
+					>
+						<Link
+							component={RouterLink}
+							to="/champs"
+							rel="noopener noreferrer"
+							role="link"
+						>
+							Champions
 						</Link>
 					</MenuItem>
 				</Menu>

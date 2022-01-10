@@ -48,6 +48,7 @@ describe('Nav component', () => {
 			'/search',
 			'/users',
 			'/compare',
+			'/champs',
 		]
 		const expectedLinkTexts = [
 			'Home',
@@ -56,6 +57,7 @@ describe('Nav component', () => {
 			'Search Users',
 			'All Users',
 			'Compare Users',
+			'Champions',
 		]
 
 		beforeEach(() => {
