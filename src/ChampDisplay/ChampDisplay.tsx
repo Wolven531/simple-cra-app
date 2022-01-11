@@ -18,14 +18,28 @@ const useStyles = makeStyles({
 	}),
 })
 
-export const ChampDisplay: FC<ChampDisplayProps> = ({ champInfo }) => {
+export const ChampDisplay: FC<ChampDisplayProps> = ({ champInfo: champ }) => {
 	const classes = useStyles(theme)
-	const newTitle = champInfo.title[0]
+	const imgUrl = `http://ddragon.leagueoflegends.com/cdn/${champ.version}/img/sprite/${champ.image.sprite}`
+
+	const newTitle = champ.title[0]
 		.toUpperCase()
-		.concat(champInfo.title.substring(1))
+		.concat(champ.title.substring(1))
 	return (
 		<Container className={classes.champDisplayContainer}>
-			<Container>{champInfo.name}</Container>
+			<Container
+				style={{
+					width: 48,
+					height: 48,
+					backgroundPositionX: -champ.image.x,
+					backgroundPositionY: -champ.image.y,
+					backgroundImage: `url(${imgUrl})`,
+					transform: 'scale(1.5) translate(0px, -10px)',
+				}}
+			>
+				&nbsp;
+			</Container>
+			<Container>{champ.name}</Container>
 			<Container>{newTitle}</Container>
 		</Container>
 	)

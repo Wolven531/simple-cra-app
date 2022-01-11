@@ -1,5 +1,14 @@
+import { IChampImage } from './IChampImage'
+
 export interface IChampDisplay {
-	image?: ImageBitmap
+	version: string
+	id: string
+	key: string
 	name: string
 	title: string
+	blurb: string
+	info: []
+	image: IChampImage
+	tags: []
+	partype: string
 }
