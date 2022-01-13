@@ -1,6 +1,7 @@
 import { Container } from '@material-ui/core'
 import { FC } from 'react'
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { ChampInfo } from '../ChampInfo/ChampInfo'
 import { ComparePage } from '../ComparePage/ComparePage'
 import { ConfigPage } from '../ConfigPage/ConfigPage'
 import { DisplayChampsPage } from '../DisplayChampsPage/DisplayChampsPage'
@@ -50,6 +51,9 @@ const App: FC = () => {
 						</Route>
 						<Route path="/champs" exact>
 							<DisplayChampsPage />
+						</Route>
+						<Route path="/champInfo/:champId" exact>
+							<ChampInfo />
 						</Route>
 						<Route path="/">
 							<PageNotFoundPage />
