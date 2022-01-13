@@ -4,7 +4,7 @@ import {
 	HTTP_POST,
 	NO_CACHE,
 } from '../constants'
-import { IUser, IUserStats } from '../types'
+import { IChampInfo, IUser, IUserStats } from '../types'
 
 /**
  * This service encapsulates API communication in a centralized location
@@ -254,6 +254,29 @@ class ApiService {
 				this.handleError(err)
 
 				return Promise.resolve([])
+			})
+	}
+
+	/**
+	 * Use the fetch API over HTTP to hit the get user stats endpoint
+	 *
+	 * @returns Promise that resolves champ info; otherwise, Promise that resolves to empty string
+	 */
+	async getChampInfo(champId: string): Promise<IChampInfo> {
+		let version = await this.getLatestDragonVersion()
+		let versionUrl = `http://ddragon.leagueoflegends.com/cdn/${version}/data/en_US/champion/${champId}.json`
+		return fetch(versionUrl, {
+			cache: NO_CACHE,
+			method: HTTP_GET,
+		})
+			.then((resp) => resp.json())
+			.then((champInfo) => {
+				return champInfo.data
+			})
+			.catch((err) => {
+				this.handleError(err)
+
+				return Promise.resolve('')
 			})
 	}
 
