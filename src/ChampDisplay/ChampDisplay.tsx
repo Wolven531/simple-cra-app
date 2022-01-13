@@ -1,7 +1,8 @@
-import { Container, makeStyles, Theme } from '@material-ui/core'
+import { Container, Link, makeStyles, Theme } from '@material-ui/core'
 import React, { FC } from 'react'
 import { theme } from '../theme'
 import { IChampDisplay } from '../types/IChampDisplay'
+import { Link as RouterLink } from 'react-router-dom'
 
 interface ChampDisplayProps {
 	champInfo: IChampDisplay
@@ -27,18 +28,25 @@ export const ChampDisplay: FC<ChampDisplayProps> = ({ champInfo: champ }) => {
 		.concat(champ.title.substring(1))
 	return (
 		<Container className={classes.champDisplayContainer}>
-			<Container
-				style={{
-					width: 48,
-					height: 48,
-					backgroundPositionX: -champ.image.x,
-					backgroundPositionY: -champ.image.y,
-					backgroundImage: `url(${imgUrl})`,
-					transform: 'scale(1.5) translate(0px, -10px)',
-				}}
+			<Link
+				component={RouterLink}
+				to={`/champInfo/${champ.id}`}
+				rel="noopener noreferrer"
+				role="link"
 			>
-				&nbsp;
-			</Container>
+				<Container
+					style={{
+						width: 48,
+						height: 48,
+						backgroundPositionX: -champ.image.x,
+						backgroundPositionY: -champ.image.y,
+						backgroundImage: `url(${imgUrl})`,
+						transform: 'scale(1.5) translate(0px, -10px)',
+					}}
+				>
+					<div />
+				</Container>
+			</Link>
 			<Container>{champ.name}</Container>
 			<Container>{newTitle}</Container>
 		</Container>
