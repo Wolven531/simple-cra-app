@@ -260,7 +260,7 @@ class ApiService {
 	/**
 	 * Use the fetch API over HTTP to hit the get user stats endpoint
 	 *
-	 * @returns Promise that resolves champ info; otherwise, Promise that resolves to empty string
+	 * @returns Promise that resolves champ info; otherwise, Promise that resolves to empty object
 	 */
 	async getChampInfo(champId: string): Promise<IChampInfo> {
 		let version = await this.getLatestDragonVersion()
@@ -271,12 +271,12 @@ class ApiService {
 		})
 			.then((resp) => resp.json())
 			.then((champInfo) => {
-				return champInfo.data
+				return champInfo.data[champId]
 			})
 			.catch((err) => {
 				this.handleError(err)
 
-				return Promise.resolve('')
+				return Promise.resolve({})
 			})
 	}
 
