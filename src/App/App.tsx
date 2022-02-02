@@ -22,7 +22,7 @@ const App: FC = () => {
 		<GlobalContextProvider>
 			<BrowserRouter>
 				<Nav />
-				<Container maxWidth="lg" className="app">
+				<Container maxWidth={false} className="app">
 					{/* Content outside of <Switch> renders on every page */}
 					<Switch>
 						<Route path="/" exact>

@@ -5,7 +5,7 @@ import { GlobalContext } from '../GlobalContext'
 import { theme } from '../theme'
 import { IChampInfo } from '../types/IChampInfo'
 
-interface props {
+interface IChampRouteProps {
 	champId: string
 }
 
@@ -19,9 +19,9 @@ const useStyles = makeStyles({
 	}),
 })
 
-export const ChampInfo: FC = () => {
+export const ChampInfo: FC<any> = () => {
 	const classes = useStyles(theme)
-	let props = useParams<props>()
+	const props = useParams<IChampRouteProps>()
 	const { api, setTitle } = useContext(GlobalContext) // for page title and API access
 	const [champ, setChamp] = useState<IChampInfo>()
 
@@ -35,12 +35,13 @@ export const ChampInfo: FC = () => {
 		console.log(champ)
 	}, [setTitle, fireGetChampInfo])
 
+	if (!champ) {
+		return <></>
+	}
+
 	return (
-		// champ && (
-		// 	<Container className={classes.champInfoContainer}>
-		// 		{/* {champ.lore} */}fuck
-		// 	</Container>
-		// )
-		<Container>butt</Container>
+		<Container className={classes.champInfoContainer}>
+			{champ.lore}
+		</Container>
 	)
 }
