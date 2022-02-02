@@ -123,9 +123,9 @@ const ComparePage: FC = () => {
 
 	return (
 		// Search Section: Layout; 2 Selects for user lists, 1 Select for # of games
-		<Container>
+		<Container maxWidth="md">
 			{/* Search Section */}
-			<Container className={classes.searchContainer}>
+			<Container maxWidth="sm" className={classes.searchContainer}>
 				<Typography>Games:</Typography>
 				<Select
 					onChange={gamesHandleChange}
