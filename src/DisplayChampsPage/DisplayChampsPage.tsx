@@ -1,4 +1,4 @@
-import { Container, makeStyles, Theme } from '@material-ui/core'
+import { Container, Grid, makeStyles, Theme } from '@material-ui/core'
 import React, { FC, useCallback, useContext, useEffect, useState } from 'react'
 import { ChampDisplay } from '../ChampDisplay/ChampDisplay'
 import { GlobalContext } from '../GlobalContext'
@@ -11,9 +11,6 @@ const useStyles = makeStyles({
 		marginTop: theme.spacing(3),
 	}),
 	champsContainer: (theme: Theme) => ({
-		display: 'grid',
-		gridAutoRows: '200px',
-		gridTemplateColumns: '30% 30% 30% ',
 		marginTop: theme.spacing(3),
 	}),
 })
@@ -40,12 +37,23 @@ export const DisplayChampsPage: FC = () => {
 		setTitle('Champions')
 		fireGetChamps()
 	}, [setTitle, fireGetChamps])
-
 	return (
-		<Container className={classes.champsContainer}>
-			{champs.map((champ) => (
-				<ChampDisplay champInfo={champ} />
-			))}
+		<Container maxWidth={false} className={classes.champsContainer}>
+			<Grid container spacing={5}>
+				{champs.map((champ) => (
+					<Grid
+						key={champ.id}
+						item
+						xs={12}
+						sm={6}
+						md={4}
+						lg={3}
+						xl={2}
+					>
+						<ChampDisplay champInfo={champ} />
+					</Grid>
+				))}
+			</Grid>
 		</Container>
 	)
 }

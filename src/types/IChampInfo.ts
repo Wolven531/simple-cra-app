@@ -52,16 +52,6 @@ export interface Leveltip {
 
 export interface Datavalues {}
 
-export interface Image2 {
-	full: string
-	sprite: string
-	group: string
-	x: number
-	y: number
-	w: number
-	h: number
-}
-
 export interface Spell {
 	id: string
 	name: string
@@ -81,24 +71,14 @@ export interface Spell {
 	maxammo: string
 	range: number[]
 	rangeBurn: string
-	image: Image2
+	image: Image
 	resource: string
-}
-
-export interface Image3 {
-	full: string
-	sprite: string
-	group: string
-	x: number
-	y: number
-	w: number
-	h: number
 }
 
 export interface Passive {
 	name: string
 	description: string
-	image: Image3
+	image: Image
 }
 
 export interface IChampInfo {
